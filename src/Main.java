@@ -11,12 +11,37 @@ public class Main {
         boolean gestor=false;
         String usuarioNPC1 = "soyunnpc1", contraseniaNPC1 = "6969";
         String usuarioNPC2 = "npcsisoy", contraseniaNPC2 = "9696";
-        boolean usuarioNormal=false;
+        boolean inversor=false;
         boolean registroCompleto=false;
+        int tipoUsuario = 0;
         System.out.println("----------------------------");
         System.out.println("¡Bienvenido a FernanStarter!");
         System.out.println("----------------------------");
         System.out.println();
+
+        //Elección de perfil de usuario
+        System.out.println("""
+                Inicia sesión:
+                1. Como administrador
+                2. Como gestor
+                3. Como inversor""");
+
+
+        switch (tipoUsuario) {
+            case 1:
+                admin = true;
+                break;
+            case 2:
+                gestor = true;
+                break;
+            case 3:
+                inversor = true;
+                break;
+            default:
+                System.out.println("Error");
+                break;
+        }
+
         //Menú de log-in
         Scanner lecturaDatos = new Scanner(System.in);
         do{
@@ -37,7 +62,7 @@ public class Main {
                         (usuarioLogin.equalsIgnoreCase(usuarioNPC2) && contraseniaLogin.equalsIgnoreCase(contraseniaNPC2))) {
                     registroCompleto = true;
                     System.out.println("Inicio de sesión exitoso, bienvenido " + usuarioLogin + ".");
-                }else if(contadorIntentos<3){
+                }else if(contadorIntentos<3) {
                     System.out.println("Usuario o contraseña incorrectos. Intenta de nuevo, le quedan " + intentos-- + " intentos.");
                     contadorIntentos++;
                 }
