@@ -4,15 +4,16 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-
+        //Variables de usuarios
         String usuarioLogin,contraseniaLogin;
         int contadorIntentos=0, intentos=2;
         String usuarioAdmin = "pepito123", contraseniaAdmin = "12345";
         String usuarioGestor = "tornaceitor", contraseniaGestor = "54321";
         String usuarioNPC1 = "soyunnpc1", contraseniaNPC1 = "6969";
         String usuarioNPC2 = "npcsisoy", contraseniaNPC2 = "9696";
-        boolean admin=false, gestor=false, inversor=false;
-        boolean registroCompleto=false;
+        boolean admin=false, gestor=false, inversor=false, npc1=false, npc2=false;
+        boolean registroAdmin=false, registroGestor=false, registroInversor=false;
+        int opcionConfig=0;
 
         Scanner lecturaDatos = new Scanner(System.in);
 
@@ -21,58 +22,107 @@ public class Main {
         System.out.println("----------------------------");
         System.out.println();
 
-        //Elección de perfil de usuario
+        //Elección de perfil de usuario y log-in
         System.out.println("""
                 Inicia sesión:
                 1. Como administrador
                 2. Como gestor
                 3. Como inversor""");
 
-        int tipoUsuario = lecturaDatos.nextInt();
+        int tipoUsuario = Integer.parseInt(lecturaDatos.nextLine());
 
         switch (tipoUsuario) {
             case 1:
                 admin = true;
+                System.out.println();
+                System.out.println("Usted ha elegido ingresar como administrador.");
+                System.out.println();
+                do{
+                   System.out.println("Para salir del programa, escribe SALIR");
+                   System.out.println("--------------------------------------");
+                   System.out.println("1.-Introduce usuario ");
+                   usuarioLogin = lecturaDatos.nextLine().toLowerCase();
+                   if (usuarioLogin.equalsIgnoreCase("salir")) break;
+                   System.out.println("2.-Introduce la contraseña");
+                   contraseniaLogin = lecturaDatos.nextLine().toLowerCase();
+                   if (contraseniaLogin.equalsIgnoreCase("salir")) break;
+
+                   if ((usuarioLogin.equalsIgnoreCase(usuarioAdmin) && contraseniaLogin.equalsIgnoreCase(contraseniaAdmin))) {
+                       registroAdmin = true;
+                       System.out.println("Inicio de sesión exitoso, bienvenido " + usuarioLogin + ".");
+                   }
+                   break;
+               }while(!registroAdmin);
                 break;
+
             case 2:
                 gestor = true;
+                System.out.println();
+                System.out.println("Usted ha elegido ingresar como gestor.");
+                do{
+                    if (contadorIntentos<3){
+                        System.out.println();
+                        System.out.println("Para salir del programa, escribe SALIR");
+                        System.out.println("--------------------------------------");
+                        System.out.println("1.-Introduce usuario ");
+                        usuarioLogin = lecturaDatos.nextLine().toLowerCase();
+                        if (usuarioLogin.equalsIgnoreCase("salir")) break;
+                        System.out.println("2.-Introduce la contraseña");
+                        contraseniaLogin = lecturaDatos.nextLine().toLowerCase();
+                        if (contraseniaLogin.equalsIgnoreCase("salir")) break;
+
+                        if ((usuarioLogin.equalsIgnoreCase(usuarioGestor) && contraseniaLogin.equalsIgnoreCase(contraseniaGestor))) {
+                            registroGestor = true;
+                            System.out.println("Inicio de sesión exitoso, bienvenido " + usuarioLogin + ".");
+                        }else if(contadorIntentos<3) {
+                            System.out.println("Usuario o contraseña incorrectos. Intenta de nuevo, le quedan " + intentos-- + " intentos.");
+                            contadorIntentos++;
+                        }
+                    }else{
+                        break;
+                    }
+                }while(!registroGestor);
                 break;
+
             case 3:
                 inversor = true;
+                System.out.println();
+                System.out.println("Usted ha elegido ingresar como inversor.");
+                do{
+                    if (contadorIntentos<3){
+                        System.out.println();
+                        System.out.println("Para salir del programa, escribe SALIR");
+                        System.out.println("--------------------------------------");
+                        System.out.println("1.-Introduce usuario ");
+                        usuarioLogin = lecturaDatos.nextLine().toLowerCase();
+                        if (usuarioLogin.equalsIgnoreCase("salir")) break;
+                        System.out.println("2.-Introduce la contraseña");
+                        contraseniaLogin = lecturaDatos.nextLine().toLowerCase();
+                        if (contraseniaLogin.equalsIgnoreCase("salir")) break;
+
+                        if ((usuarioLogin.equalsIgnoreCase(usuarioNPC1) && contraseniaLogin.equalsIgnoreCase(contraseniaNPC1))) {
+                            registroInversor = true;
+                            npc1=true;
+                            System.out.println("Inicio de sesión exitoso, bienvenido " + usuarioLogin + ".");
+                        } else if(usuarioLogin.equalsIgnoreCase(usuarioNPC2) && contraseniaLogin.equalsIgnoreCase(contraseniaNPC2)){
+                            registroInversor = true;
+                            npc2=true;
+                            System.out.println("Inicio de sesión exitoso, bienvenido " + usuarioLogin + ".");
+                        }else if(contadorIntentos<3) {
+                            System.out.println("Usuario o contraseña incorrectos. Intenta de nuevo, le quedan " + intentos-- + " intentos.");
+                            contadorIntentos++;
+                        }
+                    }else{
+                        break;
+                    }
+                }while(!registroInversor);
                 break;
+
             default:
                 System.out.println("Error");
                 break;
         }
 
-        //Menú de log-in
-
-        do{
-            if (contadorIntentos<3){
-                System.out.println();
-                System.out.println("Para salir del programa, escribe SALIR");
-                System.out.println("--------------------------------------");
-                System.out.println("1.-Introduce usuario ");
-                usuarioLogin = lecturaDatos.nextLine().toLowerCase();
-                if (usuarioLogin.equalsIgnoreCase("salir")) break;
-                System.out.println("2.-Introduce la contraseña");
-                contraseniaLogin = lecturaDatos.nextLine().toLowerCase();
-                if (contraseniaLogin.equalsIgnoreCase("salir")) break;
-
-                if ((usuarioLogin.equalsIgnoreCase(usuarioAdmin) && contraseniaLogin.equalsIgnoreCase(contraseniaAdmin)) ||
-                        (usuarioLogin.equalsIgnoreCase(usuarioGestor) && contraseniaLogin.equalsIgnoreCase(contraseniaGestor)) ||
-                        (usuarioLogin.equalsIgnoreCase(usuarioNPC1) && contraseniaLogin.equalsIgnoreCase(contraseniaNPC1)) ||
-                        (usuarioLogin.equalsIgnoreCase(usuarioNPC2) && contraseniaLogin.equalsIgnoreCase(contraseniaNPC2))) {
-                    registroCompleto = true;
-                    System.out.println("Inicio de sesión exitoso, bienvenido " + usuarioLogin + ".");
-                }else if(contadorIntentos<3) {
-                    System.out.println("Usuario o contraseña incorrectos. Intenta de nuevo, le quedan " + intentos-- + " intentos.");
-                    contadorIntentos++;
-                }
-            }else{
-                break;
-            }
-        } while (!registroCompleto);
 
         // PROYECTOS
 
@@ -83,41 +133,61 @@ public class Main {
 
         // Creación de proyecto - Gestor
 
-        if (gestor) {
+        if (registroGestor) {
+            System.out.println();
+            System.out.println("¿Quieres crear un nuevo proyecto? (S/N)");
+            String creaProyecto = lecturaDatos.nextLine().toLowerCase();
 
             while (numeroProyecto < 4) {
-                System.out.println("¿Quieres crear un nuevo proyecto? (S/N)");
-                String creaProyecto = lecturaDatos.nextLine().toLowerCase();
+                // Si el usuario no quiere continuar, salir del bucle
+                if (creaProyecto.equals("n")) {
+                    break;
+                }
 
+                // El usuario quiere crear un proyecto
                 if (creaProyecto.equals("s")) {
                     numeroProyecto++;
-                    if (numeroProyecto >= 4) System.out.println("No se pueden crear más proyectos");
+                    if (numeroProyecto >= 4) {
+                        System.out.println("No se pueden crear más proyectos");
+                        break;
+                    }
+
                     System.out.println("Escribe el nombre de tu proyecto");
                     nombreProyecto = lecturaDatos.nextLine();
                     System.out.println("Escribe una descripción:");
                     descripcionProyecto = lecturaDatos.nextLine();
                     System.out.println("Introduce la categoría a la que pertenece");
                     categoriaProyecto = lecturaDatos.nextLine();
+
                     System.out.println("Introduce la cantidad de dinero necesaria");
                     cantidadNecesaria = lecturaDatos.nextFloat();
+                    lecturaDatos.nextLine(); // Limpiar el buffer
                     System.out.println("Introduce la cantidad invertida actualmente");
                     cantidadFinanciada = lecturaDatos.nextFloat();
+                    lecturaDatos.nextLine(); // Limpiar el buffer
+
                     System.out.println("Introduce la fecha en la que se abrirá la recaudación");
                     fechaInicio = LocalDate.parse(lecturaDatos.nextLine(), DateTimeFormatter.ofPattern("yyyy-MM-dd"));
                     System.out.println("Introduce la fecha de cierre de recaudaciones");
                     fechaFin = LocalDate.parse(lecturaDatos.nextLine(), DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+
                     while (numeroRecompensa < 4) {
                         System.out.println("¿Quieres añadir una recompensa? (S/N)");
                         String creaRecompensa = lecturaDatos.nextLine().toLowerCase();
-                        if (creaRecompensa.equals("s")){
+                        if (creaRecompensa.equals("s")) {
                             numeroRecompensa++;
-                            if (numeroRecompensa >= 4) System.out.println("No se pueden crear más recompensas");
-
+                            if (numeroRecompensa >= 4) {
+                                System.out.println("No se pueden crear más recompensas");
+                            }
+                        } else {
+                            break; // Salir del bucle si no quiere más recompensas
                         }
                     }
                 }
             }
-            // Menú gestor
+                // Menú gestor
+
+
                 int seleccionGestor;
                 do {
                     System.out.println("""
@@ -132,18 +202,46 @@ public class Main {
                 switch (seleccionGestor) {
                     case 1:
                     case 2:
+                        do {
+                            System.out.println("Selecciona que quieres hacer: " +
+                                    "1.- Cambiar mi usuario" +
+                                    "2.- Cambiar mi contraseña" +
+                                    "3.- Salir");
+                            opcionConfig = lecturaDatos.nextInt();
+                            lecturaDatos.nextLine();
+                        } while (opcionConfig < 1 || opcionConfig > 3);
+
+                        switch (opcionConfig) {
+                            case 1:
+                                System.out.println("Introduce tu nuevo usuario: ");
+                                usuarioGestor = lecturaDatos.nextLine();
+                                System.out.println();
+                                System.out.println("Usuario cambiado exitosamente.");
+                                break;
+                            case 2:
+                                System.out.println("Introduce tu nueva contraseña: ");
+                                contraseniaGestor = lecturaDatos.nextLine();
+                                System.out.println("Contraseña cambiada exitosamente.");
+                                break;
+                            case 3:
+                                break;
+                            default:
+                                System.out.println("Has introducido un valor incorrecto.");
+                        }
+                        break;
                     case 3:
                     default:
                         System.out.println("Has introducido un valor incorrecto.");
                 }
 
 
-        }
+            }
             //Menu inversor
 
-            if (inversor) {
-                int seleccionInversor;
+            if (registroInversor) {
+                int seleccionInversor = 0;
                 do {
+                    System.out.println();
                     System.out.println("""
                             1. Mis inversiones
                             2. Proyectos
@@ -167,7 +265,150 @@ public class Main {
                     case 3:
                     case 4:
                     case 5:
+                        do {
+                            System.out.println("""
+                                    Selecciona que quieres hacer: 
+                                    1.-Cambiar el usuario
+                                    2.-Cambiar la contraseña
+                                    3.-Salir""");
+                            opcionConfig = lecturaDatos.nextInt();
+                            lecturaDatos.nextLine();
+                        } while (opcionConfig < 1 || opcionConfig > 3);
+
+                        switch (opcionConfig) {
+                            case 1:
+                                System.out.println("Introduce tu nuevo usuario: ");
+                                if (npc1) {
+                                    usuarioNPC1 = lecturaDatos.nextLine();
+                                    System.out.println();
+                                    System.out.println("Usuario cambiado exitosamente.");
+                                    break;
+                                } else {
+                                    usuarioNPC2 = lecturaDatos.nextLine();
+                                    System.out.println();
+                                    System.out.println("Usuario cambiado exitosamente.");
+                                    break;
+                                }
+
+                            case 2:
+                                if (npc1) {
+                                    System.out.println("Introduce tu nueva contraseña: ");
+                                    contraseniaNPC1 = lecturaDatos.nextLine();
+                                    System.out.println("Contraseña cambiada exitosamente.");
+                                    break;
+                                } else {
+                                    System.out.println("Introduce tu nueva contraseña: ");
+                                    contraseniaNPC2 = lecturaDatos.nextLine();
+                                    System.out.println("Contraseña cambiada exitosamente.");
+                                    break;
+                                }
+                            case 3:
+                                break;
+                            default:
+                                System.out.println("Has introducido un valor incorrecto.");
+                        }
+                        break;
                     case 6:
+                        System.out.println("""
+                                Inicia sesión:
+                                1. Como administrador
+                                2. Como gestor
+                                3. Como inversor""");
+
+                        tipoUsuario = lecturaDatos.nextInt();
+
+                        switch (tipoUsuario) {
+                            case 1:
+                                admin = true;
+                                System.out.println();
+                                System.out.println("Usted ha elegido ingresar como administrador.");
+                                System.out.println();
+                                do {
+                                    System.out.println("Para salir del programa, escribe SALIR");
+                                    System.out.println("--------------------------------------");
+                                    System.out.println("1.-Introduce usuario ");
+                                    usuarioLogin = lecturaDatos.nextLine().toLowerCase();
+                                    if (usuarioLogin.equalsIgnoreCase("salir")) break;
+                                    System.out.println("2.-Introduce la contraseña");
+                                    contraseniaLogin = lecturaDatos.nextLine().toLowerCase();
+                                    if (contraseniaLogin.equalsIgnoreCase("salir")) break;
+
+                                    if ((usuarioLogin.equalsIgnoreCase(usuarioAdmin) && contraseniaLogin.equalsIgnoreCase(contraseniaAdmin))) {
+                                        registroAdmin = true;
+                                        System.out.println("Inicio de sesión exitoso, bienvenido " + usuarioLogin + ".");
+                                    }
+                                    break;
+                                } while (!registroAdmin);
+                                break;
+
+                            case 2:
+                                gestor = true;
+                                System.out.println();
+                                System.out.println("Usted ha elegido ingresar como gestor.");
+                                do {
+                                    if (contadorIntentos < 3) {
+                                        System.out.println();
+                                        System.out.println("Para salir del programa, escribe SALIR");
+                                        System.out.println("--------------------------------------");
+                                        System.out.println("1.-Introduce usuario ");
+                                        usuarioLogin = lecturaDatos.nextLine().toLowerCase();
+                                        if (usuarioLogin.equalsIgnoreCase("salir")) break;
+                                        System.out.println("2.-Introduce la contraseña");
+                                        contraseniaLogin = lecturaDatos.nextLine().toLowerCase();
+                                        if (contraseniaLogin.equalsIgnoreCase("salir")) break;
+
+                                        if ((usuarioLogin.equalsIgnoreCase(usuarioGestor) && contraseniaLogin.equalsIgnoreCase(contraseniaGestor))) {
+                                            registroGestor = true;
+                                            System.out.println("Inicio de sesión exitoso, bienvenido " + usuarioLogin + ".");
+                                        } else if (contadorIntentos < 3) {
+                                            System.out.println("Usuario o contraseña incorrectos. Intenta de nuevo, le quedan " + intentos-- + " intentos.");
+                                            contadorIntentos++;
+                                        }
+                                    } else {
+                                        break;
+                                    }
+                                } while (!registroGestor);
+                                break;
+
+                            case 3:
+                                inversor = true;
+                                System.out.println();
+                                System.out.println("Usted ha elegido ingresar como inversor.");
+                                do {
+                                    if (contadorIntentos < 3) {
+                                        System.out.println();
+                                        System.out.println("Para salir del programa, escribe SALIR");
+                                        System.out.println("--------------------------------------");
+                                        System.out.println("1.-Introduce usuario ");
+                                        usuarioLogin = lecturaDatos.nextLine().toLowerCase();
+                                        if (usuarioLogin.equalsIgnoreCase("salir")) break;
+                                        System.out.println("2.-Introduce la contraseña");
+                                        contraseniaLogin = lecturaDatos.nextLine().toLowerCase();
+                                        if (contraseniaLogin.equalsIgnoreCase("salir")) break;
+
+                                        if ((usuarioLogin.equalsIgnoreCase(usuarioNPC1) && contraseniaLogin.equalsIgnoreCase(contraseniaNPC1))) {
+                                            registroInversor = true;
+                                            npc1 = true;
+                                            System.out.println("Inicio de sesión exitoso, bienvenido " + usuarioLogin + ".");
+                                        } else if (usuarioLogin.equalsIgnoreCase(usuarioNPC2) && contraseniaLogin.equalsIgnoreCase(contraseniaNPC2)) {
+                                            registroInversor = true;
+                                            npc2 = true;
+                                            System.out.println("Inicio de sesión exitoso, bienvenido " + usuarioLogin + ".");
+                                        } else if (contadorIntentos < 3) {
+                                            System.out.println("Usuario o contraseña incorrectos. Intenta de nuevo, le quedan " + intentos-- + " intentos.");
+                                            contadorIntentos++;
+                                        }
+                                    } else {
+                                        break;
+                                    }
+                                } while (!registroInversor);
+                                break;
+
+                            default:
+                                System.out.println("Error");
+                                break;
+                        }
+                        break;
                     default:
                         System.out.println("Has introducido un valor incorrecto.");
                 }
