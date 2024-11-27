@@ -124,84 +124,161 @@ public class Main {
         }
 
 
-        // PROYECTOS
-
-        int numeroProyecto = 0, numeroRecompensa = 0;
-        String nombreProyecto = "", descripcionProyecto = "", categoriaProyecto = "", recompensaDescripcion = "";
-        float cantidadNecesaria = 0, cantidadFinanciada = 0, cantidadAportada = 0, recompensaPrecio = 0;
-        LocalDate fechaInicio = LocalDate.now(), fechaFin = LocalDate.now();
 
         // Creación de proyecto - Gestor
 
         if (registroGestor) {
-            System.out.println();
-            System.out.println("¿Quieres crear un nuevo proyecto? (S/N)"); // Hacer que se repita si no has agotado los tres proyectos
-            String creaProyecto = lecturaDatos.nextLine().toLowerCase();
 
-            while (numeroProyecto < 4) {
-                // Si el usuario no quiere continuar, salir del bucle
-                if (creaProyecto.equals("n")) {
-                    break;
-                }
+            // Variables para almacenar información de hasta 3 proyectos
+            String nombre1 = "", descripcion1 = "", categoria1 = "", fechaInicio1 = "", fechaFin1 = "";
+            double cantidadNecesaria1 = 0, cantidadFinanciada1 = 0;
+            String recompensa1_1 = "", recompensa1_2 = "", recompensa1_3 = "";
+            double precio1_1 = 0, precio1_2 = 0, precio1_3 = 0;
 
-                // El usuario quiere crear un proyecto
-                if (creaProyecto.equals("s")) {
-                    numeroProyecto++;
-                    if (numeroProyecto >= 4) {
-                        System.out.println("No se pueden crear más proyectos");
-                        break;
-                    }
+            String nombre2 = "", descripcion2 = "", categoria2 = "", fechaInicio2 = "", fechaFin2 = "";
+            double cantidadNecesaria2 = 0, cantidadFinanciada2 = 0;
+            String recompensa2_1 = "", recompensa2_2 = "", recompensa2_3 = "";
+            double precio2_1 = 0, precio2_2 = 0, precio2_3 = 0;
 
-                    System.out.println("Escribe el nombre de tu proyecto");
-                    nombreProyecto = lecturaDatos.nextLine();
-                    System.out.println("Escribe una descripción:");
-                    descripcionProyecto = lecturaDatos.nextLine();
-                    System.out.println("Introduce la categoría a la que pertenece");
-                    categoriaProyecto = lecturaDatos.nextLine();
+            String nombre3 = "", descripcion3 = "", categoria3 = "", fechaInicio3 = "", fechaFin3 = "";
+            double cantidadNecesaria3 = 0, cantidadFinanciada3 = 0;
+            String recompensa3_1 = "", recompensa3_2 = "", recompensa3_3 = "";
+            double precio3_1 = 0, precio3_2 = 0, precio3_3 = 0;
 
-                    System.out.println("Introduce la cantidad de dinero necesaria");
-                    cantidadNecesaria = lecturaDatos.nextFloat();
-                    lecturaDatos.nextLine(); // Limpiar el buffer
-                    System.out.println("Introduce la cantidad invertida actualmente");
-                    cantidadFinanciada = lecturaDatos.nextFloat();
-                    lecturaDatos.nextLine(); // Limpiar el buffer
+            int proyectosCreados = 0;
 
-                    System.out.println("Introduce la fecha en la que se abrirá la recaudación");
-                    fechaInicio = LocalDate.parse(lecturaDatos.nextLine(), DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-                    System.out.println("Introduce la fecha de cierre de recaudaciones");
-                    fechaFin = LocalDate.parse(lecturaDatos.nextLine(), DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+            // Menú gestor
 
-                    while (numeroRecompensa < 4) {
-                        System.out.println("¿Quieres añadir una recompensa? (S/N)");
-                        String creaRecompensa = lecturaDatos.nextLine().toLowerCase();
-                        if (creaRecompensa.equals("s")) {
-                            numeroRecompensa++;
-                            if (numeroRecompensa >= 4) {
-                                System.out.println("No se pueden crear más recompensas");
-                            }
-                        } else {
-                            break; // Salir del bucle si no quiere más recompensas
-                        }
-                    }
-                }
-            }
-                // Menú gestor
+            boolean salirMenu = false;
 
+            while (!salirMenu) { //El bucle finaliza cuando se le da 3. Cerrar sesión, salirMenu = true y te sales del menú de gestor.
+                System.out.println("""
+                        \n--- MENÚ PRINCIPAL ---
+                        Seleccione una opción:
+                        1. Mis proyectos
+                        2. Configuración
+                        3. Cerrar sesión""");
 
-                int seleccionGestor;
-                do {
-                    System.out.println("""
-                            1. Mis proyectos
-                            2. Configuración
-                            3. Cerrar sesión""");
-
-                    seleccionGestor = lecturaDatos.nextInt();
-                }
-                while (seleccionGestor < 1 || seleccionGestor > 3);
+                int seleccionGestor = lecturaDatos.nextInt();
 
                 switch (seleccionGestor) {
-                    case 1:
-                    case 2:
+                    case 1: // Menú - Mis proyectos
+                        boolean salirSubMenu = false;
+
+                        while (!salirSubMenu) { //El bucle finaliza cuando se le da 3. Salir, salirSubMenu = true y te sales del menú Mis proyectos para ir al menu gestor.
+                            System.out.println("""
+                                    \n--- MIS PROYECTOS ---
+                                    Seleccione una opción:
+                                    1. Crear un nuevo proyecto
+                                    2. Ver proyectos existentes
+                                    3. Salir""");
+                            int seleccionProyectos = lecturaDatos.nextInt();
+                            lecturaDatos.nextLine();
+
+                            switch (seleccionProyectos) {
+                            case 1:
+                                if (proyectosCreados >= 3) {
+                                    System.out.println("Ya no se pueden crear más proyectos (máximo 3).");
+                                }
+                                else {
+                                    proyectosCreados++;
+
+                                    System.out.println("\n--- Crear Proyecto " + proyectosCreados + " ---");
+                                    System.out.print("Nombre del proyecto: ");
+                                    String nombre = lecturaDatos.nextLine();
+                                    System.out.print("Descripción del proyecto: ");
+                                    String descripcion = lecturaDatos.nextLine();
+                                    System.out.print("Categoría (arte, tecnología, cine, etc.): ");
+                                    String categoria = lecturaDatos.nextLine();
+                                    System.out.print("Cantidad necesaria (€): ");
+                                    double cantidadNecesaria = lecturaDatos.nextDouble();
+                                    System.out.print("Cantidad financiada hasta el momento (€): ");
+                                    double cantidadFinanciada = lecturaDatos.nextDouble();
+                                    lecturaDatos.nextLine(); // Limpiar buffer
+                                    System.out.print("Fecha inicio de apertura (dd/mm/yyyy): ");
+                                    String fechaInicio = lecturaDatos.nextLine();
+                                    System.out.print("Fecha fin de cierre (dd/mm/yyyy): ");
+                                    String fechaFin = lecturaDatos.nextLine();
+
+                                    System.out.println("\nAñadiendo recompensas (máximo 3):");
+                                    System.out.print("Recompensa 1 descripción: ");
+                                    String recompensa1 = lecturaDatos.nextLine();
+                                    System.out.print("Recompensa 1 precio (€): ");
+                                    double precio1 = lecturaDatos.nextDouble();
+                                    lecturaDatos.nextLine();
+                                    System.out.print("Recompensa 2 descripción: ");
+                                    String recompensa2 = lecturaDatos.nextLine();
+                                    System.out.print("Recompensa 2 precio (€): ");
+                                    double precio2 = lecturaDatos.nextDouble();
+                                    lecturaDatos.nextLine();
+                                    System.out.print("Recompensa 3 descripción: ");
+                                    String recompensa3 = lecturaDatos.nextLine();
+                                    System.out.print("Recompensa 3 precio (€): ");
+                                    double precio3 = lecturaDatos.nextDouble();
+                                    lecturaDatos.nextLine();
+
+                                    if (proyectosCreados == 1) {
+                                        nombre1 = nombre; descripcion1 = descripcion; categoria1 = categoria;
+                                        cantidadNecesaria1 = cantidadNecesaria; cantidadFinanciada1 = cantidadFinanciada;
+                                        fechaInicio1 = fechaInicio; fechaFin1 = fechaFin;
+                                        recompensa1_1 = recompensa1; recompensa1_2 = recompensa2; recompensa1_3 = recompensa3;
+                                        precio1_1 = precio1; precio1_2 = precio2; precio1_3 = precio3;
+                                    } else if (proyectosCreados == 2) {
+                                        nombre2 = nombre; descripcion2 = descripcion; categoria2 = categoria;
+                                        cantidadNecesaria2 = cantidadNecesaria; cantidadFinanciada2 = cantidadFinanciada;
+                                        fechaInicio2 = fechaInicio; fechaFin2 = fechaFin;
+                                        recompensa2_1 = recompensa1; recompensa2_2 = recompensa2; recompensa2_3 = recompensa3;
+                                        precio2_1 = precio1; precio2_2 = precio2; precio2_3 = precio3;
+                                    } else if (proyectosCreados == 3) {
+                                        nombre3 = nombre; descripcion3 = descripcion; categoria3 = categoria;
+                                        cantidadNecesaria3 = cantidadNecesaria; cantidadFinanciada3 = cantidadFinanciada;
+                                        fechaInicio3 = fechaInicio; fechaFin3 = fechaFin;
+                                        recompensa3_1 = recompensa1; recompensa3_2 = recompensa2; recompensa3_3 = recompensa3;
+                                        precio3_1 = precio1; precio3_2 = precio2; precio3_3 = precio3;
+                                    }
+
+                                    System.out.println("Proyecto creado con éxito.");
+                                }
+                            case 2:
+                                System.out.println("\n--- Proyectos Existentes ---");
+                                // Si proyectosCreados tiene un valor determinado, se muestran todos los proyectos con valor inferior al actual (todos los creados previamente)
+                                if (proyectosCreados >= 1) {
+                                    System.out.println("\nProyecto 1:");
+                                    System.out.println("Nombre: " + nombre1 + "\nDescripción: " + descripcion1 + "\nCategoría: " + categoria1 +
+                                            "\nCantidad necesaria: " + cantidadNecesaria1 + " €\nCantidad financiada: " + cantidadFinanciada1 + " €" +
+                                            "\nFecha inicio: " + fechaInicio1 + "\nFecha fin: " + fechaFin1);
+                                    System.out.println("Recompensas: 1) " + recompensa1_1 + " (" + precio1_1 + " €), 2) " + recompensa1_2 + " (" + precio1_2 + " €), 3) " + recompensa1_3 + " (" + precio1_3 + " €)");
+                                }
+
+                                if (proyectosCreados >= 2) {
+                                    System.out.println("\nProyecto 2:");
+                                    System.out.println("Nombre: " + nombre2 + "\nDescripción: " + descripcion2 + "\nCategoría: " + categoria2 +
+                                            "\nCantidad necesaria: " + cantidadNecesaria2 + " €\nCantidad financiada: " + cantidadFinanciada2 + " €" +
+                                            "\nFecha inicio: " + fechaInicio2 + "\nFecha fin: " + fechaFin2);
+                                    System.out.println("Recompensas: 1) " + recompensa2_1 + " (" + precio2_1 + " €), 2) " + recompensa2_2 + " (" + precio2_2 + " €), 3) " + recompensa2_3 + " (" + precio2_3 + " €)");
+                                }
+
+                                if (proyectosCreados == 3) {
+                                    System.out.println("\nProyecto 3:");
+                                    System.out.println("Nombre: " + nombre3 + "\nDescripción: " + descripcion3 + "\nCategoría: " + categoria3 +
+                                            "\nCantidad necesaria: " + cantidadNecesaria3 + " €\nCantidad financiada: " + cantidadFinanciada3 + " €" +
+                                            "\nFecha inicio: " + fechaInicio3 + "\nFecha fin: " + fechaFin3);
+                                    System.out.println("Recompensas: 1) " + recompensa3_1 + " (" + precio3_1 + " €), 2) " + recompensa3_2 + " (" + precio3_2 + " €), 3) " + recompensa3_3 + " (" + precio3_3 + " €)");
+                                }
+
+                                if (proyectosCreados == 0) {
+                                    System.out.println("No hay proyectos registrados.");
+                                }
+                            case 3:
+                                System.out.println("Volviendo al Menú Principal...");
+                                salirSubMenu = true; // Salir del submenú
+                                break;
+                            default:
+                                System.out.println("Has introducido un valor incorrecto.");
+                            }
+                        }
+                        break;
+                    case 2: // Menú - Configuración
                         do {
                             System.out.println("Selecciona que quieres hacer: " +
                                     "1.- Cambiar mi usuario" +
@@ -226,18 +303,22 @@ public class Main {
                             case 3:
                                 break;
                             default:
-                                System.out.println("Has introducido un valor incorrecto.");
+                                System.out.println("Opción inválida. Inténtelo de nuevo.");
                         }
                         break;
                     case 3:
+                        System.out.println("Saliendo del programa...");
+                        salirMenu = true; // Salir del menú
+                        break;
                     default:
-                        System.out.println("Has introducido un valor incorrecto.");
+                        System.out.println("Opción inválida. Inténtelo de nuevo.");
                 }
-
             }
+        }
+
             //Menu inversor
 
-            if (registroInversor) {
+        if (registroInversor) {
                 int seleccionInversor = 0;
                 do {
                     System.out.println();
@@ -256,11 +337,11 @@ public class Main {
                 switch (seleccionInversor) {
                     case 1:
                     case 2:
-                        System.out.println("Nombre: " + nombreProyecto);
-                        System.out.println("Descripción: " + descripcionProyecto);
-                        System.out.println("Categoría: " + categoriaProyecto);
-                        System.out.println("Cantidad necesaria: " + cantidadNecesaria);
-                        System.out.println("Cantidad aportada: " + cantidadAportada);
+                        System.out.println("Nombre: ");
+                        System.out.println("Descripción: ");
+                        System.out.println("Categoría: ");
+                        System.out.println("Cantidad necesaria: ");
+                        System.out.println("Cantidad aportada: ");
                     case 3:
                     case 4:
                     case 5:
@@ -312,11 +393,11 @@ public class Main {
                         System.out.println("Has introducido un valor incorrecto.");
                 }
             }
-            // Meterlo en apartados de proyectos detallados
-            System.out.println("Fecha de apertura para recibir inversiones: " + fechaInicio);
+        // Meterlo en apartados de proyectos detallados
+            /*System.out.println("Fecha de apertura para recibir inversiones: " + fechaInicio);
             System.out.println("Fecha de apertura para recibir inversiones: " + fechaInicio);
             System.out.println("Fecha de cierre de inversiones: " + fechaFin);
-            System.out.println(": " + fechaInicio);
+            System.out.println(": " + fechaInicio);*/
 
 
 
