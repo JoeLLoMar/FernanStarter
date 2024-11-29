@@ -309,6 +309,81 @@ public class Main {
                                                                     "\nCantidad necesaria: " + cantidadNecesaria1 + " €\nCantidad financiada: " + cantidadFinanciada1 + " €" +
                                                                     "\nFecha inicio: " + fechaInicio1 + "\nFecha fin: " + fechaFin1);
                                                             System.out.println("Recompensas: 1) " + recompensa1_1 + " (" + precio1_1 + " €), 2) " + recompensa1_2 + " (" + precio1_2 + " €), 3) " + recompensa1_3 + " (" + precio1_3 + " €)");
+                                                            System.out.println("""
+                                                                    Opciones de gestión:
+                                                                    1. Modificar proyecto
+                                                                    2. Eliminar proyecto
+                                                                    3. Salir""");
+                                                                    int gestionProyecto = lecturaDatos.nextInt();
+                                                                    lecturaDatos.nextLine();
+
+                                                                    switch (gestionProyecto) {
+                                                                        case 1:
+                                                                            System.out.println("""
+                                                                                    Elige el apartado que vas a modificar:
+                                                                                    1. Nombre
+                                                                                    2. Descripción
+                                                                                    3. Categoría
+                                                                                    4. Cantidad necesaria
+                                                                                    5. Cantidad financiada
+                                                                                    6. Fecha inicio
+                                                                                    7. Fecha fin
+                                                                                    8. Recompensa 1
+                                                                                    9. Recompensa 2
+                                                                                    10. Recompensa 3
+                                                                                    11. Salir""");
+                                                                            int modificaApartado = lecturaDatos.nextInt();
+                                                                            lecturaDatos.nextLine();
+
+                                                                            switch (modificaApartado) {
+                                                                                case 1:
+                                                                                    System.out.print("Nombre del proyecto: ");
+                                                                                    nombre1 = lecturaDatos.nextLine();
+                                                                                case 2:
+                                                                                    System.out.print("Descripción del proyecto: ");
+                                                                                    descripcion1 = lecturaDatos.nextLine();
+                                                                                case 3:
+                                                                                    System.out.print("Categoría (arte, tecnología, cine, etc.): ");
+                                                                                    categoria1 = lecturaDatos.nextLine();
+                                                                                case 4:
+                                                                                    System.out.print("Cantidad necesaria (€): ");
+                                                                                    cantidadNecesaria1 = lecturaDatos.nextDouble();
+                                                                                case 5:
+                                                                                    System.out.print("Cantidad financiada hasta el momento (€): ");
+                                                                                    cantidadFinanciada1 = lecturaDatos.nextDouble();
+                                                                                    lecturaDatos.nextLine(); // Limpiar buffer
+                                                                                case 6:
+                                                                                    System.out.print("Fecha inicio de apertura (dd/mm/yyyy): ");
+                                                                                    fechaInicio1 = lecturaDatos.nextLine();
+                                                                                case 7:
+                                                                                    System.out.print("Fecha fin de cierre (dd/mm/yyyy): ");
+                                                                                    fechaFin1 = lecturaDatos.nextLine();
+                                                                                case 8:
+                                                                                    System.out.print("Recompensa 1 descripción: ");
+                                                                                    recompensa1_1 = lecturaDatos.nextLine();
+                                                                                    System.out.print("Recompensa 1 precio (€): ");
+                                                                                    precio1_1 = lecturaDatos.nextDouble();
+                                                                                    lecturaDatos.nextLine();
+                                                                                case 9:
+                                                                                    System.out.print("Recompensa 2 descripción: ");
+                                                                                    recompensa1_2 = lecturaDatos.nextLine();
+                                                                                    System.out.print("Recompensa 2 precio (€): ");
+                                                                                    precio1_2 = lecturaDatos.nextDouble();
+                                                                                    lecturaDatos.nextLine();
+                                                                                case 10:
+                                                                                    System.out.print("Recompensa 3 descripción: ");
+                                                                                    recompensa1_3 = lecturaDatos.nextLine();
+                                                                                    System.out.print("Recompensa 3 precio (€): ");
+                                                                                    precio1_3 = lecturaDatos.nextDouble();
+                                                                                    lecturaDatos.nextLine();
+                                                                                case 11:
+
+                                                                            }
+                                                                        case 2:
+
+                                                                        case 3:
+                                                                        default:
+                                                                    }
                                                         }
                                                         else System.out.println("Error. Este proyecto no existe.");
                                                     case 2:
@@ -318,6 +393,11 @@ public class Main {
                                                                     "\nCantidad necesaria: " + cantidadNecesaria2 + " €\nCantidad financiada: " + cantidadFinanciada2 + " €" +
                                                                     "\nFecha inicio: " + fechaInicio2 + "\nFecha fin: " + fechaFin2);
                                                             System.out.println("Recompensas: 1) " + recompensa2_1 + " (" + precio2_1 + " €), 2) " + recompensa2_2 + " (" + precio2_2 + " €), 3) " + recompensa2_3 + " (" + precio2_3 + " €)");
+                                                            System.out.println("""
+                                                                    Opciones de gestión:
+                                                                    1. Modificar proyecto
+                                                                    2. Eliminar proyecto
+                                                                    3. Salir""");
                                                         }
                                                         else System.out.println("Error. Este proyecto no existe.");
 
@@ -328,6 +408,11 @@ public class Main {
                                                                     "\nCantidad necesaria: " + cantidadNecesaria3 + " €\nCantidad financiada: " + cantidadFinanciada3 + " €" +
                                                                     "\nFecha inicio: " + fechaInicio3 + "\nFecha fin: " + fechaFin3);
                                                             System.out.println("Recompensas: 1) " + recompensa3_1 + " (" + precio3_1 + " €), 2) " + recompensa3_2 + " (" + precio3_2 + " €), 3) " + recompensa3_3 + " (" + precio3_3 + " €)");
+                                                            System.out.println("""
+                                                                    Opciones de gestión:
+                                                                    1. Modificar proyecto
+                                                                    2. Eliminar proyecto
+                                                                    3. Salir""");
                                                         }
                                                         else System.out.println("Error. Este proyecto no existe.");
 
