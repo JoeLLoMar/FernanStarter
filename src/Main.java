@@ -1,5 +1,3 @@
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 
 public class Main {
@@ -275,30 +273,67 @@ public class Main {
                                             if (proyectosCreados >= 1) {
                                                 System.out.println("\nProyecto 1:");
                                                 System.out.println("Nombre: " + nombre1 + "\nDescripción: " + descripcion1 + "\nCategoría: " + categoria1 +
-                                                        "\nCantidad necesaria: " + cantidadNecesaria1 + " €\nCantidad financiada: " + cantidadFinanciada1 + " €" +
-                                                        "\nFecha inicio: " + fechaInicio1 + "\nFecha fin: " + fechaFin1);
-                                                System.out.println("Recompensas: 1) " + recompensa1_1 + " (" + precio1_1 + " €), 2) " + recompensa1_2 + " (" + precio1_2 + " €), 3) " + recompensa1_3 + " (" + precio1_3 + " €)");
+                                                        "\nCantidad necesaria: " + cantidadNecesaria1 + " €\nCantidad financiada: " + cantidadFinanciada1 + " €");
                                             }
 
                                             if (proyectosCreados >= 2) {
                                                 System.out.println("\nProyecto 2:");
                                                 System.out.println("Nombre: " + nombre2 + "\nDescripción: " + descripcion2 + "\nCategoría: " + categoria2 +
-                                                        "\nCantidad necesaria: " + cantidadNecesaria2 + " €\nCantidad financiada: " + cantidadFinanciada2 + " €" +
-                                                        "\nFecha inicio: " + fechaInicio2 + "\nFecha fin: " + fechaFin2);
-                                                System.out.println("Recompensas: 1) " + recompensa2_1 + " (" + precio2_1 + " €), 2) " + recompensa2_2 + " (" + precio2_2 + " €), 3) " + recompensa2_3 + " (" + precio2_3 + " €)");
+                                                        "\nCantidad necesaria: " + cantidadNecesaria2 + " €\nCantidad financiada: " + cantidadFinanciada2 + " €");
                                             }
 
                                             if (proyectosCreados == 3) {
                                                 System.out.println("\nProyecto 3:");
                                                 System.out.println("Nombre: " + nombre3 + "\nDescripción: " + descripcion3 + "\nCategoría: " + categoria3 +
-                                                        "\nCantidad necesaria: " + cantidadNecesaria3 + " €\nCantidad financiada: " + cantidadFinanciada3 + " €" +
-                                                        "\nFecha inicio: " + fechaInicio3 + "\nFecha fin: " + fechaFin3);
-                                                System.out.println("Recompensas: 1) " + recompensa3_1 + " (" + precio3_1 + " €), 2) " + recompensa3_2 + " (" + precio3_2 + " €), 3) " + recompensa3_3 + " (" + precio3_3 + " €)");
+                                                        "\nCantidad necesaria: " + cantidadNecesaria3 + " €\nCantidad financiada: " + cantidadFinanciada3 + " €");
                                             }
 
                                             if (proyectosCreados == 0) {
                                                 System.out.println("No hay proyectos registrados.");
                                             }
+                                            //Vista detallada de proyectos
+                                            if (proyectosCreados > 0) {
+                                                System.out.println("Ver vista detallada: ");
+                                                if (proyectosCreados >= 1) System.out.println("1. Proyecto 1: " + nombre1);
+                                                if (proyectosCreados >= 2) System.out.println("2. Proyecto 2: " + nombre2);
+                                                if (proyectosCreados == 3) System.out.println("3. Proyecto 3: " + nombre3);
+                                                System.out.println("4. Salir");
+                                                int selecProyectDetalle = lecturaDatos.nextInt();
+                                                lecturaDatos.nextLine();
+
+                                                switch (selecProyectDetalle) {
+                                                    case 1:
+                                                        if (proyectosCreados >= 1) {
+                                                            System.out.println("\nProyecto 1:");
+                                                            System.out.println("Nombre: " + nombre1 + "\nDescripción: " + descripcion1 + "\nCategoría: " + categoria1 +
+                                                                    "\nCantidad necesaria: " + cantidadNecesaria1 + " €\nCantidad financiada: " + cantidadFinanciada1 + " €" +
+                                                                    "\nFecha inicio: " + fechaInicio1 + "\nFecha fin: " + fechaFin1);
+                                                            System.out.println("Recompensas: 1) " + recompensa1_1 + " (" + precio1_1 + " €), 2) " + recompensa1_2 + " (" + precio1_2 + " €), 3) " + recompensa1_3 + " (" + precio1_3 + " €)");
+                                                        }
+                                                        else System.out.println("Error. Este proyecto no existe.");
+                                                    case 2:
+                                                        if (proyectosCreados >= 2) {
+                                                            System.out.println("\nProyecto 2:");
+                                                            System.out.println("Nombre: " + nombre2 + "\nDescripción: " + descripcion2 + "\nCategoría: " + categoria2 +
+                                                                    "\nCantidad necesaria: " + cantidadNecesaria2 + " €\nCantidad financiada: " + cantidadFinanciada2 + " €" +
+                                                                    "\nFecha inicio: " + fechaInicio2 + "\nFecha fin: " + fechaFin2);
+                                                            System.out.println("Recompensas: 1) " + recompensa2_1 + " (" + precio2_1 + " €), 2) " + recompensa2_2 + " (" + precio2_2 + " €), 3) " + recompensa2_3 + " (" + precio2_3 + " €)");
+                                                        }
+                                                        else System.out.println("Error. Este proyecto no existe.");
+
+                                                    case 3:
+                                                        if (proyectosCreados == 3) {
+                                                            System.out.println("\nProyecto 3:");
+                                                            System.out.println("Nombre: " + nombre3 + "\nDescripción: " + descripcion3 + "\nCategoría: " + categoria3 +
+                                                                    "\nCantidad necesaria: " + cantidadNecesaria3 + " €\nCantidad financiada: " + cantidadFinanciada3 + " €" +
+                                                                    "\nFecha inicio: " + fechaInicio3 + "\nFecha fin: " + fechaFin3);
+                                                            System.out.println("Recompensas: 1) " + recompensa3_1 + " (" + precio3_1 + " €), 2) " + recompensa3_2 + " (" + precio3_2 + " €), 3) " + recompensa3_3 + " (" + precio3_3 + " €)");
+                                                        }
+                                                        else System.out.println("Error. Este proyecto no existe.");
+
+                                                }
+                                            }
+
                                         case 3:
                                             System.out.println("Volviendo al Menú Principal...");
                                             salirSubMenu = true; // Salir del submenú
@@ -306,7 +341,6 @@ public class Main {
                                             break;
                                         default:
                                             System.out.println("Has introducido un valor incorrecto.");
-
                                     }
                                 }
                                 break;
@@ -436,20 +470,9 @@ public class Main {
                         break;
                     }
                 }
+
             }while(!cerrarSesion);
 
-            // Creación de proyecto - Gestor
-
-
-            // Meterlo en apartados de proyectos detallados
-            /*System.out.println("Fecha de apertura para recibir inversiones: " + fechaInicio);
-            System.out.println("Fecha de apertura para recibir inversiones: " + fechaInicio);
-            System.out.println("Fecha de cierre de inversiones: " + fechaFin);
-            System.out.println(": " + fechaInicio);*/
         } while (!cerrarPrograma);
-
-
-
-
     }
 }
