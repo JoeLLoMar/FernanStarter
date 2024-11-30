@@ -163,7 +163,6 @@ public class Main {
                             1. Mis proyectos
                             2. Configuración
                             3. Cerrar sesión""");
-
                         int seleccionGestor = lecturaDatos.nextInt();
 
                         switch (seleccionGestor) {
@@ -205,19 +204,19 @@ public class Main {
                                                 String fechaFin = lecturaDatos.nextLine();
 
                                                 System.out.println("\nAñadiendo recompensas (máximo 3):");
-                                                System.out.print("Recompensa 1 descripción: ");
+                                                System.out.print("Recompensa 1 - Descripción: ");
                                                 String recompensa1 = lecturaDatos.nextLine();
-                                                System.out.print("Recompensa 1 precio (€): ");
+                                                System.out.print("Recompensa 1 - Precio (€): ");
                                                 double precio1 = lecturaDatos.nextDouble();
                                                 lecturaDatos.nextLine();
-                                                System.out.print("Recompensa 2 descripción: ");
+                                                System.out.print("Recompensa 2 - Descripción: ");
                                                 String recompensa2 = lecturaDatos.nextLine();
-                                                System.out.print("Recompensa 2 precio (€): ");
+                                                System.out.print("Recompensa 2 - Precio (€): ");
                                                 double precio2 = lecturaDatos.nextDouble();
                                                 lecturaDatos.nextLine();
-                                                System.out.print("Recompensa 3 descripción: ");
+                                                System.out.print("Recompensa 3 - Descripción: ");
                                                 String recompensa3 = lecturaDatos.nextLine();
-                                                System.out.print("Recompensa 3 precio (€): ");
+                                                System.out.print("Recompensa 3 - Precio (€): ");
                                                 double precio3 = lecturaDatos.nextDouble();
                                                 lecturaDatos.nextLine();
 
@@ -267,6 +266,7 @@ public class Main {
 
                                                 System.out.println("Proyecto creado con éxito.");
                                             }
+                                            break;
                                         case 2:
                                             System.out.println("\n--- Proyectos Existentes ---");
                                             // Si proyectosCreados tiene un valor determinado, se muestran todos los proyectos con valor inferior al actual (todos los creados previamente)
@@ -298,10 +298,10 @@ public class Main {
                                                 if (proyectosCreados >= 2) System.out.println("2. Proyecto 2: " + nombre2);
                                                 if (proyectosCreados == 3) System.out.println("3. Proyecto 3: " + nombre3);
                                                 System.out.println("4. Salir");
-                                                int selecProyectDetalle = lecturaDatos.nextInt();
+                                                int selecProyectoDetalle = lecturaDatos.nextInt();
                                                 lecturaDatos.nextLine();
 
-                                                switch (selecProyectDetalle) {
+                                                switch (selecProyectoDetalle) {
                                                     case 1:
                                                         if (proyectosCreados >= 1) {
                                                             System.out.println("\nProyecto 1:");
@@ -309,29 +309,36 @@ public class Main {
                                                                     "\nCantidad necesaria: " + cantidadNecesaria1 + " €\nCantidad financiada: " + cantidadFinanciada1 + " €" +
                                                                     "\nFecha inicio: " + fechaInicio1 + "\nFecha fin: " + fechaFin1);
                                                             System.out.println("Recompensas: 1) " + recompensa1_1 + " (" + precio1_1 + " €), 2) " + recompensa1_2 + " (" + precio1_2 + " €), 3) " + recompensa1_3 + " (" + precio1_3 + " €)");
-                                                            System.out.println("""
+
+                                                            boolean salirGestionProyecto = false;
+                                                            //MODIFICAR - ELIMINAR proyecto 1
+                                                            while (!salirGestionProyecto) {
+                                                                System.out.println("""
                                                                     Opciones de gestión:
                                                                     1. Modificar proyecto
                                                                     2. Eliminar proyecto
                                                                     3. Salir""");
-                                                                    int gestionProyecto = lecturaDatos.nextInt();
-                                                                    lecturaDatos.nextLine();
+                                                                int gestionProyecto = lecturaDatos.nextInt();
+                                                                lecturaDatos.nextLine();
 
-                                                                    switch (gestionProyecto) {
-                                                                        case 1:
+                                                                switch (gestionProyecto) {
+                                                                    case 1:
+                                                                        boolean salirModificar = false;
+
+                                                                        while (!salirModificar){
                                                                             System.out.println("""
-                                                                                    Elige el apartado que vas a modificar:
-                                                                                    1. Nombre
-                                                                                    2. Descripción
-                                                                                    3. Categoría
-                                                                                    4. Cantidad necesaria
-                                                                                    5. Cantidad financiada
-                                                                                    6. Fecha inicio
-                                                                                    7. Fecha fin
-                                                                                    8. Recompensa 1
-                                                                                    9. Recompensa 2
-                                                                                    10. Recompensa 3
-                                                                                    11. Salir""");
+                                                                            Elige el apartado que vas a modificar:
+                                                                            1. Nombre
+                                                                            2. Descripción
+                                                                            3. Categoría
+                                                                            4. Cantidad necesaria
+                                                                            5. Cantidad financiada
+                                                                            6. Fecha inicio
+                                                                            7. Fecha fin
+                                                                            8. Recompensa 1
+                                                                            9. Recompensa 2
+                                                                            10. Recompensa 3
+                                                                            11. Salir""");
                                                                             int modificaApartado = lecturaDatos.nextInt();
                                                                             lecturaDatos.nextLine();
 
@@ -339,53 +346,92 @@ public class Main {
                                                                                 case 1:
                                                                                     System.out.print("Nombre del proyecto: ");
                                                                                     nombre1 = lecturaDatos.nextLine();
+                                                                                    break;
                                                                                 case 2:
                                                                                     System.out.print("Descripción del proyecto: ");
                                                                                     descripcion1 = lecturaDatos.nextLine();
+                                                                                    break;
                                                                                 case 3:
                                                                                     System.out.print("Categoría (arte, tecnología, cine, etc.): ");
                                                                                     categoria1 = lecturaDatos.nextLine();
+                                                                                    break;
                                                                                 case 4:
                                                                                     System.out.print("Cantidad necesaria (€): ");
                                                                                     cantidadNecesaria1 = lecturaDatos.nextDouble();
+                                                                                    break;
                                                                                 case 5:
                                                                                     System.out.print("Cantidad financiada hasta el momento (€): ");
                                                                                     cantidadFinanciada1 = lecturaDatos.nextDouble();
                                                                                     lecturaDatos.nextLine(); // Limpiar buffer
+                                                                                    break;
                                                                                 case 6:
                                                                                     System.out.print("Fecha inicio de apertura (dd/mm/yyyy): ");
                                                                                     fechaInicio1 = lecturaDatos.nextLine();
+                                                                                    break;
                                                                                 case 7:
                                                                                     System.out.print("Fecha fin de cierre (dd/mm/yyyy): ");
                                                                                     fechaFin1 = lecturaDatos.nextLine();
+                                                                                    break;
                                                                                 case 8:
-                                                                                    System.out.print("Recompensa 1 descripción: ");
+                                                                                    System.out.print("Recompensa 1 - Descripción: ");
                                                                                     recompensa1_1 = lecturaDatos.nextLine();
-                                                                                    System.out.print("Recompensa 1 precio (€): ");
+                                                                                    System.out.print("Recompensa 1 -Precio (€): ");
                                                                                     precio1_1 = lecturaDatos.nextDouble();
                                                                                     lecturaDatos.nextLine();
+                                                                                    break;
                                                                                 case 9:
-                                                                                    System.out.print("Recompensa 2 descripción: ");
+                                                                                    System.out.print("Recompensa 2 - Descripción: ");
                                                                                     recompensa1_2 = lecturaDatos.nextLine();
-                                                                                    System.out.print("Recompensa 2 precio (€): ");
+                                                                                    System.out.print("Recompensa 2 - Precio (€): ");
                                                                                     precio1_2 = lecturaDatos.nextDouble();
                                                                                     lecturaDatos.nextLine();
+                                                                                    break;
                                                                                 case 10:
-                                                                                    System.out.print("Recompensa 3 descripción: ");
+                                                                                    System.out.print("Recompensa 3 - Descripción: ");
                                                                                     recompensa1_3 = lecturaDatos.nextLine();
-                                                                                    System.out.print("Recompensa 3 precio (€): ");
+                                                                                    System.out.print("Recompensa 3 - Precio (€): ");
                                                                                     precio1_3 = lecturaDatos.nextDouble();
                                                                                     lecturaDatos.nextLine();
+                                                                                    break;
                                                                                 case 11:
-
+                                                                                    System.out.println("Volviendo al menú de modificación.");
+                                                                                    salirModificar = true;
+                                                                                    break;
+                                                                                default:
+                                                                                    System.out.println("Opción inválida. Inténtelo de nuevo.");
+                                                                                    break;
                                                                             }
-                                                                        case 2:
-
-                                                                        case 3:
-                                                                        default:
-                                                                    }
+                                                                        }
+                                                                        break;
+                                                                    case 2: // Todas las variables a "nulo" o a -1 para indicar que no hay un valor definido
+                                                                        nombre1 = null;
+                                                                        descripcion1 = null;
+                                                                        categoria1 = null;
+                                                                        cantidadNecesaria1 = -1;
+                                                                        cantidadFinanciada1 = -1;
+                                                                        fechaInicio1 = null;
+                                                                        fechaFin1 = null;
+                                                                        recompensa1_1 = null;
+                                                                        recompensa1_2 = null;
+                                                                        recompensa1_3 = null;
+                                                                        precio1_1 = -1;
+                                                                        precio1_2 = -1;
+                                                                        precio1_3 = -1;
+                                                                        System.out.println("El proyecto ha sido eliminado.");
+                                                                        break;
+                                                                    case 3:
+                                                                        System.out.println("Volviendo al menú de gestión de proyecto.");
+                                                                        salirGestionProyecto = true;
+                                                                        break;
+                                                                    default:
+                                                                        System.out.println("Opción inválida. Inténtelo de nuevo.");
+                                                                        break;
+                                                                }
+                                                            }
                                                         }
                                                         else System.out.println("Error. Este proyecto no existe.");
+                                                        break;
+                                                    //VISTA DETALLADA Proyecto 2
                                                     case 2:
                                                         if (proyectosCreados >= 2) {
                                                             System.out.println("\nProyecto 2:");
@@ -393,14 +439,128 @@ public class Main {
                                                                     "\nCantidad necesaria: " + cantidadNecesaria2 + " €\nCantidad financiada: " + cantidadFinanciada2 + " €" +
                                                                     "\nFecha inicio: " + fechaInicio2 + "\nFecha fin: " + fechaFin2);
                                                             System.out.println("Recompensas: 1) " + recompensa2_1 + " (" + precio2_1 + " €), 2) " + recompensa2_2 + " (" + precio2_2 + " €), 3) " + recompensa2_3 + " (" + precio2_3 + " €)");
-                                                            System.out.println("""
+
+                                                            boolean salirGestionProyecto = false;
+                                                            //MODIFICAR - ELIMINAR proyecto 2
+                                                            while (!salirGestionProyecto) {
+                                                                System.out.println("""
                                                                     Opciones de gestión:
                                                                     1. Modificar proyecto
                                                                     2. Eliminar proyecto
                                                                     3. Salir""");
+                                                                int gestionProyecto = lecturaDatos.nextInt();
+                                                                lecturaDatos.nextLine();
+
+                                                                switch (gestionProyecto) {
+                                                                    case 1:
+                                                                        boolean salirModificar = false;
+
+                                                                        while (!salirModificar){
+                                                                            System.out.println("""
+                                                                            Elige el apartado que vas a modificar:
+                                                                            1. Nombre
+                                                                            2. Descripción
+                                                                            3. Categoría
+                                                                            4. Cantidad necesaria
+                                                                            5. Cantidad financiada
+                                                                            6. Fecha inicio
+                                                                            7. Fecha fin
+                                                                            8. Recompensa 1
+                                                                            9. Recompensa 2
+                                                                            10. Recompensa 3
+                                                                            11. Salir""");
+                                                                            int modificaApartado = lecturaDatos.nextInt();
+                                                                            lecturaDatos.nextLine();
+
+                                                                            switch (modificaApartado) {
+                                                                                case 1:
+                                                                                    System.out.print("Nombre del proyecto: ");
+                                                                                    nombre2 = lecturaDatos.nextLine();
+                                                                                    break;
+                                                                                case 2:
+                                                                                    System.out.print("Descripción del proyecto: ");
+                                                                                    descripcion2 = lecturaDatos.nextLine();
+                                                                                    break;
+                                                                                case 3:
+                                                                                    System.out.print("Categoría (arte, tecnología, cine, etc.): ");
+                                                                                    categoria2 = lecturaDatos.nextLine();
+                                                                                    break;
+                                                                                case 4:
+                                                                                    System.out.print("Cantidad necesaria (€): ");
+                                                                                    cantidadNecesaria2 = lecturaDatos.nextDouble();
+                                                                                    break;
+                                                                                case 5:
+                                                                                    System.out.print("Cantidad financiada hasta el momento (€): ");
+                                                                                    cantidadFinanciada2 = lecturaDatos.nextDouble();
+                                                                                    lecturaDatos.nextLine(); // Limpiar buffer
+                                                                                    break;
+                                                                                case 6:
+                                                                                    System.out.print("Fecha inicio de apertura (dd/mm/yyyy): ");
+                                                                                    fechaInicio2 = lecturaDatos.nextLine();
+                                                                                    break;
+                                                                                case 7:
+                                                                                    System.out.print("Fecha fin de cierre (dd/mm/yyyy): ");
+                                                                                    fechaFin2 = lecturaDatos.nextLine();
+                                                                                    break;
+                                                                                case 8:
+                                                                                    System.out.print("Recompensa 1 - Descripción: ");
+                                                                                    recompensa2_1 = lecturaDatos.nextLine();
+                                                                                    System.out.print("Recompensa 1 - Precio (€): ");
+                                                                                    precio2_1 = lecturaDatos.nextDouble();
+                                                                                    lecturaDatos.nextLine();
+                                                                                    break;
+                                                                                case 9:
+                                                                                    System.out.print("Recompensa 2 - Descripción: ");
+                                                                                    recompensa2_2 = lecturaDatos.nextLine();
+                                                                                    System.out.print("Recompensa 2 - Precio (€): ");
+                                                                                    precio2_2 = lecturaDatos.nextDouble();
+                                                                                    lecturaDatos.nextLine();
+                                                                                    break;
+                                                                                case 10:
+                                                                                    System.out.print("Recompensa 3 - Descripción: ");
+                                                                                    recompensa2_3 = lecturaDatos.nextLine();
+                                                                                    System.out.print("Recompensa 3 - Precio (€): ");
+                                                                                    precio2_3 = lecturaDatos.nextDouble();
+                                                                                    lecturaDatos.nextLine();
+                                                                                    break;
+                                                                                case 11:
+                                                                                    System.out.println("Volviendo al menú de modificación.");
+                                                                                    salirModificar = true;
+                                                                                    break;
+                                                                                default:
+                                                                                    System.out.println("Opción inválida. Inténtelo de nuevo.");
+                                                                                    break;
+                                                                            }
+                                                                        }
+                                                                        break;
+                                                                    case 2:
+                                                                        nombre2 = "";
+                                                                        descripcion2 = "";
+                                                                        categoria2 = "";
+                                                                        cantidadNecesaria2 = 0;
+                                                                        cantidadFinanciada2 = 0;
+                                                                        fechaInicio2 = "";
+                                                                        fechaFin2 = "";
+                                                                        recompensa2_1 = "";
+                                                                        recompensa2_2 = "";
+                                                                        recompensa2_3 = "";
+                                                                        precio2_1 = 0;
+                                                                        precio2_2 = 0;
+                                                                        precio2_3 = 0;
+                                                                        System.out.println("El proyecto ha sido eliminado.");
+                                                                        break;
+                                                                    case 3:
+                                                                        System.out.println("Volviendo al menú de gestión de proyecto.");
+                                                                        salirGestionProyecto = true;
+                                                                        break;
+                                                                    default:
+                                                                        System.out.println("Opción inválida. Inténtelo de nuevo.");
+                                                                        break;
+                                                                }
+                                                            }
                                                         }
                                                         else System.out.println("Error. Este proyecto no existe.");
-
+                                                        break;
                                                     case 3:
                                                         if (proyectosCreados == 3) {
                                                             System.out.println("\nProyecto 3:");
@@ -408,17 +568,130 @@ public class Main {
                                                                     "\nCantidad necesaria: " + cantidadNecesaria3 + " €\nCantidad financiada: " + cantidadFinanciada3 + " €" +
                                                                     "\nFecha inicio: " + fechaInicio3 + "\nFecha fin: " + fechaFin3);
                                                             System.out.println("Recompensas: 1) " + recompensa3_1 + " (" + precio3_1 + " €), 2) " + recompensa3_2 + " (" + precio3_2 + " €), 3) " + recompensa3_3 + " (" + precio3_3 + " €)");
-                                                            System.out.println("""
+
+                                                            boolean salirGestionProyecto = false;
+                                                            while (!salirGestionProyecto) {
+                                                                System.out.println("""
                                                                     Opciones de gestión:
                                                                     1. Modificar proyecto
                                                                     2. Eliminar proyecto
                                                                     3. Salir""");
+                                                                int gestionProyecto = lecturaDatos.nextInt();
+                                                                lecturaDatos.nextLine();
+
+                                                                switch (gestionProyecto) {
+                                                                    case 1:
+                                                                        boolean salirModificar = false;
+
+                                                                        while (!salirModificar){
+                                                                            System.out.println("""
+                                                                            Elige el apartado que vas a modificar:
+                                                                            1. Nombre
+                                                                            2. Descripción
+                                                                            3. Categoría
+                                                                            4. Cantidad necesaria
+                                                                            5. Cantidad financiada
+                                                                            6. Fecha inicio
+                                                                            7. Fecha fin
+                                                                            8. Recompensa 1
+                                                                            9. Recompensa 2
+                                                                            10. Recompensa 3
+                                                                            11. Salir""");
+                                                                            int modificaApartado = lecturaDatos.nextInt();
+                                                                            lecturaDatos.nextLine();
+
+                                                                            switch (modificaApartado) {
+                                                                                case 1:
+                                                                                    System.out.print("Nombre del proyecto: ");
+                                                                                    nombre3 = lecturaDatos.nextLine();
+                                                                                    break;
+                                                                                case 2:
+                                                                                    System.out.print("Descripción del proyecto: ");
+                                                                                    descripcion3 = lecturaDatos.nextLine();
+                                                                                    break;
+                                                                                case 3:
+                                                                                    System.out.print("Categoría (arte, tecnología, cine, etc.): ");
+                                                                                    categoria3 = lecturaDatos.nextLine();
+                                                                                    break;
+                                                                                case 4:
+                                                                                    System.out.print("Cantidad necesaria (€): ");
+                                                                                    cantidadNecesaria3 = lecturaDatos.nextDouble();
+                                                                                    break;
+                                                                                case 5:
+                                                                                    System.out.print("Cantidad financiada hasta el momento (€): ");
+                                                                                    cantidadFinanciada3 = lecturaDatos.nextDouble();
+                                                                                    lecturaDatos.nextLine(); // Limpiar buffer
+                                                                                    break;
+                                                                                case 6:
+                                                                                    System.out.print("Fecha inicio de apertura (dd/mm/yyyy): ");
+                                                                                    fechaInicio3 = lecturaDatos.nextLine();
+                                                                                    break;
+                                                                                case 7:
+                                                                                    System.out.print("Fecha fin de cierre (dd/mm/yyyy): ");
+                                                                                    fechaFin3 = lecturaDatos.nextLine();
+                                                                                    break;
+                                                                                case 8:
+                                                                                    System.out.print("Recompensa 1 - Descripción: ");
+                                                                                    recompensa3_1 = lecturaDatos.nextLine();
+                                                                                    System.out.print("Recompensa 1 - Precio (€): ");
+                                                                                    precio3_1 = lecturaDatos.nextDouble();
+                                                                                    lecturaDatos.nextLine();
+                                                                                    break;
+                                                                                case 9:
+                                                                                    System.out.print("Recompensa 2 - Descripción: ");
+                                                                                    recompensa3_2 = lecturaDatos.nextLine();
+                                                                                    System.out.print("Recompensa 2 - Precio (€): ");
+                                                                                    precio3_2 = lecturaDatos.nextDouble();
+                                                                                    lecturaDatos.nextLine();
+                                                                                    break;
+                                                                                case 10:
+                                                                                    System.out.print("Recompensa 3 - Descripción: ");
+                                                                                    recompensa3_3 = lecturaDatos.nextLine();
+                                                                                    System.out.print("Recompensa 3 - Precio (€): ");
+                                                                                    precio3_3 = lecturaDatos.nextDouble();
+                                                                                    lecturaDatos.nextLine();
+                                                                                    break;
+                                                                                case 11:
+                                                                                    System.out.println("Volviendo al menú de modificación.");
+                                                                                    salirModificar = true;
+                                                                                    break;
+                                                                                default:
+                                                                                    System.out.println("Opción inválida. Inténtelo de nuevo.");
+                                                                                    break;
+                                                                            }
+                                                                        }
+                                                                        break;
+                                                                    case 2:
+                                                                        nombre2 = "";
+                                                                        descripcion2 = "";
+                                                                        categoria2 = "";
+                                                                        cantidadNecesaria2 = 0;
+                                                                        cantidadFinanciada2 = 0;
+                                                                        fechaInicio2 = "";
+                                                                        fechaFin2 = "";
+                                                                        recompensa2_1 = "";
+                                                                        recompensa2_2 = "";
+                                                                        recompensa2_3 = "";
+                                                                        precio2_1 = 0;
+                                                                        precio2_2 = 0;
+                                                                        precio2_3 = 0;
+                                                                        System.out.println("El proyecto ha sido eliminado.");
+                                                                        break;
+                                                                    case 3:
+                                                                        System.out.println("Volviendo al menú de gestión de proyecto.");
+                                                                        salirGestionProyecto = true;
+                                                                        break;
+                                                                    default:
+                                                                        System.out.println("Opción inválida. Inténtelo de nuevo.");
+                                                                        break;
+                                                                }
+                                                            }
                                                         }
                                                         else System.out.println("Error. Este proyecto no existe.");
-
+                                                        break;
                                                 }
                                             }
-
+                                            break;
                                         case 3:
                                             System.out.println("Volviendo al Menú Principal...");
                                             salirSubMenu = true; // Salir del submenú
@@ -426,6 +699,7 @@ public class Main {
                                             break;
                                         default:
                                             System.out.println("Has introducido un valor incorrecto.");
+                                            break;
                                     }
                                 }
                                 break;
