@@ -534,19 +534,19 @@ public class Main {
                                                                         }
                                                                         break;
                                                                     case 2:
-                                                                        nombre2 = "";
-                                                                        descripcion2 = "";
-                                                                        categoria2 = "";
-                                                                        cantidadNecesaria2 = 0;
-                                                                        cantidadFinanciada2 = 0;
-                                                                        fechaInicio2 = "";
-                                                                        fechaFin2 = "";
-                                                                        recompensa2_1 = "";
-                                                                        recompensa2_2 = "";
-                                                                        recompensa2_3 = "";
-                                                                        precio2_1 = 0;
-                                                                        precio2_2 = 0;
-                                                                        precio2_3 = 0;
+                                                                        nombre2 = null;
+                                                                        descripcion2 = null;
+                                                                        categoria2 = null;
+                                                                        cantidadNecesaria2 = -1;
+                                                                        cantidadFinanciada2 = -1;
+                                                                        fechaInicio2 = null;
+                                                                        fechaFin2 = null;
+                                                                        recompensa2_1 = null;
+                                                                        recompensa2_2 = null;
+                                                                        recompensa2_3 = null;
+                                                                        precio2_1 = -1;
+                                                                        precio2_2 = -1;
+                                                                        precio2_3 = -1;
                                                                         System.out.println("El proyecto ha sido eliminado.");
                                                                         break;
                                                                     case 3:
@@ -662,19 +662,19 @@ public class Main {
                                                                         }
                                                                         break;
                                                                     case 2:
-                                                                        nombre2 = "";
-                                                                        descripcion2 = "";
-                                                                        categoria2 = "";
-                                                                        cantidadNecesaria2 = 0;
-                                                                        cantidadFinanciada2 = 0;
-                                                                        fechaInicio2 = "";
-                                                                        fechaFin2 = "";
-                                                                        recompensa2_1 = "";
-                                                                        recompensa2_2 = "";
-                                                                        recompensa2_3 = "";
-                                                                        precio2_1 = 0;
-                                                                        precio2_2 = 0;
-                                                                        precio2_3 = 0;
+                                                                        nombre2 = null;
+                                                                        descripcion2 = null;
+                                                                        categoria2 = null;
+                                                                        cantidadNecesaria2 = -1;
+                                                                        cantidadFinanciada2 = -1;
+                                                                        fechaInicio2 = null;
+                                                                        fechaFin2 = null;
+                                                                        recompensa2_1 = null;
+                                                                        recompensa2_2 = null;
+                                                                        recompensa2_3 = null;
+                                                                        precio2_1 = -1;
+                                                                        precio2_2 = -1;
+                                                                        precio2_3 = -1;
                                                                         System.out.println("El proyecto ha sido eliminado.");
                                                                         break;
                                                                     case 3:
