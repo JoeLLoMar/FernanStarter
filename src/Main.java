@@ -1753,10 +1753,10 @@ public class Main {
                             case 3:
                                 do {
                                     System.out.println("""
-                                        Selecciona que quieres hacer: "
-                                        "1.- Cambiar mi usuario"
-                                        "2.- Cambiar mi contraseña"
-                                        "3.- Salir""");
+                                        Selecciona que quieres hacer: 
+                                        1.- Cambiar mi usuario
+                                        2.- Cambiar mi contraseña
+                                        3.- Salir""");
                                     opcionConfig = lecturaDatos.nextInt();
                                     lecturaDatos.nextLine();
                                 } while (opcionConfig < 1 || opcionConfig > 3);
@@ -3355,10 +3355,11 @@ public class Main {
     //2.2. GESTOR - CONFIGURACIÓN
                             case 2:
                                 do {
-                                    System.out.println("Selecciona que quieres hacer: " +
-                                            "1.- Cambiar mi usuario" +
-                                            "2.- Cambiar mi contraseña" +
-                                            "3.- Salir");
+                                    System.out.println("""
+                                        Selecciona que quieres hacer: 
+                                        1.- Cambiar mi usuario
+                                        2.- Cambiar mi contraseña
+                                        3.- Salir""");
                                     opcionConfig = lecturaDatos.nextInt();
                                     lecturaDatos.nextLine();
                                 } while (opcionConfig < 1 || opcionConfig > 3);
