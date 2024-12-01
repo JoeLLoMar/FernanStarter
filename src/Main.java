@@ -79,6 +79,11 @@ public class Main {
                             registroAdmin = true;
                             System.out.println("Inicio de sesión exitoso, bienvenido " + usuarioLogin + ".");
                         }
+                        else{
+                            System.out.println("Credenciales incorrectos, pruebe de nuevo.");
+                            System.out.println();
+                            continue;
+                        }
                         break;
                     } while (!registroAdmin);
                     break;
@@ -111,9 +116,13 @@ public class Main {
                                     contadorIntentos++;
                                 }
                             } else {
+                                System.out.println();
+                                System.out.println("Intentos agotados, usuario bloqueado.");
+                                usuarioGestorBlocked=true;
                                 break; //Agotas intentos y te manda al inicio del login gestor
                             }
                         } while (!registroGestor);
+                        contadorIntentos=0;
                         break; // Te lleva a la creación de Proyectos
                     }
     //0.3. LOGIN - INVERSOR
@@ -158,9 +167,14 @@ public class Main {
                                     contadorIntentos++;
                                 }
                             } else {
-                                break;
+                                System.out.println();
+                                System.out.println("Intentos agotados, usuario bloqueado.");
+                                usuarioNPC1Blocked=true;
+                                usuarioNPC2Blocked=true;
+                                break; //Agotas intentos y te manda al inicio del login gestor
                             }
                         } while (!registroInversor);
+                        contadorIntentos=0;
                         break;
                     }
     //0.4. LOGIN - SALIR
@@ -173,6 +187,16 @@ public class Main {
                     System.out.println("Error");
                     break;
             }
+
+            if(tipoUsuario==2){
+                if(usuarioGestorBlocked)continue;
+            }
+
+            if(tipoUsuario==3){
+                if(usuarioNPC1Blocked) continue;
+                else if(usuarioNPC2Blocked) continue;
+            }
+
             if (cerrarPrograma) {
                 break;
             }
@@ -239,6 +263,40 @@ public class Main {
                                                     break;
                                                 }
                                         }
+                                    case 2:
+                                        System.out.println("Lista de usuarios bloqueados");
+                                        if(usuarioGestorBlocked) System.out.println("1. Usuario gestor: " + usuarioGestor + " está bloqueado");
+                                        else System.out.println("1. Usuario gestor: " + usuarioGestor + " NO está bloqueado");
+                                        if(usuarioNPC1Blocked) System.out.println("2. Usuario inversor 1: " + usuarioNPC1 + " está bloqueado");
+                                        else System.out.println("2. Usuario inversor 1: " + usuarioNPC1 + " NO está bloqueado");
+                                        if(usuarioNPC2Blocked) System.out.println("3. Usuario inversor 2: " + usuarioNPC2 + " está bloqueado");
+                                        else System.out.println("3. Usuario inversor 2: " + usuarioNPC2 + " NO está bloqueado");
+                                        int eleccionDesbloqueo = Integer.parseInt(lecturaDatos.nextLine());
+
+                                        switch(eleccionDesbloqueo){
+                                            case 1:
+                                                if(usuarioGestorBlocked){
+                                                    usuarioGestorBlocked=false;
+                                                    System.out.println("Usuario desbloqueado con éxito.");
+                                                }
+                                                else System.out.println("Error, no se puede desbloquear un usuario ya desbloqueado");
+                                                break;
+                                            case 2:
+                                                if(usuarioNPC1Blocked){
+                                                    usuarioNPC1Blocked=false;
+                                                    System.out.println("Usuario desbloqueado con éxito.");
+                                                }
+                                                else System.out.println("Error, no se puede desbloquear un usuario ya desbloqueado");
+                                                break;
+                                            case 3:
+                                                if(usuarioNPC2Blocked){
+                                                    usuarioNPC2Blocked=false;
+                                                    System.out.println("Usuario desbloqueado con éxito.");
+                                                }
+                                                else System.out.println("Error, no se puede desbloquear un usuario ya desbloqueado");
+                                                break;
+                                        }
+                                        break;
                                 }
                                 break;
     //1.2. ADMINISTRADOR - PROYECTOS
@@ -1740,7 +1798,7 @@ public class Main {
                 if (registroGestor) {
 //2. GESTOR - MENÚ PRINCIPAL
                     boolean salirMenu = false;
-
+                    contadorIntentos=0;
                     while (!salirMenu) { //El bucle finaliza cuando se le da 3. Cerrar sesión, salirMenu = true y te sales del menú de gestor.
                         System.out.println("""
                             \n--- MENÚ PRINCIPAL ---
@@ -3349,7 +3407,7 @@ public class Main {
                     if (registroInversor) {
 //3. INVERSOR - MENÚ PRINCIPAL
                         boolean salirMenu = false;
-
+                        contadorIntentos=0;
                         while (!salirMenu) {
                             System.out.println("""
                                     \n--- MENÚ PRINCIPAL ---
