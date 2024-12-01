@@ -11,13 +11,13 @@ public class Main {
         String usuarioGestor = "tornaceitor", contraseniaGestor = "54321";
         String usuarioNPC1 = "soyunnpc1", contraseniaNPC1 = "6969";
         String usuarioNPC2 = "npcsisoy", contraseniaNPC2 = "9696";
-        boolean admin = false, gestor = false, inversor = false, npc1 = false, npc2 = false, usuarioNPC1Blocked=false, usuarioGestorBlocked=false, usuarioNPC2Blocked=false;
+        boolean admin = false, gestor = false, inversor = false, usuarioNPC1Blocked=false, usuarioGestorBlocked=false, usuarioNPC2Blocked=false;
         boolean registroAdmin = false, registroGestor = false, registroInversor = false, cerrarSesion=false;
         int opcionConfig = 0;
 
         //Variables específicas inversor
         double saldoInversor1 = 0, saldoInversor2 = 0;
-        String amigosInversor1 = null, amigosInversor2 = null;
+        String amigosInversor1 = "", amigosInversor2 = "";
         double inversion1Proyecto1 = 0, inversion1Proyecto2 = 0, inversion1Proyecto3 = 0, inversion2Proyecto1 = 0, inversion2Proyecto2 = 0, inversion2Proyecto3 = 0;
         boolean participaInv1Proyecto1 = false, participaInv1Proyecto2 = false, participaInv1Proyecto3 = false, participaInv2Proyecto1 = false, participaInv2Proyecto2 = false, participaInv2Proyecto3 = false;
         int proyectosFinanciaInv1 = 0, proyectosFinanciaInv2 = 0;
@@ -41,6 +41,8 @@ public class Main {
         int proyectosCreados = 0;
 
         do {
+            boolean npc1 = false, npc2 = false;
+
             Scanner lecturaDatos = new Scanner(System.in);
 
             System.out.println("----------------------------");
@@ -5812,7 +5814,7 @@ public class Main {
 
                                     while (!salirSubMenuCartera) {
                                         System.out.println("""
-                                            --- CARTERA DIGITAL ---
+                                            \n --- CARTERA DIGITAL ---
                                             Seleccione una opción:
                                             1. Ver saldo actual
                                             2. Añadir saldo
@@ -5850,7 +5852,7 @@ public class Main {
 
                                     while (!salirSubMenuAmigos) {
                                         System.out.println("""
-                                            --- INVITA A UN AMIGO ---
+                                            \n--- INVITA A UN AMIGO ---
                                             Seleccione una opción:
                                             1. Lista de amigos
                                             2. Invitar amigo
@@ -5862,19 +5864,19 @@ public class Main {
                                             case 1:
                                                 System.out.print("Tu lista de amigos es: ");
                                                 if (npc1) {
-                                                    if (amigosInversor1 != null) System.out.println(amigosInversor1);
-                                                    else System.out.println("No tienes ningún amigo actualmente");
+                                                    if (amigosInversor1.isEmpty()) System.out.println("No tienes ningún amigo actualmente");
+                                                    else System.out.println(amigosInversor1);
                                                 }
                                                 if (npc2) {
-                                                    if (amigosInversor2 != null) System.out.println(amigosInversor2);
-                                                    else System.out.println("No tienes ningún amigo actualmente");
+                                                    if (amigosInversor2.isEmpty()) System.out.println("No tienes ningún amigo actualmente");
+                                                    else System.out.println(amigosInversor2);
                                                 }
                                                 break;
                                             case 2:
                                                 System.out.print("Introduce la cuenta de usuario de un amigo: ");
                                                 String cuentaAmigo = lecturaDatos.nextLine();
-                                                if (npc1) amigosInversor1 = amigosInversor1.concat(cuentaAmigo);
-                                                if (npc2) amigosInversor2 = amigosInversor2.concat(cuentaAmigo);
+                                                if (npc1) amigosInversor1 = amigosInversor1.concat("\n" + cuentaAmigo);
+                                                if (npc2) amigosInversor2 = amigosInversor2.concat("\n" + cuentaAmigo);
                                                 System.out.println("Se ha añadido " + cuentaAmigo + " a tu lista de amigos.");
                                                 break;
                                             case 3:
