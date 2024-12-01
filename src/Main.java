@@ -195,7 +195,7 @@ public class Main {
                         switch (seleccionAdmin) {
     //1.1. ADMINISTRADOR - PANEL DE CONTROL
                             case 1:
-                                System.out.println("Bienvenido al panel de control, ¿que deseas hacer?:");
+                                System.out.println("Bienvenido al panel de control, ¿qué deseas hacer?:");
                                 System.out.println("""
                                     \n--- PANEL DE CONTROL ---
                                     1. Bloquear usuario
