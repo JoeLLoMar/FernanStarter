@@ -47,7 +47,7 @@ public class Main {
             System.out.println("¡Bienvenido a FernanStarter!");
             System.out.println("----------------------------");
             System.out.println();
-
+//0. LOGIN
             //Elección de perfil de usuario y log-in
             System.out.println("""
                     Inicia sesión:
@@ -59,6 +59,7 @@ public class Main {
             tipoUsuario = Integer.parseInt(lecturaDatos.nextLine());
             //Switch que valida que tipo de usuario has seleccionado y te pide iniciar sesión como tal
             switch (tipoUsuario) {
+    //0.1. LOGIN - ADMINISTRADOR
                 case 1:
                     admin = true;
                     System.out.println();
@@ -81,7 +82,7 @@ public class Main {
                         break;
                     } while (!registroAdmin);
                     break;
-
+    //0.2. LOGIN - GESTOR
                 case 2: //Accedes al login como gestor
                     gestor = true;
                     if (usuarioGestorBlocked) {
@@ -115,8 +116,7 @@ public class Main {
                         } while (!registroGestor);
                         break; // Te lleva a la creación de Proyectos
                     }
-
-
+    //0.3. LOGIN - INVERSOR
                 case 3: //igual que el case 2 de gestor
                     inversor = true;
                     if (usuarioNPC1Blocked && (usuarioLogin.equalsIgnoreCase(usuarioNPC1) && contraseniaLogin.equalsIgnoreCase(contraseniaNPC1))) {
@@ -163,7 +163,7 @@ public class Main {
                         } while (!registroInversor);
                         break;
                     }
-
+    //0.4. LOGIN - SALIR
                 case 4:
                     System.out.println("Saliendo del programa...");
                     cerrarPrograma = true;
@@ -1887,7 +1887,7 @@ public class Main {
                                                     System.out.println("No hay proyectos registrados.");
                                                     salirVerProyectos = true;
                                                 }
-                                                //VISTA DETALLADA - Menú
+            //2.1.2.1. GESTOR - VISTA DETALLADA MENÚ
                                                 if (proyectosCreados > 0) {
                                                     System.out.println("\nVer vista detallada: ");
                                                     for (int i = 1; i <= proyectosCreados; i++) {
@@ -1916,7 +1916,7 @@ public class Main {
                                                     lecturaDatos.nextLine();
 
                                                     switch (selecProyectoDetalle) {
-                                                        //VISTA DETALLADA - Proyecto 1
+            //2.1.2.2. GESTOR - VISTA DETALLADA 1
                                                         case 1:
                                                             if (proyectosCreados >= 1) {
                                                                 if (nombre1 != null) {
@@ -2366,7 +2366,7 @@ public class Main {
                                                                 salirVerProyectos = true;
                                                             }
                                                             break;
-                                                        //VISTA DETALLADA - Proyecto 2
+            //2.1.2.3. GESTOR - VISTA DETALLADA 2
                                                         case 2:
                                                             if (proyectosCreados >= 2) {
                                                                 if (nombre2 != null) {
@@ -2817,7 +2817,7 @@ public class Main {
                                                                 salirVerProyectos = true;
                                                             }
                                                             break;
-                                                        //VISTA DETALLADA - Proyecto 3
+            //2.1.2.4. GESTOR - VISTA DETALLADA 3
                                                         case 3:
                                                             if (proyectosCreados == 3) {
                                                                 if (nombre3 != null) {
@@ -3267,7 +3267,7 @@ public class Main {
                                                                 salirVerProyectos = true;
                                                             }
                                                             break;
-                                                        //VISTA DETALLADA - Salir
+            //2.1.2.5. GESTOR - VISTA DETALLADA SALIR
                                                         case 4:
                                                             if (proyectosCreados == 3) {
                                                                 System.out.println("Volviendo a MIS PROYECTOS...");
@@ -4388,7 +4388,7 @@ public class Main {
 
                                                     if (proyectosCreados > 0) {
                                                         System.out.println("\nVer vista detallada: ");
-
+            //3.2.1.1. INVERSOR - VISTA DETALLADA MENÚ
                                                         for (int i = 1; i <= proyectosCreados; i++) {
                                                             System.out.print(i + ". Proyecto ");
                                                             if (i == 1) {
@@ -4416,7 +4416,7 @@ public class Main {
                                                         lecturaDatos.nextLine();
 
                                                         switch (selecProyectoDetalle) {
-            //3.2.1.1 INVERSOR - VISTA DETALLADA 1 / SALIR (a proyectos)
+            //3.2.1.2. INVERSOR - VISTA DETALLADA 1
                                                             case 1:
                                                                 if (proyectosCreados >= 1) {
                                                                     if (nombre1 != null) {
@@ -4851,7 +4851,7 @@ public class Main {
                                                                     salirVerProyectos = true;
                                                                 }
                                                                 break;
-            //3.2.1.2. INVERSOR - VISTA DETALLADA 2 / SALIR (a proyectos)
+            //3.2.1.3. INVERSOR - VISTA DETALLADA 2
                                                             case 2:
                                                                 if (proyectosCreados >= 2) {
                                                                     if (nombre2 != null) {
@@ -5286,7 +5286,7 @@ public class Main {
                                                                     salirVerProyectos = true;
                                                                 }
                                                                 break;
-            //3.2.1.3. INVERSOR - VISTA DETALLADA 3 / SALIR (a proyectos)
+            //3.2.1.4. INVERSOR - VISTA DETALLADA 3
                                                             case 3:
                                                                 if (proyectosCreados == 3) {
                                                                     if (nombre3 != null) {
@@ -5721,7 +5721,7 @@ public class Main {
                                                                     salirVerProyectos = true;
                                                                 }
                                                                 break;
-            //3.2.1.4. INVERSOR - SALIR (a proyectos)
+            //3.2.1.5. INVERSOR - SALIR (a proyectos)
                                                             case 4:
                                                                 if (proyectosCreados == 3) {
                                                                     System.out.println("Volviendo a PROYECTOS");
@@ -5748,7 +5748,7 @@ public class Main {
                                     }
                                     break;
                                 case 3:
-//3.3. INVERSOR - CARTERA DIGITAL
+    //3.3. INVERSOR - CARTERA DIGITAL
                                     boolean salirSubMenuCartera = false;
 
                                     while (!salirSubMenuCartera) {
@@ -5786,7 +5786,7 @@ public class Main {
                                     }
                                     break;
                                 case 4:
-//3.4. INVERSOR - INVITAR AMIGO
+    //3.4. INVERSOR - INVITAR AMIGO
                                     boolean salirSubMenuAmigos = false;
 
                                     while (!salirSubMenuAmigos) {
@@ -5829,7 +5829,7 @@ public class Main {
                                     }
                                     break;
                                 case 5:
-//3.5. INVERSOR - CONFIGURACION
+    //3.5. INVERSOR - CONFIGURACION
                                     do {
                                         System.out.println("""
                                                 Selecciona que quieres hacer:
@@ -5874,7 +5874,7 @@ public class Main {
                                     }
                                     break;
                                 case 6:
-//3.6. INVERSOR - CERRAR SESIÓN
+    //3.6. INVERSOR - CERRAR SESIÓN
                                     System.out.println("Saliendo del programa...");
                                     salirMenu = true; // Salir del menú
                                     registroInversor = false;
