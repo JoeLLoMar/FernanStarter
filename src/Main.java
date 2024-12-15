@@ -1,19 +1,302 @@
 import java.util.Scanner;
 
+
 public class Main {
+    //Parte donde nos morimos, es decir, pasamos 6k líneas a funciones
+
+    //Funcion del primero log-in
+    public static int menuInicial(){
+        int tipoUsuario;
+        Scanner lecturaDatos = new Scanner(System.in);
+
+        System.out.println("----------------------------");
+        System.out.println("¡Bienvenido a FernanStarter!");
+        System.out.println("----------------------------");
+        System.out.println();
+//0. LOGIN
+        //Elección de perfil de usuario y log-in
+        System.out.println("""
+                    Inicia sesión:
+                    1. Como administrador
+                    2. Como gestor
+                    3. Como inversor
+                    4. Salir""");
+
+        tipoUsuario = Integer.parseInt(lecturaDatos.nextLine());
+
+        return tipoUsuario;
+    }
+
+    //Menu bloqueo-desbloqueo usuarios
+    public static int menubloqueoDesbloqueo(){
+        Scanner lecturaDatos = new Scanner(System.in);
+        System.out.println("Bienvenido al panel de control, ¿qué deseas hacer?:");
+        System.out.println("""
+                                    \n--- PANEL DE CONTROL ---
+                                    1. Bloquear usuario
+                                    2. Desbloquear usuario""");
+
+        int eleccionBloqueo = Integer.parseInt(lecturaDatos.nextLine());
+        return eleccionBloqueo;
+    }
+
+    //Menu bloqueo usuarios
+    public static void menuBloqueo(boolean usuarioGestorBlocked,boolean usuarioNPC1Blocked, boolean usuarioNPC2Blocked ){
+        String usuarioGestor="tornaceitor", usuarioNPC1="soyunnpc1", usuarioNPC2="npcsisoy";
+        usuarioGestorBlocked=usuarioGestorBlocked;
+        usuarioNPC1Blocked=usuarioNPC1Blocked;
+        usuarioNPC2Blocked=usuarioNPC2Blocked;
+        Scanner lecturaDatos = new Scanner(System.in);
+
+        System.out.println("¿A qué usuario deseas bloquear?");
+        System.out.println("1. Usuario gestor: " + usuarioGestor);
+        System.out.println("2. Usuario inversor: " + usuarioNPC1);
+        System.out.println("3. Usuario inversor 2: " + usuarioNPC2);
+
+        int usuarioBloqueado = Integer.parseInt(lecturaDatos.nextLine());
+        switch (usuarioBloqueado) {
+            case 1:
+                if (usuarioGestorBlocked) {
+                    System.out.println("Este usuario ya está bloqueado");
+                    break;
+                } else {
+                    System.out.println("Usuario gestor bloqueado con éxito");
+                    usuarioGestorBlocked = true;
+                    break;
+                }
+            case 2:
+                if (usuarioNPC1Blocked) {
+                    System.out.println("Este usuario ya está bloqueado");
+                    break;
+                } else {
+                    System.out.println("Usuario inversor 1 bloqueado con éxito");
+                    usuarioNPC1Blocked = true;
+                    break;
+                }
+            case 3:
+                if (usuarioNPC2Blocked) {
+                    System.out.println("Este usuario ya está bloqueado");
+                    break;
+                } else {
+                    System.out.println("Usuario inversor 2 bloqueado con éxito");
+                    usuarioNPC2Blocked = true;
+                    break;
+                }
+        }
+    }
+
+    //Listado usuarios bloqueados
+    public static void usuariosBloqueados(boolean usuarioGestorBlocked,boolean usuarioNPC1Blocked, boolean usuarioNPC2Blocked){
+        String usuarioGestor="tornaceitor", usuarioNPC1="soyunnpc1", usuarioNPC2="npcsisoy";
+        usuarioGestorBlocked=usuarioGestorBlocked;
+        usuarioNPC1Blocked=usuarioNPC1Blocked;
+        usuarioNPC2Blocked=usuarioNPC2Blocked;
+        Scanner lecturaDatos = new Scanner(System.in);
+
+        System.out.println("Lista de usuarios bloqueados");
+        if(usuarioGestorBlocked) System.out.println("1. Usuario gestor: " + usuarioGestor + " está bloqueado");
+        else System.out.println("1. Usuario gestor: " + usuarioGestor + " NO está bloqueado");
+        if(usuarioNPC1Blocked) System.out.println("2. Usuario inversor 1: " + usuarioNPC1 + " está bloqueado");
+        else System.out.println("2. Usuario inversor 1: " + usuarioNPC1 + " NO está bloqueado");
+        if(usuarioNPC2Blocked) System.out.println("3. Usuario inversor 2: " + usuarioNPC2 + " está bloqueado");
+        else System.out.println("3. Usuario inversor 2: " + usuarioNPC2 + " NO está bloqueado");
+        int eleccionDesbloqueo = Integer.parseInt(lecturaDatos.nextLine());
+
+        switch(eleccionDesbloqueo){
+            case 1:
+                if(usuarioGestorBlocked){
+                    usuarioGestorBlocked=false;
+                    System.out.println("Usuario desbloqueado con éxito.");
+                }
+                else System.out.println("Error, no se puede desbloquear un usuario ya desbloqueado");
+                break;
+            case 2:
+                if(usuarioNPC1Blocked){
+                    usuarioNPC1Blocked=false;
+                    System.out.println("Usuario desbloqueado con éxito.");
+                }
+                else System.out.println("Error, no se puede desbloquear un usuario ya desbloqueado");
+                break;
+            case 3:
+                if(usuarioNPC2Blocked){
+                    usuarioNPC2Blocked=false;
+                    System.out.println("Usuario desbloqueado con éxito.");
+                }
+                else System.out.println("Error, no se puede desbloquear un usuario ya desbloqueado");
+                break;
+        }
+    }
+
+    //Funcion resgistro admin
+    public static void registroAdmin(){
+        //Variables log-in (admin)
+        String usuarioLogin="", contraseniaLogin="";
+        String usuarioAdmin = "pepito123", contraseniaAdmin = "12345";
+        boolean registroAdmin = false;
+        boolean admin = false;
+        Scanner lecturaDatos = new Scanner(System.in);
+
+        System.out.println();
+        System.out.println("Usted ha elegido ingresar como administrador.");
+        System.out.println();
+        do {
+            System.out.println("Para salir del programa, escribe SALIR");
+            System.out.println("--------------------------------------");
+            System.out.println("1.-Introduce usuario ");
+            usuarioLogin = lecturaDatos.nextLine().toLowerCase();
+            if (usuarioLogin.equalsIgnoreCase("salir")) break;
+            System.out.println("2.-Introduce la contraseña");
+            contraseniaLogin = lecturaDatos.nextLine().toLowerCase();
+            if (contraseniaLogin.equalsIgnoreCase("salir")) break;
+
+            if ((usuarioLogin.equalsIgnoreCase(usuarioAdmin) && contraseniaLogin.equalsIgnoreCase(contraseniaAdmin))) {
+                registroAdmin = true;
+                System.out.println("Inicio de sesión exitoso, bienvenido " + usuarioLogin + ".");
+                admin=true;
+            }
+            else{
+                System.out.println("Credenciales incorrectos, pruebe de nuevo.");
+                System.out.println();
+                continue;
+            }
+            break;
+        } while (!registroAdmin);
+    }
+
+    public static int menuAdmin(){
+        Scanner lecturaDatos = new Scanner(System.in);
+        System.out.println("""
+                            \n--- MENÚ PRINCIPAL ---
+                            Seleccione una opción:
+                            1. Panel de control
+                            2. Proyectos
+                            3. Configuración
+                            4. Cerrar sesión""");
+        int seleccionAdmin = Integer.parseInt(lecturaDatos.nextLine());
+        return seleccionAdmin;
+    }
+
+    //Funcion de log-in del gestor
+    public static void registroGestor(){
+        //Variables log-in gestor
+        String usuarioLogin="", contraseniaLogin="";
+        boolean usuarioGestorBlocked=false;
+        int contadorIntentos = 0, intentos = 2;;
+        boolean registroGestor = false;
+        String usuarioGestor = "tornaceitor", contraseniaGestor = "54321";
+        Scanner lecturaDatos = new Scanner(System.in);
+
+        if (usuarioGestorBlocked) {
+            System.out.println("Este usuario ha sido bloqueado por el administrador.");
+            return;
+        } else {
+            System.out.println();
+            System.out.println("Usted ha elegido ingresar como gestor.");
+            do {
+                if (contadorIntentos < 3) {
+                    System.out.println();
+                    System.out.println("Para salir del programa, escribe SALIR");
+                    System.out.println("--------------------------------------");
+                    System.out.println("1.-Introduce usuario ");
+                    usuarioLogin = lecturaDatos.nextLine().toLowerCase();
+                    if (usuarioLogin.equalsIgnoreCase("salir")) break;
+                    System.out.println("2.-Introduce la contraseña");
+                    contraseniaLogin = lecturaDatos.nextLine().toLowerCase();
+                    if (contraseniaLogin.equalsIgnoreCase("salir")) break;
+
+                    if ((usuarioLogin.equalsIgnoreCase(usuarioGestor) && contraseniaLogin.equalsIgnoreCase(contraseniaGestor))) {
+                        registroGestor = true;
+                        System.out.println("Inicio de sesión exitoso, bienvenido " + usuarioLogin + ".");
+                    } else if (contadorIntentos < 3) {
+                        System.out.println("Usuario o contraseña incorrectos. Intenta de nuevo, le quedan " + intentos-- + " intentos.");
+                        contadorIntentos++;
+                    }
+                } else {
+                    System.out.println();
+                    System.out.println("Intentos agotados, usuario bloqueado.");
+                    usuarioGestorBlocked=true;
+                    break; //Agotas intentos y te manda al inicio del login gestor
+                }
+            } while (!registroGestor);
+            contadorIntentos=0;
+             // Te lleva a la creación de Proyectos
+        }
+    }
+
+    public static void registroInversor(){
+        String usuarioLogin="", contraseniaLogin="";
+        int contadorIntentos = 0, intentos = 2;
+        String usuarioNPC1 = "soyunnpc1", contraseniaNPC1 = "6969";
+        String usuarioNPC2 = "npcsisoy", contraseniaNPC2 = "9696";
+        boolean  usuarioNPC1Blocked=false, usuarioNPC2Blocked=false, registroInversor = false, npc1=false,npc2=false;
+        Scanner lecturaDatos = new Scanner(System.in);
+
+        if (usuarioNPC1Blocked && (usuarioLogin.equalsIgnoreCase(usuarioNPC1) && contraseniaLogin.equalsIgnoreCase(contraseniaNPC1))) {
+            System.out.println("Este usuario ha sido bloqueado por el administrador.");
+            return;
+        } else if (usuarioNPC2Blocked && (usuarioLogin.equalsIgnoreCase(usuarioNPC2) && contraseniaLogin.equalsIgnoreCase(contraseniaNPC2))) {
+            System.out.println("Este usuario ha sido bloqueado por el administrador.");
+            return;
+        } else {
+            System.out.println();
+            System.out.println("Usted ha elegido ingresar como inversor.");
+            do {
+                if (contadorIntentos < 3) {
+                    System.out.println();
+                    System.out.println("Para salir del programa, escribe SALIR");
+                    System.out.println("--------------------------------------");
+                    System.out.println("1.-Introduce usuario ");
+                    usuarioLogin = lecturaDatos.nextLine().toLowerCase();
+                    if (usuarioLogin.equalsIgnoreCase("salir")) break;
+                    System.out.println("2.-Introduce la contraseña");
+                    contraseniaLogin = lecturaDatos.nextLine().toLowerCase();
+                    if (contraseniaLogin.equalsIgnoreCase("salir")) break;
+
+                    if ((usuarioLogin.equalsIgnoreCase(usuarioNPC1) && usuarioNPC1Blocked) ||
+                            (usuarioLogin.equalsIgnoreCase(usuarioNPC2) && usuarioNPC2Blocked)) {
+                        System.out.println("Este usuario ha sido bloqueado por el administrador.");
+                        break;
+                    }
+                    if ((usuarioLogin.equalsIgnoreCase(usuarioNPC1) && contraseniaLogin.equalsIgnoreCase(contraseniaNPC1))) {
+                        registroInversor = true;
+                        npc1 = true;
+                        System.out.println("Inicio de sesión exitoso, bienvenido " + usuarioLogin + ".");
+                    } else if (usuarioLogin.equalsIgnoreCase(usuarioNPC2) && contraseniaLogin.equalsIgnoreCase(contraseniaNPC2)) {
+                        registroInversor = true;
+                        npc2 = true;
+                        System.out.println("Inicio de sesión exitoso, bienvenido " + usuarioLogin + ".");
+                    } else if (contadorIntentos < 3) {
+                        System.out.println("Usuario o contraseña incorrectos. Intenta de nuevo, le quedan " + intentos-- + " intentos.");
+                        contadorIntentos++;
+                    }
+                } else {
+                    System.out.println();
+                    System.out.println("Intentos agotados, usuario bloqueado.");
+                    usuarioNPC1Blocked=true;
+                    usuarioNPC2Blocked=true;
+                    break; //Agotas intentos y te manda al inicio del login gestor
+                }
+            } while (!registroInversor);
+            contadorIntentos=0;
+            return;
+        }
+    }
+
     public static void main(String[] args) {
         //Variables de usuarios
         int tipoUsuario;
         boolean cerrarPrograma=false;
+
+        int intentos = 2;
         String usuarioLogin="", contraseniaLogin="";
-        int contadorIntentos = 0, intentos = 2;
+        boolean registroAdmin = false,registroGestor = false;
         String usuarioAdmin = "pepito123", contraseniaAdmin = "12345";
         String usuarioGestor = "tornaceitor", contraseniaGestor = "54321";
         String usuarioNPC1 = "soyunnpc1", contraseniaNPC1 = "6969";
         String usuarioNPC2 = "npcsisoy", contraseniaNPC2 = "9696";
-        boolean admin = false, gestor = false, inversor = false, usuarioNPC1Blocked=false, usuarioGestorBlocked=false, usuarioNPC2Blocked=false;
-        boolean registroAdmin = false, registroGestor = false, registroInversor = false, cerrarSesion=false;
-        int opcionConfig = 0;
+        boolean  usuarioNPC1Blocked=false, usuarioNPC2Blocked=false,usuarioGestorBlocked=false,npc1 = false, npc2 = false;;
+        boolean  registroInversor = false, cerrarSesion=false, admin=false,gestor=false;
+        int opcionConfig = 0,contadorIntentos = 0;
 
         //Variables específicas inversor
         double saldoInversor1 = 0, saldoInversor2 = 0;
@@ -41,144 +324,25 @@ public class Main {
         int proyectosCreados = 0;
 
         do {
-            boolean npc1 = false, npc2 = false;
-
             Scanner lecturaDatos = new Scanner(System.in);
-
-            System.out.println("----------------------------");
-            System.out.println("¡Bienvenido a FernanStarter!");
-            System.out.println("----------------------------");
-            System.out.println();
-//0. LOGIN
-            //Elección de perfil de usuario y log-in
-            System.out.println("""
-                    Inicia sesión:
-                    1. Como administrador
-                    2. Como gestor
-                    3. Como inversor
-                    4. Salir""");
-
-            tipoUsuario = Integer.parseInt(lecturaDatos.nextLine());
+            tipoUsuario=menuInicial();
             //Switch que valida que tipo de usuario has seleccionado y te pide iniciar sesión como tal
             switch (tipoUsuario) {
     //0.1. LOGIN - ADMINISTRADOR
                 case 1:
-                    admin = true;
-                    System.out.println();
-                    System.out.println("Usted ha elegido ingresar como administrador.");
-                    System.out.println();
-                    do {
-                        System.out.println("Para salir del programa, escribe SALIR");
-                        System.out.println("--------------------------------------");
-                        System.out.println("1.-Introduce usuario ");
-                        usuarioLogin = lecturaDatos.nextLine().toLowerCase();
-                        if (usuarioLogin.equalsIgnoreCase("salir")) break;
-                        System.out.println("2.-Introduce la contraseña");
-                        contraseniaLogin = lecturaDatos.nextLine().toLowerCase();
-                        if (contraseniaLogin.equalsIgnoreCase("salir")) break;
-
-                        if ((usuarioLogin.equalsIgnoreCase(usuarioAdmin) && contraseniaLogin.equalsIgnoreCase(contraseniaAdmin))) {
-                            registroAdmin = true;
-                            System.out.println("Inicio de sesión exitoso, bienvenido " + usuarioLogin + ".");
-                        }
-                        else{
-                            System.out.println("Credenciales incorrectos, pruebe de nuevo.");
-                            System.out.println();
-                            continue;
-                        }
-                        break;
-                    } while (!registroAdmin);
+                    registroAdmin();
+                    registroAdmin=true;
                     break;
     //0.2. LOGIN - GESTOR
                 case 2: //Accedes al login como gestor
-                    gestor = true;
-                    if (usuarioGestorBlocked) {
-                        System.out.println("Este usuario ha sido bloqueado por el administrador.");
-                        break;
-                    } else {
-                        System.out.println();
-                        System.out.println("Usted ha elegido ingresar como gestor.");
-                        do {
-                            if (contadorIntentos < 3) {
-                                System.out.println();
-                                System.out.println("Para salir del programa, escribe SALIR");
-                                System.out.println("--------------------------------------");
-                                System.out.println("1.-Introduce usuario ");
-                                usuarioLogin = lecturaDatos.nextLine().toLowerCase();
-                                if (usuarioLogin.equalsIgnoreCase("salir")) break;
-                                System.out.println("2.-Introduce la contraseña");
-                                contraseniaLogin = lecturaDatos.nextLine().toLowerCase();
-                                if (contraseniaLogin.equalsIgnoreCase("salir")) break;
-
-                                if ((usuarioLogin.equalsIgnoreCase(usuarioGestor) && contraseniaLogin.equalsIgnoreCase(contraseniaGestor))) {
-                                    registroGestor = true;
-                                    System.out.println("Inicio de sesión exitoso, bienvenido " + usuarioLogin + ".");
-                                } else if (contadorIntentos < 3) {
-                                    System.out.println("Usuario o contraseña incorrectos. Intenta de nuevo, le quedan " + intentos-- + " intentos.");
-                                    contadorIntentos++;
-                                }
-                            } else {
-                                System.out.println();
-                                System.out.println("Intentos agotados, usuario bloqueado.");
-                                usuarioGestorBlocked=true;
-                                break; //Agotas intentos y te manda al inicio del login gestor
-                            }
-                        } while (!registroGestor);
-                        contadorIntentos=0;
-                        break; // Te lleva a la creación de Proyectos
-                    }
+                    registroGestor();
+                    registroGestor=true;
+                    break;
     //0.3. LOGIN - INVERSOR
                 case 3: //igual que el case 2 de gestor
-                    inversor = true;
-                    if (usuarioNPC1Blocked && (usuarioLogin.equalsIgnoreCase(usuarioNPC1) && contraseniaLogin.equalsIgnoreCase(contraseniaNPC1))) {
-                        System.out.println("Este usuario ha sido bloqueado por el administrador.");
-                        break;
-                    } else if (usuarioNPC2Blocked && (usuarioLogin.equalsIgnoreCase(usuarioNPC2) && contraseniaLogin.equalsIgnoreCase(contraseniaNPC2))) {
-                        System.out.println("Este usuario ha sido bloqueado por el administrador.");
-                        break;
-                    } else {
-                        System.out.println();
-                        System.out.println("Usted ha elegido ingresar como inversor.");
-                        do {
-                            if (contadorIntentos < 3) {
-                                System.out.println();
-                                System.out.println("Para salir del programa, escribe SALIR");
-                                System.out.println("--------------------------------------");
-                                System.out.println("1.-Introduce usuario ");
-                                usuarioLogin = lecturaDatos.nextLine().toLowerCase();
-                                if (usuarioLogin.equalsIgnoreCase("salir")) break;
-                                System.out.println("2.-Introduce la contraseña");
-                                contraseniaLogin = lecturaDatos.nextLine().toLowerCase();
-                                if (contraseniaLogin.equalsIgnoreCase("salir")) break;
-
-                                if ((usuarioLogin.equalsIgnoreCase(usuarioNPC1) && usuarioNPC1Blocked) ||
-                                        (usuarioLogin.equalsIgnoreCase(usuarioNPC2) && usuarioNPC2Blocked)) {
-                                    System.out.println("Este usuario ha sido bloqueado por el administrador.");
-                                    break;
-                                }
-                                if ((usuarioLogin.equalsIgnoreCase(usuarioNPC1) && contraseniaLogin.equalsIgnoreCase(contraseniaNPC1))) {
-                                    registroInversor = true;
-                                    npc1 = true;
-                                    System.out.println("Inicio de sesión exitoso, bienvenido " + usuarioLogin + ".");
-                                } else if (usuarioLogin.equalsIgnoreCase(usuarioNPC2) && contraseniaLogin.equalsIgnoreCase(contraseniaNPC2)) {
-                                    registroInversor = true;
-                                    npc2 = true;
-                                    System.out.println("Inicio de sesión exitoso, bienvenido " + usuarioLogin + ".");
-                                } else if (contadorIntentos < 3) {
-                                    System.out.println("Usuario o contraseña incorrectos. Intenta de nuevo, le quedan " + intentos-- + " intentos.");
-                                    contadorIntentos++;
-                                }
-                            } else {
-                                System.out.println();
-                                System.out.println("Intentos agotados, usuario bloqueado.");
-                                usuarioNPC1Blocked=true;
-                                usuarioNPC2Blocked=true;
-                                break; //Agotas intentos y te manda al inicio del login gestor
-                            }
-                        } while (!registroInversor);
-                        contadorIntentos=0;
-                        break;
-                    }
+                    registroInversor();
+                    registroInversor=true;
+                    break;
     //0.4. LOGIN - SALIR
                 case 4:
                     System.out.println("Saliendo del programa...");
@@ -209,95 +373,19 @@ public class Main {
                     boolean salirMenu = false;
 
                     while (!salirMenu) {
-                        System.out.println("""
-                            \n--- MENÚ PRINCIPAL ---
-                            Seleccione una opción:
-                            1. Panel de control
-                            2. Proyectos
-                            3. Configuración
-                            4. Cerrar sesión""");
-                        int seleccionAdmin = Integer.parseInt(lecturaDatos.nextLine());
 
+                        int seleccionAdmin=menuAdmin();
                         switch (seleccionAdmin) {
     //1.1. ADMINISTRADOR - PANEL DE CONTROL
                             case 1:
-                                System.out.println("Bienvenido al panel de control, ¿qué deseas hacer?:");
-                                System.out.println("""
-                                    \n--- PANEL DE CONTROL ---
-                                    1. Bloquear usuario
-                                    2. Desbloquear usuario""");
+                                int eleccionBloqueo=menubloqueoDesbloqueo();
 
-                                int eleccionBloqueo = Integer.parseInt(lecturaDatos.nextLine());
                                 switch (eleccionBloqueo) {
                                     case 1:
-                                        System.out.println("¿A qué usuario deseas bloquear?");
-                                        System.out.println("1. Usuario gestor: " + usuarioGestor);
-                                        System.out.println("2. Usuario inversor: " + usuarioNPC1);
-                                        System.out.println("3. Usuario inversor 2: " + usuarioNPC2);
-
-                                        int usuarioBloqueado = Integer.parseInt(lecturaDatos.nextLine());
-                                        switch (usuarioBloqueado) {
-                                            case 1:
-                                                if (usuarioGestorBlocked) {
-                                                    System.out.println("Este usuario ya está bloqueado");
-                                                    break;
-                                                } else {
-                                                    System.out.println("Usuario gestor bloqueado con éxito");
-                                                    usuarioGestorBlocked = true;
-                                                    break;
-                                                }
-                                            case 2:
-                                                if (usuarioNPC1Blocked) {
-                                                    System.out.println("Este usuario ya está bloqueado");
-                                                    break;
-                                                } else {
-                                                    System.out.println("Usuario inversor 1 bloqueado con éxito");
-                                                    usuarioNPC1Blocked = true;
-                                                    break;
-                                                }
-                                            case 3:
-                                                if (usuarioNPC2Blocked) {
-                                                    System.out.println("Este usuario ya está bloqueado");
-                                                    break;
-                                                } else {
-                                                    System.out.println("Usuario inversor 2 bloqueado con éxito");
-                                                    usuarioNPC2Blocked = true;
-                                                    break;
-                                                }
-                                        }
+                                        menuBloqueo(usuarioNPC1Blocked,usuarioGestorBlocked,usuarioNPC2Blocked);
+                                        break;
                                     case 2:
-                                        System.out.println("Lista de usuarios bloqueados");
-                                        if(usuarioGestorBlocked) System.out.println("1. Usuario gestor: " + usuarioGestor + " está bloqueado");
-                                        else System.out.println("1. Usuario gestor: " + usuarioGestor + " NO está bloqueado");
-                                        if(usuarioNPC1Blocked) System.out.println("2. Usuario inversor 1: " + usuarioNPC1 + " está bloqueado");
-                                        else System.out.println("2. Usuario inversor 1: " + usuarioNPC1 + " NO está bloqueado");
-                                        if(usuarioNPC2Blocked) System.out.println("3. Usuario inversor 2: " + usuarioNPC2 + " está bloqueado");
-                                        else System.out.println("3. Usuario inversor 2: " + usuarioNPC2 + " NO está bloqueado");
-                                        int eleccionDesbloqueo = Integer.parseInt(lecturaDatos.nextLine());
-
-                                        switch(eleccionDesbloqueo){
-                                            case 1:
-                                                if(usuarioGestorBlocked){
-                                                    usuarioGestorBlocked=false;
-                                                    System.out.println("Usuario desbloqueado con éxito.");
-                                                }
-                                                else System.out.println("Error, no se puede desbloquear un usuario ya desbloqueado");
-                                                break;
-                                            case 2:
-                                                if(usuarioNPC1Blocked){
-                                                    usuarioNPC1Blocked=false;
-                                                    System.out.println("Usuario desbloqueado con éxito.");
-                                                }
-                                                else System.out.println("Error, no se puede desbloquear un usuario ya desbloqueado");
-                                                break;
-                                            case 3:
-                                                if(usuarioNPC2Blocked){
-                                                    usuarioNPC2Blocked=false;
-                                                    System.out.println("Usuario desbloqueado con éxito.");
-                                                }
-                                                else System.out.println("Error, no se puede desbloquear un usuario ya desbloqueado");
-                                                break;
-                                        }
+                                        usuariosBloqueados(usuarioNPC1Blocked,usuarioGestorBlocked,usuarioNPC2Blocked);
                                         break;
                                 }
                                 break;
