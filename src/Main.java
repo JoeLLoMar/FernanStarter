@@ -4143,7 +4143,7 @@ public class Main {
                                                                     salirVerProyectos = true;
                                                                 }
                                                                 break;
-            //3.2.1.5. INVERSOR - SALIR (a proyectos)
+                //3.2.1.5. INVERSOR - SALIR (a proyectos)
                                                             case 4:
                                                                 if (proyectosCreados == 3) {
                                                                     System.out.println("Volviendo a PROYECTOS");
