@@ -1,286 +1,11 @@
 import java.util.Scanner;
 
+import static Utilidades.AccesosRegistros.*;
+import static Utilidades.Menus.*;
+import static Utilidades.ProcesamientoDatos.*;
 
 public class Main {
     //Parte donde nos morimos, es decir, pasamos 6k líneas a funciones
-
-    //Funcion del primero log-in
-    public static int menuInicial(){
-        int tipoUsuario;
-        Scanner lecturaDatos = new Scanner(System.in);
-
-        System.out.println("----------------------------");
-        System.out.println("¡Bienvenido a FernanStarter!");
-        System.out.println("----------------------------");
-        System.out.println();
-//0. LOGIN
-        //Elección de perfil de usuario y log-in
-        System.out.println("""
-                    Inicia sesión:
-                    1. Como administrador
-                    2. Como gestor
-                    3. Como inversor
-                    4. Salir""");
-
-        tipoUsuario = Integer.parseInt(lecturaDatos.nextLine());
-
-        return tipoUsuario;
-    }
-
-    //Menu bloqueo-desbloqueo usuarios
-    public static int menubloqueoDesbloqueo(){
-        Scanner lecturaDatos = new Scanner(System.in);
-        System.out.println("Bienvenido al panel de control, ¿qué deseas hacer?:");
-        System.out.println("""
-                                    \n--- PANEL DE CONTROL ---
-                                    1. Bloquear usuario
-                                    2. Desbloquear usuario""");
-
-        int eleccionBloqueo = Integer.parseInt(lecturaDatos.nextLine());
-        return eleccionBloqueo;
-    }
-
-    //Menu bloqueo usuarios
-    public static void menuBloqueo(boolean usuarioGestorBlocked,boolean usuarioNPC1Blocked, boolean usuarioNPC2Blocked ){
-        String usuarioGestor="tornaceitor", usuarioNPC1="soyunnpc1", usuarioNPC2="npcsisoy";
-        usuarioGestorBlocked=usuarioGestorBlocked;
-        usuarioNPC1Blocked=usuarioNPC1Blocked;
-        usuarioNPC2Blocked=usuarioNPC2Blocked;
-        Scanner lecturaDatos = new Scanner(System.in);
-
-        System.out.println("¿A qué usuario deseas bloquear?");
-        System.out.println("1. Usuario gestor: " + usuarioGestor);
-        System.out.println("2. Usuario inversor: " + usuarioNPC1);
-        System.out.println("3. Usuario inversor 2: " + usuarioNPC2);
-
-        int usuarioBloqueado = Integer.parseInt(lecturaDatos.nextLine());
-        switch (usuarioBloqueado) {
-            case 1:
-                if (usuarioGestorBlocked) {
-                    System.out.println("Este usuario ya está bloqueado");
-                    break;
-                } else {
-                    System.out.println("Usuario gestor bloqueado con éxito");
-                    usuarioGestorBlocked = true;
-                    break;
-                }
-            case 2:
-                if (usuarioNPC1Blocked) {
-                    System.out.println("Este usuario ya está bloqueado");
-                    break;
-                } else {
-                    System.out.println("Usuario inversor 1 bloqueado con éxito");
-                    usuarioNPC1Blocked = true;
-                    break;
-                }
-            case 3:
-                if (usuarioNPC2Blocked) {
-                    System.out.println("Este usuario ya está bloqueado");
-                    break;
-                } else {
-                    System.out.println("Usuario inversor 2 bloqueado con éxito");
-                    usuarioNPC2Blocked = true;
-                    break;
-                }
-        }
-    }
-
-    //Listado usuarios bloqueados
-    public static void usuariosBloqueados(boolean usuarioGestorBlocked,boolean usuarioNPC1Blocked, boolean usuarioNPC2Blocked){
-        String usuarioGestor="tornaceitor", usuarioNPC1="soyunnpc1", usuarioNPC2="npcsisoy";
-        usuarioGestorBlocked=usuarioGestorBlocked;
-        usuarioNPC1Blocked=usuarioNPC1Blocked;
-        usuarioNPC2Blocked=usuarioNPC2Blocked;
-        Scanner lecturaDatos = new Scanner(System.in);
-
-        System.out.println("Lista de usuarios bloqueados");
-        if(usuarioGestorBlocked) System.out.println("1. Usuario gestor: " + usuarioGestor + " está bloqueado");
-        else System.out.println("1. Usuario gestor: " + usuarioGestor + " NO está bloqueado");
-        if(usuarioNPC1Blocked) System.out.println("2. Usuario inversor 1: " + usuarioNPC1 + " está bloqueado");
-        else System.out.println("2. Usuario inversor 1: " + usuarioNPC1 + " NO está bloqueado");
-        if(usuarioNPC2Blocked) System.out.println("3. Usuario inversor 2: " + usuarioNPC2 + " está bloqueado");
-        else System.out.println("3. Usuario inversor 2: " + usuarioNPC2 + " NO está bloqueado");
-        int eleccionDesbloqueo = Integer.parseInt(lecturaDatos.nextLine());
-
-        switch(eleccionDesbloqueo){
-            case 1:
-                if(usuarioGestorBlocked){
-                    usuarioGestorBlocked=false;
-                    System.out.println("Usuario desbloqueado con éxito.");
-                }
-                else System.out.println("Error, no se puede desbloquear un usuario ya desbloqueado");
-                break;
-            case 2:
-                if(usuarioNPC1Blocked){
-                    usuarioNPC1Blocked=false;
-                    System.out.println("Usuario desbloqueado con éxito.");
-                }
-                else System.out.println("Error, no se puede desbloquear un usuario ya desbloqueado");
-                break;
-            case 3:
-                if(usuarioNPC2Blocked){
-                    usuarioNPC2Blocked=false;
-                    System.out.println("Usuario desbloqueado con éxito.");
-                }
-                else System.out.println("Error, no se puede desbloquear un usuario ya desbloqueado");
-                break;
-        }
-    }
-
-    //Funcion resgistro admin
-    public static void registroAdmin(){
-        //Variables log-in (admin)
-        String usuarioLogin="", contraseniaLogin="";
-        String usuarioAdmin = "pepito123", contraseniaAdmin = "12345";
-        boolean registroAdmin = false;
-        boolean admin = false;
-        Scanner lecturaDatos = new Scanner(System.in);
-
-        System.out.println();
-        System.out.println("Usted ha elegido ingresar como administrador.");
-        System.out.println();
-        do {
-            System.out.println("Para salir del programa, escribe SALIR");
-            System.out.println("--------------------------------------");
-            System.out.println("1.-Introduce usuario ");
-            usuarioLogin = lecturaDatos.nextLine().toLowerCase();
-            if (usuarioLogin.equalsIgnoreCase("salir")) break;
-            System.out.println("2.-Introduce la contraseña");
-            contraseniaLogin = lecturaDatos.nextLine().toLowerCase();
-            if (contraseniaLogin.equalsIgnoreCase("salir")) break;
-
-            if ((usuarioLogin.equalsIgnoreCase(usuarioAdmin) && contraseniaLogin.equalsIgnoreCase(contraseniaAdmin))) {
-                registroAdmin = true;
-                System.out.println("Inicio de sesión exitoso, bienvenido " + usuarioLogin + ".");
-                admin=true;
-            }
-            else{
-                System.out.println("Credenciales incorrectos, pruebe de nuevo.");
-                System.out.println();
-                continue;
-            }
-            break;
-        } while (!registroAdmin);
-    }
-
-    public static int menuAdmin(){
-        Scanner lecturaDatos = new Scanner(System.in);
-        System.out.println("""
-                            \n--- MENÚ PRINCIPAL ---
-                            Seleccione una opción:
-                            1. Panel de control
-                            2. Proyectos
-                            3. Configuración
-                            4. Cerrar sesión""");
-        int seleccionAdmin = Integer.parseInt(lecturaDatos.nextLine());
-        return seleccionAdmin;
-    }
-
-    //Funcion de log-in del gestor
-    public static void registroGestor(){
-        //Variables log-in gestor
-        String usuarioLogin="", contraseniaLogin="";
-        boolean usuarioGestorBlocked=false;
-        int contadorIntentos = 0, intentos = 2;;
-        boolean registroGestor = false;
-        String usuarioGestor = "tornaceitor", contraseniaGestor = "54321";
-        Scanner lecturaDatos = new Scanner(System.in);
-
-        if (usuarioGestorBlocked) {
-            System.out.println("Este usuario ha sido bloqueado por el administrador.");
-            return;
-        } else {
-            System.out.println();
-            System.out.println("Usted ha elegido ingresar como gestor.");
-            do {
-                if (contadorIntentos < 3) {
-                    System.out.println();
-                    System.out.println("Para salir del programa, escribe SALIR");
-                    System.out.println("--------------------------------------");
-                    System.out.println("1.-Introduce usuario ");
-                    usuarioLogin = lecturaDatos.nextLine().toLowerCase();
-                    if (usuarioLogin.equalsIgnoreCase("salir")) break;
-                    System.out.println("2.-Introduce la contraseña");
-                    contraseniaLogin = lecturaDatos.nextLine().toLowerCase();
-                    if (contraseniaLogin.equalsIgnoreCase("salir")) break;
-
-                    if ((usuarioLogin.equalsIgnoreCase(usuarioGestor) && contraseniaLogin.equalsIgnoreCase(contraseniaGestor))) {
-                        registroGestor = true;
-                        System.out.println("Inicio de sesión exitoso, bienvenido " + usuarioLogin + ".");
-                    } else if (contadorIntentos < 3) {
-                        System.out.println("Usuario o contraseña incorrectos. Intenta de nuevo, le quedan " + intentos-- + " intentos.");
-                        contadorIntentos++;
-                    }
-                } else {
-                    System.out.println();
-                    System.out.println("Intentos agotados, usuario bloqueado.");
-                    usuarioGestorBlocked=true;
-                    break; //Agotas intentos y te manda al inicio del login gestor
-                }
-            } while (!registroGestor);
-            contadorIntentos=0;
-             // Te lleva a la creación de Proyectos
-        }
-    }
-
-    public static void registroInversor(){
-        String usuarioLogin="", contraseniaLogin="";
-        int contadorIntentos = 0, intentos = 2;
-        String usuarioNPC1 = "soyunnpc1", contraseniaNPC1 = "6969";
-        String usuarioNPC2 = "npcsisoy", contraseniaNPC2 = "9696";
-        boolean  usuarioNPC1Blocked=false, usuarioNPC2Blocked=false, registroInversor = false, npc1=false,npc2=false;
-        Scanner lecturaDatos = new Scanner(System.in);
-
-        if (usuarioNPC1Blocked && (usuarioLogin.equalsIgnoreCase(usuarioNPC1) && contraseniaLogin.equalsIgnoreCase(contraseniaNPC1))) {
-            System.out.println("Este usuario ha sido bloqueado por el administrador.");
-            return;
-        } else if (usuarioNPC2Blocked && (usuarioLogin.equalsIgnoreCase(usuarioNPC2) && contraseniaLogin.equalsIgnoreCase(contraseniaNPC2))) {
-            System.out.println("Este usuario ha sido bloqueado por el administrador.");
-            return;
-        } else {
-            System.out.println();
-            System.out.println("Usted ha elegido ingresar como inversor.");
-            do {
-                if (contadorIntentos < 3) {
-                    System.out.println();
-                    System.out.println("Para salir del programa, escribe SALIR");
-                    System.out.println("--------------------------------------");
-                    System.out.println("1.-Introduce usuario ");
-                    usuarioLogin = lecturaDatos.nextLine().toLowerCase();
-                    if (usuarioLogin.equalsIgnoreCase("salir")) break;
-                    System.out.println("2.-Introduce la contraseña");
-                    contraseniaLogin = lecturaDatos.nextLine().toLowerCase();
-                    if (contraseniaLogin.equalsIgnoreCase("salir")) break;
-
-                    if ((usuarioLogin.equalsIgnoreCase(usuarioNPC1) && usuarioNPC1Blocked) ||
-                            (usuarioLogin.equalsIgnoreCase(usuarioNPC2) && usuarioNPC2Blocked)) {
-                        System.out.println("Este usuario ha sido bloqueado por el administrador.");
-                        break;
-                    }
-                    if ((usuarioLogin.equalsIgnoreCase(usuarioNPC1) && contraseniaLogin.equalsIgnoreCase(contraseniaNPC1))) {
-                        registroInversor = true;
-                        npc1 = true;
-                        System.out.println("Inicio de sesión exitoso, bienvenido " + usuarioLogin + ".");
-                    } else if (usuarioLogin.equalsIgnoreCase(usuarioNPC2) && contraseniaLogin.equalsIgnoreCase(contraseniaNPC2)) {
-                        registroInversor = true;
-                        npc2 = true;
-                        System.out.println("Inicio de sesión exitoso, bienvenido " + usuarioLogin + ".");
-                    } else if (contadorIntentos < 3) {
-                        System.out.println("Usuario o contraseña incorrectos. Intenta de nuevo, le quedan " + intentos-- + " intentos.");
-                        contadorIntentos++;
-                    }
-                } else {
-                    System.out.println();
-                    System.out.println("Intentos agotados, usuario bloqueado.");
-                    usuarioNPC1Blocked=true;
-                    usuarioNPC2Blocked=true;
-                    break; //Agotas intentos y te manda al inicio del login gestor
-                }
-            } while (!registroInversor);
-            contadorIntentos=0;
-            return;
-        }
-    }
 
     public static void main(String[] args) {
         //Variables de usuarios
@@ -394,11 +119,7 @@ public class Main {
                                 boolean salirSubMenu = false;
 
                                 while (!salirSubMenu) { //El bucle finaliza cuando se le da 3. Salir, salirSubMenu = true y te sales del menú Mis proyectos para ir al menu gestor.
-                                    System.out.println("""
-                                        \n--- PROYECTOS ---
-                                        Seleccione una opción:
-                                        1. Ver proyectos existentes
-                                        2. Salir""");
+                                    menuProyectos();
                                     int seleccionProyectos = lecturaDatos.nextInt();
                                     lecturaDatos.nextLine();
 
@@ -409,23 +130,21 @@ public class Main {
 
                                             while (!salirVerProyectos) {
                                                 System.out.println("\n--- PROYECTOS EXISTENTES ---");
+
                                                 // Si proyectosCreados tiene un valor determinado, se muestran todos los proyectos con valor inferior al actual (todos los creados previamente)
                                                 if (nombre1 != null) {
                                                     System.out.println("\nProyecto 1:");
-                                                    System.out.println("Nombre: " + nombre1 + "\nDescripción: " + descripcion1 + "\nCategoría: " + categoria1 +
-                                                            "\nCantidad necesaria: " + cantidadNecesaria1 + " €\nCantidad financiada: " + cantidadFinanciada1 + " €");
+                                                    vistaProyecto(nombre1, descripcion1, categoria1, cantidadNecesaria1, cantidadFinanciada1);
                                                 }
 
                                                 if (nombre2 != null) {
                                                     System.out.println("\nProyecto 2:");
-                                                    System.out.println("Nombre: " + nombre2 + "\nDescripción: " + descripcion2 + "\nCategoría: " + categoria2 +
-                                                            "\nCantidad necesaria: " + cantidadNecesaria2 + " €\nCantidad financiada: " + cantidadFinanciada2 + " €");
+                                                    vistaProyecto(nombre2, descripcion2, categoria2, cantidadNecesaria2, cantidadFinanciada2);
                                                 }
 
                                                 if (nombre3 != null) {
                                                     System.out.println("\nProyecto 3:");
-                                                    System.out.println("Nombre: " + nombre3 + "\nDescripción: " + descripcion3 + "\nCategoría: " + categoria3 +
-                                                            "\nCantidad necesaria: " + cantidadNecesaria3 + " €\nCantidad financiada: " + cantidadFinanciada3 + " €");
+                                                    vistaProyecto(nombre3, descripcion3, categoria3, cantidadNecesaria3, cantidadFinanciada3);
                                                 }
 
                                                 if (proyectosCreados == 0) {
@@ -434,29 +153,7 @@ public class Main {
                                                 }
             //1.2.1.1. ADMINISTRADOR - VISTA DETALLADA MENÚ
                                                 if (proyectosCreados > 0) {
-                                                    System.out.println("\nVer vista detallada: ");
-                                                    for (int i = 1; i <= proyectosCreados; i++) {
-                                                        System.out.print(i + ". Proyecto ");
-                                                        if (i == 1) {
-                                                            if (nombre1 != null) System.out.println("1: " + nombre1);
-                                                            else if (nombre2 != null) System.out.println("2: " + nombre2);
-                                                            else if (nombre3 != null) System.out.println("3: " + nombre3);
-                                                        }
-                                                        else if (i == 2) {
-                                                            if (nombre2 != null) System.out.println("2: " + nombre2);
-                                                            else if (nombre3 != null) System.out.println("3: " + nombre3);
-                                                            else if (nombre1 != null) System.out.println("1: " + nombre1);
-                                                        }
-                                                        else if (i == 3) {
-                                                            if (nombre3 != null) System.out.println("3: " + nombre3);
-                                                            else if (nombre1 != null) System.out.println("1: " + nombre1);
-                                                            else if (nombre2 != null) System.out.println("2: " + nombre2);
-                                                        }
-                                                    }
-                                                    if (proyectosCreados == 1) System.out.print("2. ");
-                                                    else if (proyectosCreados == 2) System.out.print("3. ");
-                                                    else if (proyectosCreados == 3) System.out.print("4. ");
-                                                    System.out.println("Salir");
+                                                    menuVistaDetallada(proyectosCreados, nombre1, nombre2, nombre3);
                                                     int selecProyectoDetalle = lecturaDatos.nextInt();
                                                     lecturaDatos.nextLine();
 
@@ -466,37 +163,13 @@ public class Main {
                                                             if (proyectosCreados >= 1) {
                                                                 if (nombre1 != null) {
                                                                     System.out.println("\nProyecto 1:");
-                                                                    System.out.println("Nombre: " + nombre1 + "\nDescripción: " + descripcion1 + "\nCategoría: " + categoria1 +
-                                                                            "\nCantidad necesaria: " + cantidadNecesaria1 + " €\nCantidad financiada: " + cantidadFinanciada1 + " €" +
-                                                                            "\nFecha inicio: " + fechaInicio1 + "\nFecha fin: " + fechaFin1);
-                                                                    System.out.println("Recompensas: 1) " + recompensa1_1 + " (" + precio1_1 + " €), 2) " + recompensa1_2 + " (" + precio1_2 + " €), 3) " + recompensa1_3 + " (" + precio1_3 + " €)");
-
-                                                                    // Calcular el porcentaje de progreso
-                                                                    double porcentajeProgreso = (cantidadFinanciada1 / cantidadNecesaria1) * 100;
-
-                                                                    // Pintar la barra de progreso
-                                                                    System.out.println("\nBarra de Progreso:");
-                                                                    System.out.print("[");
-
-                                                                    int totalCaracteres = 50; // Longitud total de la barra
-                                                                    int caracteresLlenos = (int) (porcentajeProgreso / (100.0 / totalCaracteres)); // Caracteres llenos, se hace una regla de 3
-                                                                    for (int i = 0; i < totalCaracteres; i++) {
-                                                                        if (i < caracteresLlenos) {
-                                                                            System.out.print("#"); // Parte llena de la barra
-                                                                        } else {
-                                                                            System.out.print("-"); // Parte vacía de la barra
-                                                                        }
-                                                                    }
-                                                                    System.out.printf("] %.2f %%\n", porcentajeProgreso);
+                                                                    vistaProyectoDetalle(nombre1, descripcion1, categoria1, cantidadNecesaria1, cantidadFinanciada1, fechaInicio1, fechaFin1, recompensa1_1, precio1_1, recompensa1_2, precio1_2, recompensa1_3, precio1_3);
+                                                                    graficoProgreso(cantidadFinanciada1, cantidadNecesaria1);
 
                                                                     boolean salirGestionProyecto = false;
-                                                                    //MODIFICAR - ELIMINAR proyecto 1
+                                                                //MODIFICAR - ELIMINAR proyecto 1
                                                                     while (!salirGestionProyecto) {
-                                                                        System.out.println("""
-                                                                    \nOpciones de gestión:
-                                                                    1. Modificar proyecto
-                                                                    2. Eliminar proyecto
-                                                                    3. Salir""");
+                                                                        menuGestionProyecto();
                                                                         int gestionProyecto = lecturaDatos.nextInt();
                                                                         lecturaDatos.nextLine();
 
@@ -505,22 +178,9 @@ public class Main {
                                                                                 boolean salirModificar = false;
 
                                                                                 while (!salirModificar){
-                                                                                    System.out.println("""
-                                                                            \nElige el apartado que vas a modificar:
-                                                                            1. Nombre
-                                                                            2. Descripción
-                                                                            3. Categoría
-                                                                            4. Cantidad necesaria
-                                                                            5. Cantidad financiada
-                                                                            6. Fecha inicio
-                                                                            7. Fecha fin
-                                                                            8. Recompensa 1
-                                                                            9. Recompensa 2
-                                                                            10. Recompensa 3
-                                                                            11. Salir""");
+                                                                                    menuModificarProyecto();
                                                                                     int modificaApartado = lecturaDatos.nextInt();
                                                                                     lecturaDatos.nextLine();
-
                                                                                     switch (modificaApartado) {
                                                                                         case 1:
                                                                                             System.out.print("Nombre del proyecto: ");
@@ -613,37 +273,13 @@ public class Main {
                                                                 }
                                                                 else if (nombre2 != null) {
                                                                     System.out.println("\nProyecto 2:");
-                                                                    System.out.println("Nombre: " + nombre2 + "\nDescripción: " + descripcion2 + "\nCategoría: " + categoria2 +
-                                                                            "\nCantidad necesaria: " + cantidadNecesaria2 + " €\nCantidad financiada: " + cantidadFinanciada2 + " €" +
-                                                                            "\nFecha inicio: " + fechaInicio2 + "\nFecha fin: " + fechaFin2);
-                                                                    System.out.println("Recompensas: 1) " + recompensa2_1 + " (" + precio2_1 + " €), 2) " + recompensa2_2 + " (" + precio2_2 + " €), 3) " + recompensa2_3 + " (" + precio2_3 + " €)");
-
-                                                                    // Calcular el porcentaje de progreso
-                                                                    double porcentajeProgreso = (cantidadFinanciada2 / cantidadNecesaria2) * 100;
-
-                                                                    // Pintar la barra de progreso
-                                                                    System.out.println("\nBarra de Progreso:");
-                                                                    System.out.print("[");
-
-                                                                    int totalCaracteres = 50; // Longitud total de la barra
-                                                                    int caracteresLlenos = (int) (porcentajeProgreso / (100.0 / totalCaracteres)); // Caracteres llenos, se hace una regla de 3
-                                                                    for (int i = 0; i < totalCaracteres; i++) {
-                                                                        if (i < caracteresLlenos) {
-                                                                            System.out.print("#"); // Parte llena de la barra
-                                                                        } else {
-                                                                            System.out.print("-"); // Parte vacía de la barra
-                                                                        }
-                                                                    }
-                                                                    System.out.printf("] %.2f %%\n", porcentajeProgreso);
+                                                                    vistaProyectoDetalle(nombre2, descripcion2, categoria2, cantidadNecesaria2, cantidadFinanciada2, fechaInicio2, fechaFin2, recompensa2_1, precio2_1, recompensa2_2, precio2_2, recompensa2_3, precio2_3);
+                                                                    graficoProgreso(cantidadFinanciada2, cantidadNecesaria2);
 
                                                                     boolean salirGestionProyecto = false;
-                                                                    //MODIFICAR - ELIMINAR proyecto 2
+                                                                //MODIFICAR - ELIMINAR proyecto 2
                                                                     while (!salirGestionProyecto) {
-                                                                        System.out.println("""
-                                                                    \nOpciones de gestión:
-                                                                    1. Modificar proyecto
-                                                                    2. Eliminar proyecto
-                                                                    3. Salir""");
+                                                                        menuGestionProyecto();
                                                                         int gestionProyecto = lecturaDatos.nextInt();
                                                                         lecturaDatos.nextLine();
 
@@ -652,19 +288,7 @@ public class Main {
                                                                                 boolean salirModificar = false;
 
                                                                                 while (!salirModificar){
-                                                                                    System.out.println("""
-                                                                            \nElige el apartado que vas a modificar:
-                                                                            1. Nombre
-                                                                            2. Descripción
-                                                                            3. Categoría
-                                                                            4. Cantidad necesaria
-                                                                            5. Cantidad financiada
-                                                                            6. Fecha inicio
-                                                                            7. Fecha fin
-                                                                            8. Recompensa 1
-                                                                            9. Recompensa 2
-                                                                            10. Recompensa 3
-                                                                            11. Salir""");
+                                                                                    menuModificarProyecto();
                                                                                     int modificaApartado = lecturaDatos.nextInt();
                                                                                     lecturaDatos.nextLine();
 
@@ -760,36 +384,13 @@ public class Main {
                                                                 }
                                                                 else if (nombre3 != null) {
                                                                     System.out.println("\nProyecto 3:");
-                                                                    System.out.println("Nombre: " + nombre3 + "\nDescripción: " + descripcion3 + "\nCategoría: " + categoria3 +
-                                                                            "\nCantidad necesaria: " + cantidadNecesaria3 + " €\nCantidad financiada: " + cantidadFinanciada3 + " €" +
-                                                                            "\nFecha inicio: " + fechaInicio3 + "\nFecha fin: " + fechaFin3);
-                                                                    System.out.println("Recompensas: 1) " + recompensa3_1 + " (" + precio3_1 + " €), 2) " + recompensa3_2 + " (" + precio3_2 + " €), 3) " + recompensa3_3 + " (" + precio3_3 + " €)");
-
-                                                                    // Calcular el porcentaje de progreso
-                                                                    double porcentajeProgreso = (cantidadFinanciada3 / cantidadNecesaria3) * 100;
-
-                                                                    // Pintar la barra de progreso
-                                                                    System.out.println("\nBarra de Progreso:");
-                                                                    System.out.print("[");
-
-                                                                    int totalCaracteres = 50; // Longitud total de la barra
-                                                                    int caracteresLlenos = (int) (porcentajeProgreso / (100.0 / totalCaracteres)); // Caracteres llenos, se hace una regla de 3
-                                                                    for (int i = 0; i < totalCaracteres; i++) {
-                                                                        if (i < caracteresLlenos) {
-                                                                            System.out.print("#"); // Parte llena de la barra
-                                                                        } else {
-                                                                            System.out.print("-"); // Parte vacía de la barra
-                                                                        }
-                                                                    }
-                                                                    System.out.printf("] %.2f %%\n", porcentajeProgreso);
+                                                                    vistaProyectoDetalle(nombre3, descripcion3, categoria3, cantidadNecesaria3, cantidadFinanciada3, fechaInicio3, fechaFin3, recompensa3_1, precio3_1, recompensa3_2, precio3_2, recompensa3_3, precio3_3);
+                                                                    graficoProgreso(cantidadFinanciada3, cantidadNecesaria3);
 
                                                                     boolean salirGestionProyecto = false;
+                                                                //MODIFICAR - ELIMINAR proyecto 2
                                                                     while (!salirGestionProyecto) {
-                                                                        System.out.println("""
-                                                                    \nOpciones de gestión:
-                                                                    1. Modificar proyecto
-                                                                    2. Eliminar proyecto
-                                                                    3. Salir""");
+                                                                        menuGestionProyecto();
                                                                         int gestionProyecto = lecturaDatos.nextInt();
                                                                         lecturaDatos.nextLine();
 
@@ -798,19 +399,7 @@ public class Main {
                                                                                 boolean salirModificar = false;
 
                                                                                 while (!salirModificar){
-                                                                                    System.out.println("""
-                                                                            \nElige el apartado que vas a modificar:
-                                                                            1. Nombre
-                                                                            2. Descripción
-                                                                            3. Categoría
-                                                                            4. Cantidad necesaria
-                                                                            5. Cantidad financiada
-                                                                            6. Fecha inicio
-                                                                            7. Fecha fin
-                                                                            8. Recompensa 1
-                                                                            9. Recompensa 2
-                                                                            10. Recompensa 3
-                                                                            11. Salir""");
+                                                                                    menuModificarProyecto();
                                                                                     int modificaApartado = lecturaDatos.nextInt();
                                                                                     lecturaDatos.nextLine();
 
@@ -916,38 +505,13 @@ public class Main {
                                                             if (proyectosCreados >= 2) {
                                                                 if (nombre2 != null) {
                                                                     System.out.println("\nProyecto 2:");
-                                                                    System.out.println("Nombre: " + nombre2 + "\nDescripción: " + descripcion2 + "\nCategoría: " + categoria2 +
-                                                                            "\nCantidad necesaria: " + cantidadNecesaria2 + " €\nCantidad financiada: " + cantidadFinanciada2 + " €" +
-                                                                            "\nFecha inicio: " + fechaInicio2 + "\nFecha fin: " + fechaFin2);
-                                                                    System.out.println("Recompensas: 1) " + recompensa2_1 + " (" + precio2_1 + " €), 2) " + recompensa2_2 + " (" + precio2_2 + " €), 3) " + recompensa2_3 + " (" + precio2_3 + " €)");
-
-                                                                    // Calcular el porcentaje de progreso
-                                                                    double porcentajeProgreso = (cantidadFinanciada2 / cantidadNecesaria2) * 100;
-
-                                                                    // Pintar la barra de progreso
-                                                                    System.out.println("\nBarra de Progreso:");
-                                                                    System.out.print("[");
-
-                                                                    int totalCaracteres = 50; // Longitud total de la barra
-                                                                    int caracteresLlenos = (int) (porcentajeProgreso / (100.0 / totalCaracteres)); // Caracteres llenos, se hace una regla de 3
-                                                                    for (int i = 0; i < totalCaracteres; i++) {
-                                                                        if (i < caracteresLlenos) {
-                                                                            System.out.print("#"); // Parte llena de la barra
-                                                                        } else {
-                                                                            System.out.print("-"); // Parte vacía de la barra
-                                                                        }
-                                                                    }
-                                                                    System.out.printf("] %.2f %%\n", porcentajeProgreso);
-
+                                                                    vistaProyectoDetalle(nombre2, descripcion2, categoria2, cantidadNecesaria2, cantidadFinanciada2, fechaInicio2, fechaFin2, recompensa2_1, precio2_1, recompensa2_2, precio2_2, recompensa2_3, precio2_3);
+                                                                    graficoProgreso(cantidadFinanciada2, cantidadNecesaria2);
 
                                                                     boolean salirGestionProyecto = false;
-                                                                    //MODIFICAR - ELIMINAR proyecto 2
+                                                        //MODIFICAR - ELIMINAR proyecto 2
                                                                     while (!salirGestionProyecto) {
-                                                                        System.out.println("""
-                                                                    \nOpciones de gestión:
-                                                                    1. Modificar proyecto
-                                                                    2. Eliminar proyecto
-                                                                    3. Salir""");
+                                                                        menuGestionProyecto();
                                                                         int gestionProyecto = lecturaDatos.nextInt();
                                                                         lecturaDatos.nextLine();
 
@@ -956,19 +520,7 @@ public class Main {
                                                                                 boolean salirModificar = false;
 
                                                                                 while (!salirModificar){
-                                                                                    System.out.println("""
-                                                                            \nElige el apartado que vas a modificar:
-                                                                            1. Nombre
-                                                                            2. Descripción
-                                                                            3. Categoría
-                                                                            4. Cantidad necesaria
-                                                                            5. Cantidad financiada
-                                                                            6. Fecha inicio
-                                                                            7. Fecha fin
-                                                                            8. Recompensa 1
-                                                                            9. Recompensa 2
-                                                                            10. Recompensa 3
-                                                                            11. Salir""");
+                                                                                    menuModificarProyecto();
                                                                                     int modificaApartado = lecturaDatos.nextInt();
                                                                                     lecturaDatos.nextLine();
 
@@ -1064,36 +616,13 @@ public class Main {
                                                                 }
                                                                 else if (nombre3 != null) {
                                                                     System.out.println("\nProyecto 3:");
-                                                                    System.out.println("Nombre: " + nombre3 + "\nDescripción: " + descripcion3 + "\nCategoría: " + categoria3 +
-                                                                            "\nCantidad necesaria: " + cantidadNecesaria3 + " €\nCantidad financiada: " + cantidadFinanciada3 + " €" +
-                                                                            "\nFecha inicio: " + fechaInicio3 + "\nFecha fin: " + fechaFin3);
-                                                                    System.out.println("Recompensas: 1) " + recompensa3_1 + " (" + precio3_1 + " €), 2) " + recompensa3_2 + " (" + precio3_2 + " €), 3) " + recompensa3_3 + " (" + precio3_3 + " €)");
-
-                                                                    // Calcular el porcentaje de progreso
-                                                                    double porcentajeProgreso = (cantidadFinanciada3 / cantidadNecesaria3) * 100;
-
-                                                                    // Pintar la barra de progreso
-                                                                    System.out.println("\nBarra de Progreso:");
-                                                                    System.out.print("[");
-
-                                                                    int totalCaracteres = 50; // Longitud total de la barra
-                                                                    int caracteresLlenos = (int) (porcentajeProgreso / (100.0 / totalCaracteres)); // Caracteres llenos, se hace una regla de 3
-                                                                    for (int i = 0; i < totalCaracteres; i++) {
-                                                                        if (i < caracteresLlenos) {
-                                                                            System.out.print("#"); // Parte llena de la barra
-                                                                        } else {
-                                                                            System.out.print("-"); // Parte vacía de la barra
-                                                                        }
-                                                                    }
-                                                                    System.out.printf("] %.2f %%\n", porcentajeProgreso);
+                                                                    vistaProyectoDetalle(nombre3, descripcion3, categoria3, cantidadNecesaria3, cantidadFinanciada3, fechaInicio3, fechaFin3, recompensa3_1, precio3_1, recompensa3_2, precio3_2, recompensa3_3, precio3_3);
+                                                                    graficoProgreso(cantidadFinanciada3, cantidadNecesaria3);
 
                                                                     boolean salirGestionProyecto = false;
+                                                        //MODIFICAR - ELIMINAR proyecto 3
                                                                     while (!salirGestionProyecto) {
-                                                                        System.out.println("""
-                                                                    \nOpciones de gestión:
-                                                                    1. Modificar proyecto
-                                                                    2. Eliminar proyecto
-                                                                    3. Salir""");
+                                                                        menuGestionProyecto();
                                                                         int gestionProyecto = lecturaDatos.nextInt();
                                                                         lecturaDatos.nextLine();
 
@@ -1102,19 +631,7 @@ public class Main {
                                                                                 boolean salirModificar = false;
 
                                                                                 while (!salirModificar){
-                                                                                    System.out.println("""
-                                                                            \nElige el apartado que vas a modificar:
-                                                                            1. Nombre
-                                                                            2. Descripción
-                                                                            3. Categoría
-                                                                            4. Cantidad necesaria
-                                                                            5. Cantidad financiada
-                                                                            6. Fecha inicio
-                                                                            7. Fecha fin
-                                                                            8. Recompensa 1
-                                                                            9. Recompensa 2
-                                                                            10. Recompensa 3
-                                                                            11. Salir""");
+                                                                                    menuModificarProyecto();
                                                                                     int modificaApartado = lecturaDatos.nextInt();
                                                                                     lecturaDatos.nextLine();
 
@@ -1210,37 +727,13 @@ public class Main {
                                                                 }
                                                                 else if (nombre1 != null) {
                                                                     System.out.println("\nProyecto 1:");
-                                                                    System.out.println("Nombre: " + nombre1 + "\nDescripción: " + descripcion1 + "\nCategoría: " + categoria1 +
-                                                                            "\nCantidad necesaria: " + cantidadNecesaria1 + " €\nCantidad financiada: " + cantidadFinanciada1 + " €" +
-                                                                            "\nFecha inicio: " + fechaInicio1 + "\nFecha fin: " + fechaFin1);
-                                                                    System.out.println("Recompensas: 1) " + recompensa1_1 + " (" + precio1_1 + " €), 2) " + recompensa1_2 + " (" + precio1_2 + " €), 3) " + recompensa1_3 + " (" + precio1_3 + " €)");
-
-                                                                    // Calcular el porcentaje de progreso
-                                                                    double porcentajeProgreso = (cantidadFinanciada1 / cantidadNecesaria1) * 100;
-
-                                                                    // Pintar la barra de progreso
-                                                                    System.out.println("\nBarra de Progreso:");
-                                                                    System.out.print("[");
-
-                                                                    int totalCaracteres = 50; // Longitud total de la barra
-                                                                    int caracteresLlenos = (int) (porcentajeProgreso / (100.0 / totalCaracteres)); // Caracteres llenos, se hace una regla de 3
-                                                                    for (int i = 0; i < totalCaracteres; i++) {
-                                                                        if (i < caracteresLlenos) {
-                                                                            System.out.print("#"); // Parte llena de la barra
-                                                                        } else {
-                                                                            System.out.print("-"); // Parte vacía de la barra
-                                                                        }
-                                                                    }
-                                                                    System.out.printf("] %.2f %%\n", porcentajeProgreso);
+                                                                    vistaProyectoDetalle(nombre1, descripcion1, categoria1, cantidadNecesaria1, cantidadFinanciada1, fechaInicio1, fechaFin1, recompensa1_1, precio1_1, recompensa1_2, precio1_2, recompensa1_3, precio1_3);
+                                                                    graficoProgreso(cantidadFinanciada1, cantidadNecesaria1);
 
                                                                     boolean salirGestionProyecto = false;
                                                                     //MODIFICAR - ELIMINAR proyecto 1
                                                                     while (!salirGestionProyecto) {
-                                                                        System.out.println("""
-                                                                    \nOpciones de gestión:
-                                                                    1. Modificar proyecto
-                                                                    2. Eliminar proyecto
-                                                                    3. Salir""");
+                                                                        menuGestionProyecto();
                                                                         int gestionProyecto = lecturaDatos.nextInt();
                                                                         lecturaDatos.nextLine();
 
@@ -1249,22 +742,9 @@ public class Main {
                                                                                 boolean salirModificar = false;
 
                                                                                 while (!salirModificar){
-                                                                                    System.out.println("""
-                                                                            \nElige el apartado que vas a modificar:
-                                                                            1. Nombre
-                                                                            2. Descripción
-                                                                            3. Categoría
-                                                                            4. Cantidad necesaria
-                                                                            5. Cantidad financiada
-                                                                            6. Fecha inicio
-                                                                            7. Fecha fin
-                                                                            8. Recompensa 1
-                                                                            9. Recompensa 2
-                                                                            10. Recompensa 3
-                                                                            11. Salir""");
+                                                                                    menuModificarProyecto();
                                                                                     int modificaApartado = lecturaDatos.nextInt();
                                                                                     lecturaDatos.nextLine();
-
                                                                                     switch (modificaApartado) {
                                                                                         case 1:
                                                                                             System.out.print("Nombre del proyecto: ");
@@ -1367,36 +847,13 @@ public class Main {
                                                             if (proyectosCreados == 3) {
                                                                 if (nombre3 != null) {
                                                                     System.out.println("\nProyecto 3:");
-                                                                    System.out.println("Nombre: " + nombre3 + "\nDescripción: " + descripcion3 + "\nCategoría: " + categoria3 +
-                                                                            "\nCantidad necesaria: " + cantidadNecesaria3 + " €\nCantidad financiada: " + cantidadFinanciada3 + " €" +
-                                                                            "\nFecha inicio: " + fechaInicio3 + "\nFecha fin: " + fechaFin3);
-                                                                    System.out.println("Recompensas: 1) " + recompensa3_1 + " (" + precio3_1 + " €), 2) " + recompensa3_2 + " (" + precio3_2 + " €), 3) " + recompensa3_3 + " (" + precio3_3 + " €)");
-
-                                                                    // Calcular el porcentaje de progreso
-                                                                    double porcentajeProgreso = (cantidadFinanciada3 / cantidadNecesaria3) * 100;
-
-                                                                    // Pintar la barra de progreso
-                                                                    System.out.println("\nBarra de Progreso:");
-                                                                    System.out.print("[");
-
-                                                                    int totalCaracteres = 50; // Longitud total de la barra
-                                                                    int caracteresLlenos = (int) (porcentajeProgreso / (100.0 / totalCaracteres)); // Caracteres llenos, se hace una regla de 3
-                                                                    for (int i = 0; i < totalCaracteres; i++) {
-                                                                        if (i < caracteresLlenos) {
-                                                                            System.out.print("#"); // Parte llena de la barra
-                                                                        } else {
-                                                                            System.out.print("-"); // Parte vacía de la barra
-                                                                        }
-                                                                    }
-                                                                    System.out.printf("] %.2f %%\n", porcentajeProgreso);
+                                                                    vistaProyectoDetalle(nombre3, descripcion3, categoria3, cantidadNecesaria3, cantidadFinanciada3, fechaInicio3, fechaFin3, recompensa3_1, precio3_1, recompensa3_2, precio3_2, recompensa3_3, precio3_3);
+                                                                    graficoProgreso(cantidadFinanciada3, cantidadNecesaria3);
 
                                                                     boolean salirGestionProyecto = false;
+                                                                    //MODIFICAR - ELIMINAR proyecto 3
                                                                     while (!salirGestionProyecto) {
-                                                                        System.out.println("""
-                                                                    \nOpciones de gestión:
-                                                                    1. Modificar proyecto
-                                                                    2. Eliminar proyecto
-                                                                    3. Salir""");
+                                                                        menuGestionProyecto();
                                                                         int gestionProyecto = lecturaDatos.nextInt();
                                                                         lecturaDatos.nextLine();
 
@@ -1405,19 +862,7 @@ public class Main {
                                                                                 boolean salirModificar = false;
 
                                                                                 while (!salirModificar){
-                                                                                    System.out.println("""
-                                                                            \nElige el apartado que vas a modificar:
-                                                                            1. Nombre
-                                                                            2. Descripción
-                                                                            3. Categoría
-                                                                            4. Cantidad necesaria
-                                                                            5. Cantidad financiada
-                                                                            6. Fecha inicio
-                                                                            7. Fecha fin
-                                                                            8. Recompensa 1
-                                                                            9. Recompensa 2
-                                                                            10. Recompensa 3
-                                                                            11. Salir""");
+                                                                                    menuModificarProyecto();
                                                                                     int modificaApartado = lecturaDatos.nextInt();
                                                                                     lecturaDatos.nextLine();
 
@@ -1513,37 +958,13 @@ public class Main {
                                                                 }
                                                                 else if (nombre1 != null) {
                                                                     System.out.println("\nProyecto 1:");
-                                                                    System.out.println("Nombre: " + nombre1 + "\nDescripción: " + descripcion1 + "\nCategoría: " + categoria1 +
-                                                                            "\nCantidad necesaria: " + cantidadNecesaria1 + " €\nCantidad financiada: " + cantidadFinanciada1 + " €" +
-                                                                            "\nFecha inicio: " + fechaInicio1 + "\nFecha fin: " + fechaFin1);
-                                                                    System.out.println("Recompensas: 1) " + recompensa1_1 + " (" + precio1_1 + " €), 2) " + recompensa1_2 + " (" + precio1_2 + " €), 3) " + recompensa1_3 + " (" + precio1_3 + " €)");
-
-                                                                    // Calcular el porcentaje de progreso
-                                                                    double porcentajeProgreso = (cantidadFinanciada1 / cantidadNecesaria1) * 100;
-
-                                                                    // Pintar la barra de progreso
-                                                                    System.out.println("\nBarra de Progreso:");
-                                                                    System.out.print("[");
-
-                                                                    int totalCaracteres = 50; // Longitud total de la barra
-                                                                    int caracteresLlenos = (int) (porcentajeProgreso / (100.0 / totalCaracteres)); // Caracteres llenos, se hace una regla de 3
-                                                                    for (int i = 0; i < totalCaracteres; i++) {
-                                                                        if (i < caracteresLlenos) {
-                                                                            System.out.print("#"); // Parte llena de la barra
-                                                                        } else {
-                                                                            System.out.print("-"); // Parte vacía de la barra
-                                                                        }
-                                                                    }
-                                                                    System.out.printf("] %.2f %%\n", porcentajeProgreso);
+                                                                    vistaProyectoDetalle(nombre1, descripcion1, categoria1, cantidadNecesaria1, cantidadFinanciada1, fechaInicio1, fechaFin1, recompensa1_1, precio1_1, recompensa1_2, precio1_2, recompensa1_3, precio1_3);
+                                                                    graficoProgreso(cantidadFinanciada1, cantidadNecesaria1);
 
                                                                     boolean salirGestionProyecto = false;
                                                                     //MODIFICAR - ELIMINAR proyecto 1
                                                                     while (!salirGestionProyecto) {
-                                                                        System.out.println("""
-                                                                    \nOpciones de gestión:
-                                                                    1. Modificar proyecto
-                                                                    2. Eliminar proyecto
-                                                                    3. Salir""");
+                                                                        menuGestionProyecto();
                                                                         int gestionProyecto = lecturaDatos.nextInt();
                                                                         lecturaDatos.nextLine();
 
@@ -1552,22 +973,9 @@ public class Main {
                                                                                 boolean salirModificar = false;
 
                                                                                 while (!salirModificar){
-                                                                                    System.out.println("""
-                                                                            \nElige el apartado que vas a modificar:
-                                                                            1. Nombre
-                                                                            2. Descripción
-                                                                            3. Categoría
-                                                                            4. Cantidad necesaria
-                                                                            5. Cantidad financiada
-                                                                            6. Fecha inicio
-                                                                            7. Fecha fin
-                                                                            8. Recompensa 1
-                                                                            9. Recompensa 2
-                                                                            10. Recompensa 3
-                                                                            11. Salir""");
+                                                                                    menuModificarProyecto();
                                                                                     int modificaApartado = lecturaDatos.nextInt();
                                                                                     lecturaDatos.nextLine();
-
                                                                                     switch (modificaApartado) {
                                                                                         case 1:
                                                                                             System.out.print("Nombre del proyecto: ");
@@ -1660,37 +1068,13 @@ public class Main {
                                                                 }
                                                                 else if (nombre2 != null) {
                                                                     System.out.println("\nProyecto 2:");
-                                                                    System.out.println("Nombre: " + nombre2 + "\nDescripción: " + descripcion2 + "\nCategoría: " + categoria2 +
-                                                                            "\nCantidad necesaria: " + cantidadNecesaria2 + " €\nCantidad financiada: " + cantidadFinanciada2 + " €" +
-                                                                            "\nFecha inicio: " + fechaInicio2 + "\nFecha fin: " + fechaFin2);
-                                                                    System.out.println("Recompensas: 1) " + recompensa2_1 + " (" + precio2_1 + " €), 2) " + recompensa2_2 + " (" + precio2_2 + " €), 3) " + recompensa2_3 + " (" + precio2_3 + " €)");
-
-                                                                    // Calcular el porcentaje de progreso
-                                                                    double porcentajeProgreso = (cantidadFinanciada2 / cantidadNecesaria3) * 100;
-
-                                                                    // Pintar la barra de progreso
-                                                                    System.out.println("\nBarra de Progreso:");
-                                                                    System.out.print("[");
-
-                                                                    int totalCaracteres = 50; // Longitud total de la barra
-                                                                    int caracteresLlenos = (int) (porcentajeProgreso / (100.0 / totalCaracteres)); // Caracteres llenos, se hace una regla de 3
-                                                                    for (int i = 0; i < totalCaracteres; i++) {
-                                                                        if (i < caracteresLlenos) {
-                                                                            System.out.print("#"); // Parte llena de la barra
-                                                                        } else {
-                                                                            System.out.print("-"); // Parte vacía de la barra
-                                                                        }
-                                                                    }
-                                                                    System.out.printf("] %.2f %%\n", porcentajeProgreso);
+                                                                    vistaProyectoDetalle(nombre2, descripcion2, categoria2, cantidadNecesaria2, cantidadFinanciada2, fechaInicio2, fechaFin2, recompensa2_1, precio2_1, recompensa2_2, precio2_2, recompensa2_3, precio2_3);
+                                                                    graficoProgreso(cantidadFinanciada2, cantidadNecesaria2);
 
                                                                     boolean salirGestionProyecto = false;
                                                                     //MODIFICAR - ELIMINAR proyecto 2
                                                                     while (!salirGestionProyecto) {
-                                                                        System.out.println("""
-                                                                    \nOpciones de gestión:
-                                                                    1. Modificar proyecto
-                                                                    2. Eliminar proyecto
-                                                                    3. Salir""");
+                                                                        menuGestionProyecto();
                                                                         int gestionProyecto = lecturaDatos.nextInt();
                                                                         lecturaDatos.nextLine();
 
@@ -1699,19 +1083,7 @@ public class Main {
                                                                                 boolean salirModificar = false;
 
                                                                                 while (!salirModificar){
-                                                                                    System.out.println("""
-                                                                            \nElige el apartado que vas a modificar:
-                                                                            1. Nombre
-                                                                            2. Descripción
-                                                                            3. Categoría
-                                                                            4. Cantidad necesaria
-                                                                            5. Cantidad financiada
-                                                                            6. Fecha inicio
-                                                                            7. Fecha fin
-                                                                            8. Recompensa 1
-                                                                            9. Recompensa 2
-                                                                            10. Recompensa 3
-                                                                            11. Salir""");
+                                                                                    menuModificarProyecto();
                                                                                     int modificaApartado = lecturaDatos.nextInt();
                                                                                     lecturaDatos.nextLine();
 
@@ -1842,11 +1214,7 @@ public class Main {
     //1.3. ADMINISTRADOR - CONFIGURACIÓN
                             case 3:
                                 do {
-                                    System.out.println("""
-                                        Selecciona que quieres hacer: 
-                                        1.- Cambiar mi usuario
-                                        2.- Cambiar mi contraseña
-                                        3.- Salir""");
+                                    menuConfiguracion();
                                     opcionConfig = lecturaDatos.nextInt();
                                     lecturaDatos.nextLine();
                                 } while (opcionConfig < 1 || opcionConfig > 3);
@@ -1869,6 +1237,7 @@ public class Main {
                                         System.out.println("Opción inválida. Inténtelo de nuevo.");
                                         break;
                                 }
+                                break;
     //1.4. ADMINISTRADOR - CERRAR SESIÓN
                             case 4:
                                 System.out.println("Volviendo al Menú Principal...");
@@ -1890,12 +1259,7 @@ public class Main {
                     boolean salirMenu = false;
                     contadorIntentos=0;
                     while (!salirMenu) { //El bucle finaliza cuando se le da 3. Cerrar sesión, salirMenu = true y te sales del menú de gestor.
-                        System.out.println("""
-                            \n--- MENÚ PRINCIPAL ---
-                            Seleccione una opción:
-                            1. Mis proyectos
-                            2. Configuración
-                            3. Cerrar sesión""");
+                        menuPrincipalGestor();
                         int seleccionGestor = lecturaDatos.nextInt();
 
                         switch (seleccionGestor) {
@@ -1904,12 +1268,7 @@ public class Main {
                                 boolean salirSubMenu = false;
 
                                 while (!salirSubMenu) { //El bucle finaliza cuando se le da 3. Salir, salirSubMenu = true y te sales del menú Mis proyectos para ir al menu gestor.
-                                    System.out.println("""
-                                        \n--- MIS PROYECTOS ---
-                                        Seleccione una opción:
-                                        1. Crear un nuevo proyecto
-                                        2. Ver proyectos existentes
-                                        3. Salir""");
+                                    menuMisProyectoslGestor();
                                     int seleccionProyectos = lecturaDatos.nextInt();
                                     lecturaDatos.nextLine();
 
@@ -1973,7 +1332,8 @@ public class Main {
                                                     precio1_1 = precio1;
                                                     precio1_2 = precio2;
                                                     precio1_3 = precio3;
-                                                } else if (nombre2 == null) {
+                                                }
+                                                else if (nombre2 == null) {
                                                     nombre2 = nombre;
                                                     descripcion2 = descripcion;
                                                     categoria2 = categoria;
@@ -1987,7 +1347,8 @@ public class Main {
                                                     precio2_1 = precio1;
                                                     precio2_2 = precio2;
                                                     precio2_3 = precio3;
-                                                } else if (nombre3 == null) {
+                                                }
+                                                else if (nombre3 == null) {
                                                     nombre3 = nombre;
                                                     descripcion3 = descripcion;
                                                     categoria3 = categoria;
@@ -2015,20 +1376,15 @@ public class Main {
                                                 // Si proyectosCreados tiene un valor determinado, se muestran todos los proyectos con valor inferior al actual (todos los creados previamente)
                                                 if (nombre1 != null) {
                                                     System.out.println("\nProyecto 1:");
-                                                    System.out.println("Nombre: " + nombre1 + "\nDescripción: " + descripcion1 + "\nCategoría: " + categoria1 +
-                                                            "\nCantidad necesaria: " + cantidadNecesaria1 + " €\nCantidad financiada: " + cantidadFinanciada1 + " €");
+                                                    vistaProyecto(nombre1, descripcion1, categoria1, cantidadNecesaria1, cantidadFinanciada1);
                                                 }
-
                                                 if (nombre2 != null) {
                                                     System.out.println("\nProyecto 2:");
-                                                    System.out.println("Nombre: " + nombre2 + "\nDescripción: " + descripcion2 + "\nCategoría: " + categoria2 +
-                                                            "\nCantidad necesaria: " + cantidadNecesaria2 + " €\nCantidad financiada: " + cantidadFinanciada2 + " €");
+                                                    vistaProyecto(nombre2, descripcion2, categoria2, cantidadNecesaria2, cantidadFinanciada2);
                                                 }
-
                                                 if (nombre3 != null) {
                                                     System.out.println("\nProyecto 3:");
-                                                    System.out.println("Nombre: " + nombre3 + "\nDescripción: " + descripcion3 + "\nCategoría: " + categoria3 +
-                                                            "\nCantidad necesaria: " + cantidadNecesaria3 + " €\nCantidad financiada: " + cantidadFinanciada3 + " €");
+                                                    vistaProyecto(nombre3, descripcion3, categoria3, cantidadNecesaria3, cantidadFinanciada3);
                                                 }
 
                                                 if (proyectosCreados == 0) {
@@ -2037,29 +1393,7 @@ public class Main {
                                                 }
             //2.1.2.1. GESTOR - VISTA DETALLADA MENÚ
                                                 if (proyectosCreados > 0) {
-                                                    System.out.println("\nVer vista detallada: ");
-                                                    for (int i = 1; i <= proyectosCreados; i++) {
-                                                        System.out.print(i + ". Proyecto ");
-                                                        if (i == 1) {
-                                                            if (nombre1 != null) System.out.println("1: " + nombre1);
-                                                            else if (nombre2 != null) System.out.println("2: " + nombre2);
-                                                            else if (nombre3 != null) System.out.println("3: " + nombre3);
-                                                        }
-                                                        else if (i == 2) {
-                                                            if (nombre2 != null) System.out.println("2: " + nombre2);
-                                                            else if (nombre3 != null) System.out.println("3: " + nombre3);
-                                                            else if (nombre1 != null) System.out.println("1: " + nombre1);
-                                                        }
-                                                        else if (i == 3) {
-                                                            if (nombre3 != null) System.out.println("3: " + nombre3);
-                                                            else if (nombre1 != null) System.out.println("1: " + nombre1);
-                                                            else if (nombre2 != null) System.out.println("2: " + nombre2);
-                                                        }
-                                                    }
-                                                    if (proyectosCreados == 1) System.out.print("2. ");
-                                                    else if (proyectosCreados == 2) System.out.print("3. ");
-                                                    else if (proyectosCreados == 3) System.out.print("4. ");
-                                                    System.out.println("Salir");
+                                                    menuVistaDetallada(proyectosCreados, nombre1, nombre2, nombre3);
                                                     int selecProyectoDetalle = lecturaDatos.nextInt();
                                                     lecturaDatos.nextLine();
 
@@ -2069,37 +1403,13 @@ public class Main {
                                                             if (proyectosCreados >= 1) {
                                                                 if (nombre1 != null) {
                                                                     System.out.println("\nProyecto 1:");
-                                                                    System.out.println("Nombre: " + nombre1 + "\nDescripción: " + descripcion1 + "\nCategoría: " + categoria1 +
-                                                                            "\nCantidad necesaria: " + cantidadNecesaria1 + " €\nCantidad financiada: " + cantidadFinanciada1 + " €" +
-                                                                            "\nFecha inicio: " + fechaInicio1 + "\nFecha fin: " + fechaFin1);
-                                                                    System.out.println("Recompensas: 1) " + recompensa1_1 + " (" + precio1_1 + " €), 2) " + recompensa1_2 + " (" + precio1_2 + " €), 3) " + recompensa1_3 + " (" + precio1_3 + " €)");
+                                                                    vistaProyectoDetalle(nombre1, descripcion1, categoria1, cantidadNecesaria1, cantidadFinanciada1, fechaInicio1, fechaFin1, recompensa1_1, precio1_1, recompensa1_2, precio1_2, recompensa1_3, precio1_3);
+                                                                    graficoProgreso(cantidadFinanciada1, cantidadNecesaria1);
 
-                                                                    // Calcular el porcentaje de progreso
-                                                                    double porcentajeProgreso = (cantidadFinanciada1 / cantidadNecesaria1) * 100;
-
-                                                                    // Pintar la barra de progreso
-                                                                    System.out.println("\nBarra de Progreso:");
-                                                                    System.out.print("[");
-
-                                                                    int totalCaracteres = 50; // Longitud total de la barra
-                                                                    int caracteresLlenos = (int) (porcentajeProgreso / (100.0 / totalCaracteres)); // Caracteres llenos, se hace una regla de 3
-                                                                    for (int i = 0; i < totalCaracteres; i++) {
-                                                                        if (i < caracteresLlenos) {
-                                                                            System.out.print("#"); // Parte llena de la barra
-                                                                        } else {
-                                                                            System.out.print("-"); // Parte vacía de la barra
-                                                                        }
-                                                                    }
-                                                                    System.out.printf("] %.2f %%\n", porcentajeProgreso);
-
+                                                        //MODIFICAR - ELIMINAR proyecto 1
                                                                     boolean salirGestionProyecto = false;
-                                                                    //MODIFICAR - ELIMINAR proyecto 1
                                                                     while (!salirGestionProyecto) {
-                                                                        System.out.println("""
-                                                                    \nOpciones de gestión:
-                                                                    1. Modificar proyecto
-                                                                    2. Eliminar proyecto
-                                                                    3. Salir""");
+                                                                        menuGestionProyecto();
                                                                         int gestionProyecto = lecturaDatos.nextInt();
                                                                         lecturaDatos.nextLine();
 
@@ -2108,19 +1418,7 @@ public class Main {
                                                                                 boolean salirModificar = false;
 
                                                                                 while (!salirModificar){
-                                                                                    System.out.println("""
-                                                                            \nElige el apartado que vas a modificar:
-                                                                            1. Nombre
-                                                                            2. Descripción
-                                                                            3. Categoría
-                                                                            4. Cantidad necesaria
-                                                                            5. Cantidad financiada
-                                                                            6. Fecha inicio
-                                                                            7. Fecha fin
-                                                                            8. Recompensa 1
-                                                                            9. Recompensa 2
-                                                                            10. Recompensa 3
-                                                                            11. Salir""");
+                                                                                    menuModificarProyecto();
                                                                                     int modificaApartado = lecturaDatos.nextInt();
                                                                                     lecturaDatos.nextLine();
 
@@ -2216,37 +1514,13 @@ public class Main {
                                                                 }
                                                                 else if (nombre2 != null) {
                                                                     System.out.println("\nProyecto 2:");
-                                                                    System.out.println("Nombre: " + nombre2 + "\nDescripción: " + descripcion2 + "\nCategoría: " + categoria2 +
-                                                                            "\nCantidad necesaria: " + cantidadNecesaria2 + " €\nCantidad financiada: " + cantidadFinanciada2 + " €" +
-                                                                            "\nFecha inicio: " + fechaInicio2 + "\nFecha fin: " + fechaFin2);
-                                                                    System.out.println("Recompensas: 1) " + recompensa2_1 + " (" + precio2_1 + " €), 2) " + recompensa2_2 + " (" + precio2_2 + " €), 3) " + recompensa2_3 + " (" + precio2_3 + " €)");
+                                                                    vistaProyectoDetalle(nombre2, descripcion2, categoria2, cantidadNecesaria2, cantidadFinanciada2, fechaInicio2, fechaFin2, recompensa2_1, precio2_1, recompensa2_2, precio2_2, recompensa2_3, precio2_3);
+                                                                    graficoProgreso(cantidadFinanciada2, cantidadNecesaria2);
 
-                                                                    // Calcular el porcentaje de progreso
-                                                                    double porcentajeProgreso = (cantidadFinanciada2 / cantidadNecesaria2) * 100;
-
-                                                                    // Pintar la barra de progreso
-                                                                    System.out.println("\nBarra de Progreso:");
-                                                                    System.out.print("[");
-
-                                                                    int totalCaracteres = 50; // Longitud total de la barra
-                                                                    int caracteresLlenos = (int) (porcentajeProgreso / (100.0 / totalCaracteres)); // Caracteres llenos, se hace una regla de 3
-                                                                    for (int i = 0; i < totalCaracteres; i++) {
-                                                                        if (i < caracteresLlenos) {
-                                                                            System.out.print("#"); // Parte llena de la barra
-                                                                        } else {
-                                                                            System.out.print("-"); // Parte vacía de la barra
-                                                                        }
-                                                                    }
-                                                                    System.out.printf("] %.2f %%\n", porcentajeProgreso);
-
+                                                        //MODIFICAR - ELIMINAR proyecto 2
                                                                     boolean salirGestionProyecto = false;
-                                                                    //MODIFICAR - ELIMINAR proyecto 2
                                                                     while (!salirGestionProyecto) {
-                                                                        System.out.println("""
-                                                                    \nOpciones de gestión:
-                                                                    1. Modificar proyecto
-                                                                    2. Eliminar proyecto
-                                                                    3. Salir""");
+                                                                        menuGestionProyecto();
                                                                         int gestionProyecto = lecturaDatos.nextInt();
                                                                         lecturaDatos.nextLine();
 
@@ -2255,19 +1529,7 @@ public class Main {
                                                                                 boolean salirModificar = false;
 
                                                                                 while (!salirModificar){
-                                                                                    System.out.println("""
-                                                                            \nElige el apartado que vas a modificar:
-                                                                            1. Nombre
-                                                                            2. Descripción
-                                                                            3. Categoría
-                                                                            4. Cantidad necesaria
-                                                                            5. Cantidad financiada
-                                                                            6. Fecha inicio
-                                                                            7. Fecha fin
-                                                                            8. Recompensa 1
-                                                                            9. Recompensa 2
-                                                                            10. Recompensa 3
-                                                                            11. Salir""");
+                                                                                    menuModificarProyecto();
                                                                                     int modificaApartado = lecturaDatos.nextInt();
                                                                                     lecturaDatos.nextLine();
 
@@ -2363,36 +1625,13 @@ public class Main {
                                                                 }
                                                                 else if (nombre3 != null) {
                                                                     System.out.println("\nProyecto 3:");
-                                                                    System.out.println("Nombre: " + nombre3 + "\nDescripción: " + descripcion3 + "\nCategoría: " + categoria3 +
-                                                                            "\nCantidad necesaria: " + cantidadNecesaria3 + " €\nCantidad financiada: " + cantidadFinanciada3 + " €" +
-                                                                            "\nFecha inicio: " + fechaInicio3 + "\nFecha fin: " + fechaFin3);
-                                                                    System.out.println("Recompensas: 1) " + recompensa3_1 + " (" + precio3_1 + " €), 2) " + recompensa3_2 + " (" + precio3_2 + " €), 3) " + recompensa3_3 + " (" + precio3_3 + " €)");
+                                                                    vistaProyectoDetalle(nombre3, descripcion3, categoria3, cantidadNecesaria3, cantidadFinanciada3, fechaInicio3, fechaFin3, recompensa3_1, precio3_1, recompensa3_2, precio3_2, recompensa3_3, precio3_3);
+                                                                    graficoProgreso(cantidadFinanciada3, cantidadNecesaria3);
 
-                                                                    // Calcular el porcentaje de progreso
-                                                                    double porcentajeProgreso = (cantidadFinanciada3 / cantidadNecesaria3) * 100;
-
-                                                                    // Pintar la barra de progreso
-                                                                    System.out.println("\nBarra de Progreso:");
-                                                                    System.out.print("[");
-
-                                                                    int totalCaracteres = 50; // Longitud total de la barra
-                                                                    int caracteresLlenos = (int) (porcentajeProgreso / (100.0 / totalCaracteres)); // Caracteres llenos, se hace una regla de 3
-                                                                    for (int i = 0; i < totalCaracteres; i++) {
-                                                                        if (i < caracteresLlenos) {
-                                                                            System.out.print("#"); // Parte llena de la barra
-                                                                        } else {
-                                                                            System.out.print("-"); // Parte vacía de la barra
-                                                                        }
-                                                                    }
-                                                                    System.out.printf("] %.2f %%\n", porcentajeProgreso);
-
+                                                        //MODIFICAR - ELIMINAR proyecto 3
                                                                     boolean salirGestionProyecto = false;
                                                                     while (!salirGestionProyecto) {
-                                                                        System.out.println("""
-                                                                    \nOpciones de gestión:
-                                                                    1. Modificar proyecto
-                                                                    2. Eliminar proyecto
-                                                                    3. Salir""");
+                                                                        menuGestionProyecto();
                                                                         int gestionProyecto = lecturaDatos.nextInt();
                                                                         lecturaDatos.nextLine();
 
@@ -2401,19 +1640,7 @@ public class Main {
                                                                                 boolean salirModificar = false;
 
                                                                                 while (!salirModificar){
-                                                                                    System.out.println("""
-                                                                            \nElige el apartado que vas a modificar:
-                                                                            1. Nombre
-                                                                            2. Descripción
-                                                                            3. Categoría
-                                                                            4. Cantidad necesaria
-                                                                            5. Cantidad financiada
-                                                                            6. Fecha inicio
-                                                                            7. Fecha fin
-                                                                            8. Recompensa 1
-                                                                            9. Recompensa 2
-                                                                            10. Recompensa 3
-                                                                            11. Salir""");
+                                                                                    menuModificarProyecto();
                                                                                     int modificaApartado = lecturaDatos.nextInt();
                                                                                     lecturaDatos.nextLine();
 
@@ -2519,38 +1746,13 @@ public class Main {
                                                             if (proyectosCreados >= 2) {
                                                                 if (nombre2 != null) {
                                                                     System.out.println("\nProyecto 2:");
-                                                                    System.out.println("Nombre: " + nombre2 + "\nDescripción: " + descripcion2 + "\nCategoría: " + categoria2 +
-                                                                            "\nCantidad necesaria: " + cantidadNecesaria2 + " €\nCantidad financiada: " + cantidadFinanciada2 + " €" +
-                                                                            "\nFecha inicio: " + fechaInicio2 + "\nFecha fin: " + fechaFin2);
-                                                                    System.out.println("Recompensas: 1) " + recompensa2_1 + " (" + precio2_1 + " €), 2) " + recompensa2_2 + " (" + precio2_2 + " €), 3) " + recompensa2_3 + " (" + precio2_3 + " €)");
+                                                                    vistaProyectoDetalle(nombre2, descripcion2, categoria2, cantidadNecesaria2, cantidadFinanciada2, fechaInicio2, fechaFin2, recompensa2_1, precio2_1, recompensa2_2, precio2_2, recompensa2_3, precio2_3);
+                                                                    graficoProgreso(cantidadFinanciada2, cantidadNecesaria2);
 
-                                                                    // Calcular el porcentaje de progreso
-                                                                    double porcentajeProgreso = (cantidadFinanciada2 / cantidadNecesaria2) * 100;
-
-                                                                    // Pintar la barra de progreso
-                                                                    System.out.println("\nBarra de Progreso:");
-                                                                    System.out.print("[");
-
-                                                                    int totalCaracteres = 50; // Longitud total de la barra
-                                                                    int caracteresLlenos = (int) (porcentajeProgreso / (100.0 / totalCaracteres)); // Caracteres llenos, se hace una regla de 3
-                                                                    for (int i = 0; i < totalCaracteres; i++) {
-                                                                        if (i < caracteresLlenos) {
-                                                                            System.out.print("#"); // Parte llena de la barra
-                                                                        } else {
-                                                                            System.out.print("-"); // Parte vacía de la barra
-                                                                        }
-                                                                    }
-                                                                    System.out.printf("] %.2f %%\n", porcentajeProgreso);
-
-
-                                                                    boolean salirGestionProyecto = false;
                                                                     //MODIFICAR - ELIMINAR proyecto 2
+                                                                    boolean salirGestionProyecto = false;
                                                                     while (!salirGestionProyecto) {
-                                                                        System.out.println("""
-                                                                    \nOpciones de gestión:
-                                                                    1. Modificar proyecto
-                                                                    2. Eliminar proyecto
-                                                                    3. Salir""");
+                                                                        menuGestionProyecto();
                                                                         int gestionProyecto = lecturaDatos.nextInt();
                                                                         lecturaDatos.nextLine();
 
@@ -2559,19 +1761,7 @@ public class Main {
                                                                                 boolean salirModificar = false;
 
                                                                                 while (!salirModificar){
-                                                                                    System.out.println("""
-                                                                            \nElige el apartado que vas a modificar:
-                                                                            1. Nombre
-                                                                            2. Descripción
-                                                                            3. Categoría
-                                                                            4. Cantidad necesaria
-                                                                            5. Cantidad financiada
-                                                                            6. Fecha inicio
-                                                                            7. Fecha fin
-                                                                            8. Recompensa 1
-                                                                            9. Recompensa 2
-                                                                            10. Recompensa 3
-                                                                            11. Salir""");
+                                                                                    menuModificarProyecto();
                                                                                     int modificaApartado = lecturaDatos.nextInt();
                                                                                     lecturaDatos.nextLine();
 
@@ -2667,36 +1857,13 @@ public class Main {
                                                                 }
                                                                 else if (nombre3 != null) {
                                                                     System.out.println("\nProyecto 3:");
-                                                                    System.out.println("Nombre: " + nombre3 + "\nDescripción: " + descripcion3 + "\nCategoría: " + categoria3 +
-                                                                            "\nCantidad necesaria: " + cantidadNecesaria3 + " €\nCantidad financiada: " + cantidadFinanciada3 + " €" +
-                                                                            "\nFecha inicio: " + fechaInicio3 + "\nFecha fin: " + fechaFin3);
-                                                                    System.out.println("Recompensas: 1) " + recompensa3_1 + " (" + precio3_1 + " €), 2) " + recompensa3_2 + " (" + precio3_2 + " €), 3) " + recompensa3_3 + " (" + precio3_3 + " €)");
+                                                                    vistaProyectoDetalle(nombre3, descripcion3, categoria3, cantidadNecesaria3, cantidadFinanciada3, fechaInicio3, fechaFin3, recompensa3_1, precio3_1, recompensa3_2, precio3_2, recompensa3_3, precio3_3);
+                                                                    graficoProgreso(cantidadFinanciada3, cantidadNecesaria3);
 
-                                                                    // Calcular el porcentaje de progreso
-                                                                    double porcentajeProgreso = (cantidadFinanciada3 / cantidadNecesaria3) * 100;
-
-                                                                    // Pintar la barra de progreso
-                                                                    System.out.println("\nBarra de Progreso:");
-                                                                    System.out.print("[");
-
-                                                                    int totalCaracteres = 50; // Longitud total de la barra
-                                                                    int caracteresLlenos = (int) (porcentajeProgreso / (100.0 / totalCaracteres)); // Caracteres llenos, se hace una regla de 3
-                                                                    for (int i = 0; i < totalCaracteres; i++) {
-                                                                        if (i < caracteresLlenos) {
-                                                                            System.out.print("#"); // Parte llena de la barra
-                                                                        } else {
-                                                                            System.out.print("-"); // Parte vacía de la barra
-                                                                        }
-                                                                    }
-                                                                    System.out.printf("] %.2f %%\n", porcentajeProgreso);
-
+                                                                    //MODIFICAR - ELIMINAR proyecto 3
                                                                     boolean salirGestionProyecto = false;
                                                                     while (!salirGestionProyecto) {
-                                                                        System.out.println("""
-                                                                    \nOpciones de gestión:
-                                                                    1. Modificar proyecto
-                                                                    2. Eliminar proyecto
-                                                                    3. Salir""");
+                                                                        menuGestionProyecto();
                                                                         int gestionProyecto = lecturaDatos.nextInt();
                                                                         lecturaDatos.nextLine();
 
@@ -2705,19 +1872,7 @@ public class Main {
                                                                                 boolean salirModificar = false;
 
                                                                                 while (!salirModificar){
-                                                                                    System.out.println("""
-                                                                            \nElige el apartado que vas a modificar:
-                                                                            1. Nombre
-                                                                            2. Descripción
-                                                                            3. Categoría
-                                                                            4. Cantidad necesaria
-                                                                            5. Cantidad financiada
-                                                                            6. Fecha inicio
-                                                                            7. Fecha fin
-                                                                            8. Recompensa 1
-                                                                            9. Recompensa 2
-                                                                            10. Recompensa 3
-                                                                            11. Salir""");
+                                                                                    menuModificarProyecto();
                                                                                     int modificaApartado = lecturaDatos.nextInt();
                                                                                     lecturaDatos.nextLine();
 
@@ -2813,37 +1968,13 @@ public class Main {
                                                                 }
                                                                 else if (nombre1 != null) {
                                                                     System.out.println("\nProyecto 1:");
-                                                                    System.out.println("Nombre: " + nombre1 + "\nDescripción: " + descripcion1 + "\nCategoría: " + categoria1 +
-                                                                            "\nCantidad necesaria: " + cantidadNecesaria1 + " €\nCantidad financiada: " + cantidadFinanciada1 + " €" +
-                                                                            "\nFecha inicio: " + fechaInicio1 + "\nFecha fin: " + fechaFin1);
-                                                                    System.out.println("Recompensas: 1) " + recompensa1_1 + " (" + precio1_1 + " €), 2) " + recompensa1_2 + " (" + precio1_2 + " €), 3) " + recompensa1_3 + " (" + precio1_3 + " €)");
+                                                                    vistaProyectoDetalle(nombre1, descripcion1, categoria1, cantidadNecesaria1, cantidadFinanciada1, fechaInicio1, fechaFin1, recompensa1_1, precio1_1, recompensa1_2, precio1_2, recompensa1_3, precio1_3);
+                                                                    graficoProgreso(cantidadFinanciada1, cantidadNecesaria1);
 
-                                                                    // Calcular el porcentaje de progreso
-                                                                    double porcentajeProgreso = (cantidadFinanciada1 / cantidadNecesaria1) * 100;
-
-                                                                    // Pintar la barra de progreso
-                                                                    System.out.println("\nBarra de Progreso:");
-                                                                    System.out.print("[");
-
-                                                                    int totalCaracteres = 50; // Longitud total de la barra
-                                                                    int caracteresLlenos = (int) (porcentajeProgreso / (100.0 / totalCaracteres)); // Caracteres llenos, se hace una regla de 3
-                                                                    for (int i = 0; i < totalCaracteres; i++) {
-                                                                        if (i < caracteresLlenos) {
-                                                                            System.out.print("#"); // Parte llena de la barra
-                                                                        } else {
-                                                                            System.out.print("-"); // Parte vacía de la barra
-                                                                        }
-                                                                    }
-                                                                    System.out.printf("] %.2f %%\n", porcentajeProgreso);
-
-                                                                    boolean salirGestionProyecto = false;
                                                                     //MODIFICAR - ELIMINAR proyecto 1
+                                                                    boolean salirGestionProyecto = false;
                                                                     while (!salirGestionProyecto) {
-                                                                        System.out.println("""
-                                                                    \nOpciones de gestión:
-                                                                    1. Modificar proyecto
-                                                                    2. Eliminar proyecto
-                                                                    3. Salir""");
+                                                                        menuGestionProyecto();
                                                                         int gestionProyecto = lecturaDatos.nextInt();
                                                                         lecturaDatos.nextLine();
 
@@ -2852,19 +1983,7 @@ public class Main {
                                                                                 boolean salirModificar = false;
 
                                                                                 while (!salirModificar){
-                                                                                    System.out.println("""
-                                                                            \nElige el apartado que vas a modificar:
-                                                                            1. Nombre
-                                                                            2. Descripción
-                                                                            3. Categoría
-                                                                            4. Cantidad necesaria
-                                                                            5. Cantidad financiada
-                                                                            6. Fecha inicio
-                                                                            7. Fecha fin
-                                                                            8. Recompensa 1
-                                                                            9. Recompensa 2
-                                                                            10. Recompensa 3
-                                                                            11. Salir""");
+                                                                                    menuModificarProyecto();
                                                                                     int modificaApartado = lecturaDatos.nextInt();
                                                                                     lecturaDatos.nextLine();
 
@@ -2970,36 +2089,13 @@ public class Main {
                                                             if (proyectosCreados == 3) {
                                                                 if (nombre3 != null) {
                                                                     System.out.println("\nProyecto 3:");
-                                                                    System.out.println("Nombre: " + nombre3 + "\nDescripción: " + descripcion3 + "\nCategoría: " + categoria3 +
-                                                                            "\nCantidad necesaria: " + cantidadNecesaria3 + " €\nCantidad financiada: " + cantidadFinanciada3 + " €" +
-                                                                            "\nFecha inicio: " + fechaInicio3 + "\nFecha fin: " + fechaFin3);
-                                                                    System.out.println("Recompensas: 1) " + recompensa3_1 + " (" + precio3_1 + " €), 2) " + recompensa3_2 + " (" + precio3_2 + " €), 3) " + recompensa3_3 + " (" + precio3_3 + " €)");
+                                                                    vistaProyectoDetalle(nombre3, descripcion3, categoria3, cantidadNecesaria3, cantidadFinanciada3, fechaInicio3, fechaFin3, recompensa3_1, precio3_1, recompensa3_2, precio3_2, recompensa3_3, precio3_3);
+                                                                    graficoProgreso(cantidadFinanciada3, cantidadNecesaria3);
 
-                                                                    // Calcular el porcentaje de progreso
-                                                                    double porcentajeProgreso = (cantidadFinanciada3 / cantidadNecesaria3) * 100;
-
-                                                                    // Pintar la barra de progreso
-                                                                    System.out.println("\nBarra de Progreso:");
-                                                                    System.out.print("[");
-
-                                                                    int totalCaracteres = 50; // Longitud total de la barra
-                                                                    int caracteresLlenos = (int) (porcentajeProgreso / (100.0 / totalCaracteres)); // Caracteres llenos, se hace una regla de 3
-                                                                    for (int i = 0; i < totalCaracteres; i++) {
-                                                                        if (i < caracteresLlenos) {
-                                                                            System.out.print("#"); // Parte llena de la barra
-                                                                        } else {
-                                                                            System.out.print("-"); // Parte vacía de la barra
-                                                                        }
-                                                                    }
-                                                                    System.out.printf("] %.2f %%\n", porcentajeProgreso);
-
+                                                                    //MODIFICAR - ELIMINAR proyecto 3
                                                                     boolean salirGestionProyecto = false;
                                                                     while (!salirGestionProyecto) {
-                                                                        System.out.println("""
-                                                                    \nOpciones de gestión:
-                                                                    1. Modificar proyecto
-                                                                    2. Eliminar proyecto
-                                                                    3. Salir""");
+                                                                        menuGestionProyecto();
                                                                         int gestionProyecto = lecturaDatos.nextInt();
                                                                         lecturaDatos.nextLine();
 
@@ -3008,19 +2104,7 @@ public class Main {
                                                                                 boolean salirModificar = false;
 
                                                                                 while (!salirModificar){
-                                                                                    System.out.println("""
-                                                                            \nElige el apartado que vas a modificar:
-                                                                            1. Nombre
-                                                                            2. Descripción
-                                                                            3. Categoría
-                                                                            4. Cantidad necesaria
-                                                                            5. Cantidad financiada
-                                                                            6. Fecha inicio
-                                                                            7. Fecha fin
-                                                                            8. Recompensa 1
-                                                                            9. Recompensa 2
-                                                                            10. Recompensa 3
-                                                                            11. Salir""");
+                                                                                    menuModificarProyecto();
                                                                                     int modificaApartado = lecturaDatos.nextInt();
                                                                                     lecturaDatos.nextLine();
 
@@ -3116,37 +2200,13 @@ public class Main {
                                                                 }
                                                                 else if (nombre1 != null) {
                                                                     System.out.println("\nProyecto 1:");
-                                                                    System.out.println("Nombre: " + nombre1 + "\nDescripción: " + descripcion1 + "\nCategoría: " + categoria1 +
-                                                                            "\nCantidad necesaria: " + cantidadNecesaria1 + " €\nCantidad financiada: " + cantidadFinanciada1 + " €" +
-                                                                            "\nFecha inicio: " + fechaInicio1 + "\nFecha fin: " + fechaFin1);
-                                                                    System.out.println("Recompensas: 1) " + recompensa1_1 + " (" + precio1_1 + " €), 2) " + recompensa1_2 + " (" + precio1_2 + " €), 3) " + recompensa1_3 + " (" + precio1_3 + " €)");
+                                                                    vistaProyectoDetalle(nombre1, descripcion1, categoria1, cantidadNecesaria1, cantidadFinanciada1, fechaInicio1, fechaFin1, recompensa1_1, precio1_1, recompensa1_2, precio1_2, recompensa1_3, precio1_3);
+                                                                    graficoProgreso(cantidadFinanciada1, cantidadNecesaria1);
 
-                                                                    // Calcular el porcentaje de progreso
-                                                                    double porcentajeProgreso = (cantidadFinanciada1 / cantidadNecesaria1) * 100;
-
-                                                                    // Pintar la barra de progreso
-                                                                    System.out.println("\nBarra de Progreso:");
-                                                                    System.out.print("[");
-
-                                                                    int totalCaracteres = 50; // Longitud total de la barra
-                                                                    int caracteresLlenos = (int) (porcentajeProgreso / (100.0 / totalCaracteres)); // Caracteres llenos, se hace una regla de 3
-                                                                    for (int i = 0; i < totalCaracteres; i++) {
-                                                                        if (i < caracteresLlenos) {
-                                                                            System.out.print("#"); // Parte llena de la barra
-                                                                        } else {
-                                                                            System.out.print("-"); // Parte vacía de la barra
-                                                                        }
-                                                                    }
-                                                                    System.out.printf("] %.2f %%\n", porcentajeProgreso);
-
-                                                                    boolean salirGestionProyecto = false;
                                                                     //MODIFICAR - ELIMINAR proyecto 1
+                                                                    boolean salirGestionProyecto = false;
                                                                     while (!salirGestionProyecto) {
-                                                                        System.out.println("""
-                                                                    \nOpciones de gestión:
-                                                                    1. Modificar proyecto
-                                                                    2. Eliminar proyecto
-                                                                    3. Salir""");
+                                                                        menuGestionProyecto();
                                                                         int gestionProyecto = lecturaDatos.nextInt();
                                                                         lecturaDatos.nextLine();
 
@@ -3155,19 +2215,7 @@ public class Main {
                                                                                 boolean salirModificar = false;
 
                                                                                 while (!salirModificar){
-                                                                                    System.out.println("""
-                                                                            \nElige el apartado que vas a modificar:
-                                                                            1. Nombre
-                                                                            2. Descripción
-                                                                            3. Categoría
-                                                                            4. Cantidad necesaria
-                                                                            5. Cantidad financiada
-                                                                            6. Fecha inicio
-                                                                            7. Fecha fin
-                                                                            8. Recompensa 1
-                                                                            9. Recompensa 2
-                                                                            10. Recompensa 3
-                                                                            11. Salir""");
+                                                                                    menuModificarProyecto();
                                                                                     int modificaApartado = lecturaDatos.nextInt();
                                                                                     lecturaDatos.nextLine();
 
@@ -3263,37 +2311,13 @@ public class Main {
                                                                 }
                                                                 else if (nombre2 != null) {
                                                                     System.out.println("\nProyecto 2:");
-                                                                    System.out.println("Nombre: " + nombre2 + "\nDescripción: " + descripcion2 + "\nCategoría: " + categoria2 +
-                                                                            "\nCantidad necesaria: " + cantidadNecesaria2 + " €\nCantidad financiada: " + cantidadFinanciada2 + " €" +
-                                                                            "\nFecha inicio: " + fechaInicio2 + "\nFecha fin: " + fechaFin2);
-                                                                    System.out.println("Recompensas: 1) " + recompensa2_1 + " (" + precio2_1 + " €), 2) " + recompensa2_2 + " (" + precio2_2 + " €), 3) " + recompensa2_3 + " (" + precio2_3 + " €)");
+                                                                    vistaProyectoDetalle(nombre2, descripcion2, categoria2, cantidadNecesaria2, cantidadFinanciada2, fechaInicio2, fechaFin2, recompensa2_1, precio2_1, recompensa2_2, precio2_2, recompensa2_3, precio2_3);
+                                                                    graficoProgreso(cantidadFinanciada2, cantidadNecesaria2);
 
-                                                                    // Calcular el porcentaje de progreso
-                                                                    double porcentajeProgreso = (cantidadFinanciada2 / cantidadNecesaria3) * 100;
-
-                                                                    // Pintar la barra de progreso
-                                                                    System.out.println("\nBarra de Progreso:");
-                                                                    System.out.print("[");
-
-                                                                    int totalCaracteres = 50; // Longitud total de la barra
-                                                                    int caracteresLlenos = (int) (porcentajeProgreso / (100.0 / totalCaracteres)); // Caracteres llenos, se hace una regla de 3
-                                                                    for (int i = 0; i < totalCaracteres; i++) {
-                                                                        if (i < caracteresLlenos) {
-                                                                            System.out.print("#"); // Parte llena de la barra
-                                                                        } else {
-                                                                            System.out.print("-"); // Parte vacía de la barra
-                                                                        }
-                                                                    }
-                                                                    System.out.printf("] %.2f %%\n", porcentajeProgreso);
-
-                                                                    boolean salirGestionProyecto = false;
                                                                     //MODIFICAR - ELIMINAR proyecto 2
+                                                                    boolean salirGestionProyecto = false;
                                                                     while (!salirGestionProyecto) {
-                                                                        System.out.println("""
-                                                                    \nOpciones de gestión:
-                                                                    1. Modificar proyecto
-                                                                    2. Eliminar proyecto
-                                                                    3. Salir""");
+                                                                        menuGestionProyecto();
                                                                         int gestionProyecto = lecturaDatos.nextInt();
                                                                         lecturaDatos.nextLine();
 
@@ -3302,19 +2326,7 @@ public class Main {
                                                                                 boolean salirModificar = false;
 
                                                                                 while (!salirModificar){
-                                                                                    System.out.println("""
-                                                                            \nElige el apartado que vas a modificar:
-                                                                            1. Nombre
-                                                                            2. Descripción
-                                                                            3. Categoría
-                                                                            4. Cantidad necesaria
-                                                                            5. Cantidad financiada
-                                                                            6. Fecha inicio
-                                                                            7. Fecha fin
-                                                                            8. Recompensa 1
-                                                                            9. Recompensa 2
-                                                                            10. Recompensa 3
-                                                                            11. Salir""");
+                                                                                    menuModificarProyecto();
                                                                                     int modificaApartado = lecturaDatos.nextInt();
                                                                                     lecturaDatos.nextLine();
 
@@ -3445,11 +2457,7 @@ public class Main {
     //2.2. GESTOR - CONFIGURACIÓN
                             case 2:
                                 do {
-                                    System.out.println("""
-                                        Selecciona que quieres hacer: 
-                                        1.- Cambiar mi usuario
-                                        2.- Cambiar mi contraseña
-                                        3.- Salir""");
+                                    menuConfiguracion();
                                     opcionConfig = lecturaDatos.nextInt();
                                     lecturaDatos.nextLine();
                                 } while (opcionConfig < 1 || opcionConfig > 3);
@@ -3470,6 +2478,7 @@ public class Main {
                                         break;
                                     default:
                                         System.out.println("Opción inválida. Inténtelo de nuevo.");
+                                        break;
                                 }
                                 break;
     //2.3. GESTOR - CERRAR SESIÓN
@@ -3500,30 +2509,15 @@ public class Main {
                         boolean salirMenu = false;
                         contadorIntentos=0;
                         while (!salirMenu) {
-                            System.out.println("""
-                                    \n--- MENÚ PRINCIPAL ---
-                                    Seleccione una opción:
-                                    1. Mis inversiones
-                                    2. Proyectos
-                                    3. Cartera digital
-                                    4. Invita a un amigo
-                                    5. Configuración
-                                    6. Cerrar sesión""");
-
+                            menuPrincipalInversor();
                             int seleccionInversor = lecturaDatos.nextInt();
-
 
                             switch (seleccionInversor) {
                                 case 1:
     //3.1. INVERSOR - MIS INVERSIONES
                                     boolean salirSubMenuInversiones = false;
-
                                     while (!salirSubMenuInversiones) { //El bucle finaliza cuando se le da 3. Salir, salirSubMenu = true y te sales del menú Mis proyectos para ir al menu gestor.
-                                        System.out.println("""
-                                                \n--- PROYECTOS ---
-                                                Seleccione una opción:
-                                                1. Ver proyectos financiados
-                                                2. Salir""");
+                                        menuMisInversionesInversor();
                                         int seleccionProyectos = lecturaDatos.nextInt();
                                         lecturaDatos.nextLine();
 
@@ -3531,7 +2525,6 @@ public class Main {
         //3.1.1. INVERSOR - VER PROYECTOS FINANCIADOS
                                             case 1:
                                                 boolean salirVerProyectos = false;
-
                                                 while (!salirVerProyectos) {
                                                     System.out.println("\n--- PROYECTOS FINANCIADOS ---");
                                                     // Si proyectosCreados tiene un valor determinado, se muestran todos los proyectos con valor inferior al actual (todos los creados previamente)
@@ -3539,20 +2532,15 @@ public class Main {
                                                     if (npc1) {
                                                         if (nombre1 != null && participaInv1Proyecto1) {
                                                             System.out.println("\nProyecto 1:");
-                                                            System.out.println("Nombre: " + nombre1 + "\nDescripción: " + descripcion1 + "\nCategoría: " + categoria1 +
-                                                                    "\nCantidad necesaria: " + cantidadNecesaria1 + " €\nCantidad que has aportado: " + inversion1Proyecto1 + " €");
+                                                            vistaProyectoInversor(nombre1, descripcion1, categoria1, cantidadNecesaria1, inversion1Proyecto1);
                                                         }
-
                                                         if (nombre2 != null && participaInv1Proyecto2) {
                                                             System.out.println("\nProyecto 2:");
-                                                            System.out.println("Nombre: " + nombre2 + "\nDescripción: " + descripcion2 + "\nCategoría: " + categoria2 +
-                                                                    "\nCantidad necesaria: " + cantidadNecesaria2 + " €\nCantidad que has aportado: " + inversion1Proyecto2 + " €");
+                                                            vistaProyectoInversor(nombre2, descripcion2, categoria2, cantidadNecesaria2, inversion1Proyecto2);
                                                         }
-
                                                         if (nombre3 != null && participaInv1Proyecto3) {
                                                             System.out.println("\nProyecto 3:");
-                                                            System.out.println("Nombre: " + nombre3 + "\nDescripción: " + descripcion3 + "\nCategoría: " + categoria3 +
-                                                                    "\nCantidad necesaria: " + cantidadNecesaria3 + " €\nCantidad que has aportado: " + inversion1Proyecto3 + " €");
+                                                            vistaProyectoInversor(nombre3, descripcion3, categoria3, cantidadNecesaria3, inversion1Proyecto3);
                                                         }
 
                                                         if (proyectosFinanciaInv1 == 0) {
@@ -3561,31 +2549,7 @@ public class Main {
                                                         }
             //3.1.1.1. INVERSOR 1 - VISTA DETALLADA MENÚ
                                                         if (proyectosFinanciaInv1 > 0) {
-                                                            System.out.println("\nVer vista detallada: ");
-
-                                                            for (int i = 1; i <= proyectosFinanciaInv1; i++) {
-                                                                System.out.print(i + ". Proyecto ");
-                                                                if (i == 1) {
-                                                                    if (nombre1 != null && participaInv1Proyecto1) System.out.println("1: " + nombre1);
-                                                                    else if (nombre2 != null && participaInv1Proyecto2) System.out.println("2: " + nombre2);
-                                                                    else if (nombre3 != null && participaInv1Proyecto3) System.out.println("3: " + nombre3);
-
-                                                                } else if (i == 2) {
-                                                                    if (nombre2 != null && participaInv1Proyecto2) System.out.println("2: " + nombre2);
-                                                                    else if (nombre3 != null && participaInv1Proyecto3) System.out.println("3: " + nombre3);
-                                                                    else if (nombre1 != null && participaInv1Proyecto1) System.out.println("1: " + nombre1);
-
-                                                                } else if (i == 3) {
-                                                                    if (nombre3 != null && participaInv1Proyecto3) System.out.println("3: " + nombre3);
-                                                                    else if (nombre1 != null && participaInv1Proyecto1) System.out.println("1: " + nombre1);
-                                                                    else if (nombre2 != null && participaInv1Proyecto2) System.out.println("2: " + nombre2);
-                                                                }
-                                                            }
-
-                                                            if (proyectosFinanciaInv1 == 1) System.out.print("2. ");
-                                                            else if (proyectosFinanciaInv1 == 2) System.out.print("3. ");
-                                                            else if (proyectosFinanciaInv1 == 3) System.out.print("4. ");
-                                                            System.out.println("Salir");
+                                                            menuVistaDetalladaInversor(proyectosFinanciaInv1, nombre1, nombre2, nombre3, participaInv1Proyecto1, participaInv1Proyecto2, participaInv1Proyecto3);
                                                             int selecProyectoDetalle = lecturaDatos.nextInt();
                                                             lecturaDatos.nextLine();
 
@@ -3595,35 +2559,13 @@ public class Main {
                                                                     if (proyectosFinanciaInv1 >= 1) {
                                                                         if (nombre1 != null && participaInv1Proyecto1) {
                                                                             System.out.println("\nProyecto 1:");
-                                                                            System.out.println("Nombre: " + nombre1 + "\nDescripción: " + descripcion1 + "\nCategoría: " + categoria1 +
-                                                                                    "\nCantidad necesaria: " + cantidadNecesaria1 + " €\nCantidad que has aportado: " + inversion1Proyecto1 + " €" +
-                                                                                    "\nFecha inicio: " + fechaInicio1 + "\nFecha fin: " + fechaFin1);
-                                                                            System.out.println("Recompensas: 1) " + recompensa1_1 + " (" + precio1_1 + " €), 2) " + recompensa1_2 + " (" + precio1_2 + " €), 3) " + recompensa1_3 + " (" + precio1_3 + " €)");
+                                                                            vistaProyectoInversorDetalle(nombre1, descripcion1, categoria1, cantidadNecesaria1, inversion1Proyecto1, fechaInicio1, fechaFin1, recompensa1_1, precio1_1, recompensa1_2, precio1_2, recompensa1_3, precio1_3);
+                                                                            graficoProgreso(cantidadFinanciada1, cantidadNecesaria1);
 
-                                                                            // Calcular el porcentaje de progreso
-                                                                            double porcentajeProgreso = (cantidadFinanciada1 / cantidadNecesaria1) * 100;
-
-                                                                            // Pintar la barra de progreso
-                                                                            System.out.println("\nBarra de Progreso:");
-                                                                            System.out.print("[");
-
-                                                                            int totalCaracteres = 50; // Longitud total de la barra
-                                                                            int caracteresLlenos = (int) (porcentajeProgreso / (100.0 / totalCaracteres)); // Caracteres llenos, se hace una regla de 3
-                                                                            for (int i = 0; i < totalCaracteres; i++) {
-                                                                                if (i < caracteresLlenos) {
-                                                                                    System.out.print("#"); // Parte llena de la barra
-                                                                                } else {
-                                                                                    System.out.print("-"); // Parte vacía de la barra
-                                                                                }
-                                                                            }
-                                                                            System.out.printf("] %.2f %%\n", porcentajeProgreso);
-
+                                                                    //SALIR proyecto 1
                                                                             boolean salirGestionProyecto = false;
-                                                                            //MODIFICAR - ELIMINAR proyecto 1
                                                                             while (!salirGestionProyecto) {
-                                                                                System.out.println("""
-                                                                                        \nSeleccione una opción:
-                                                                                        1. Salir""");
+                                                                                menuGestionProyectoInversor();
                                                                                 int gestionProyecto = lecturaDatos.nextInt();
                                                                                 lecturaDatos.nextLine();
 
@@ -3637,35 +2579,13 @@ public class Main {
                                                                         }
                                                                         else if (nombre2 != null && participaInv1Proyecto2) {
                                                                             System.out.println("\nProyecto 2:");
-                                                                            System.out.println("Nombre: " + nombre2 + "\nDescripción: " + descripcion2 + "\nCategoría: " + categoria2 +
-                                                                                    "\nCantidad necesaria: " + cantidadNecesaria2 + " €\nCantidad que has aportado: " + inversion1Proyecto2 + " €" +
-                                                                                    "\nFecha inicio: " + fechaInicio2 + "\nFecha fin: " + fechaFin2);
-                                                                            System.out.println("Recompensas: 1) " + recompensa2_1 + " (" + precio2_1 + " €), 2) " + recompensa2_2 + " (" + precio2_2 + " €), 3) " + recompensa2_3 + " (" + precio2_3 + " €)");
+                                                                            vistaProyectoInversorDetalle(nombre2, descripcion2, categoria2, cantidadNecesaria2, inversion1Proyecto2, fechaInicio2, fechaFin2, recompensa2_1, precio2_1, recompensa2_2, precio2_2, recompensa2_3, precio2_3);
+                                                                            graficoProgreso(cantidadFinanciada2, cantidadNecesaria2);
 
-                                                                            // Calcular el porcentaje de progreso
-                                                                            double porcentajeProgreso = (cantidadFinanciada2 / cantidadNecesaria2) * 100;
-
-                                                                            // Pintar la barra de progreso
-                                                                            System.out.println("\nBarra de Progreso:");
-                                                                            System.out.print("[");
-
-                                                                            int totalCaracteres = 50; // Longitud total de la barra
-                                                                            int caracteresLlenos = (int) (porcentajeProgreso / (100.0 / totalCaracteres)); // Caracteres llenos, se hace una regla de 3
-                                                                            for (int i = 0; i < totalCaracteres; i++) {
-                                                                                if (i < caracteresLlenos) {
-                                                                                    System.out.print("#"); // Parte llena de la barra
-                                                                                } else {
-                                                                                    System.out.print("-"); // Parte vacía de la barra
-                                                                                }
-                                                                            }
-                                                                            System.out.printf("] %.2f %%\n", porcentajeProgreso);
-
+                                                                    //SALIR proyecto 2
                                                                             boolean salirGestionProyecto = false;
-                                                                            //MODIFICAR - ELIMINAR proyecto 2
                                                                             while (!salirGestionProyecto) {
-                                                                                System.out.println("""
-                                                                                        \nSeleccione una opción:
-                                                                                        1. Salir""");
+                                                                                menuGestionProyectoInversor();
                                                                                 int gestionProyecto = lecturaDatos.nextInt();
                                                                                 lecturaDatos.nextLine();
 
@@ -3679,34 +2599,13 @@ public class Main {
                                                                         }
                                                                         else if (nombre3 != null && participaInv1Proyecto3) {
                                                                             System.out.println("\nProyecto 3:");
-                                                                            System.out.println("Nombre: " + nombre3 + "\nDescripción: " + descripcion3 + "\nCategoría: " + categoria3 +
-                                                                                    "\nCantidad necesaria: " + cantidadNecesaria3 + " €\nCantidad que has aportado: " + inversion1Proyecto3 + " €" +
-                                                                                    "\nFecha inicio: " + fechaInicio3 + "\nFecha fin: " + fechaFin3);
-                                                                            System.out.println("Recompensas: 1) " + recompensa3_1 + " (" + precio3_1 + " €), 2) " + recompensa3_2 + " (" + precio3_2 + " €), 3) " + recompensa3_3 + " (" + precio3_3 + " €)");
+                                                                            vistaProyectoInversorDetalle(nombre3, descripcion3, categoria3, cantidadNecesaria3, inversion1Proyecto3, fechaInicio3, fechaFin3, recompensa3_1, precio3_1, recompensa3_2, precio3_2, recompensa3_3, precio3_3);
+                                                                            graficoProgreso(cantidadFinanciada3, cantidadNecesaria3);
 
-                                                                            // Calcular el porcentaje de progreso
-                                                                            double porcentajeProgreso = (cantidadFinanciada3 / cantidadNecesaria3) * 100;
-
-                                                                            // Pintar la barra de progreso
-                                                                            System.out.println("\nBarra de Progreso:");
-                                                                            System.out.print("[");
-
-                                                                            int totalCaracteres = 50; // Longitud total de la barra
-                                                                            int caracteresLlenos = (int) (porcentajeProgreso / (100.0 / totalCaracteres)); // Caracteres llenos, se hace una regla de 3
-                                                                            for (int i = 0; i < totalCaracteres; i++) {
-                                                                                if (i < caracteresLlenos) {
-                                                                                    System.out.print("#"); // Parte llena de la barra
-                                                                                } else {
-                                                                                    System.out.print("-"); // Parte vacía de la barra
-                                                                                }
-                                                                            }
-                                                                            System.out.printf("] %.2f %%\n", porcentajeProgreso);
-
+                                                                    //SALIR proyecto 3
                                                                             boolean salirGestionProyecto = false;
                                                                             while (!salirGestionProyecto) {
-                                                                                System.out.println("""
-                                                                                        \nSeleccione una opción:
-                                                                                        1. Salir""");
+                                                                                menuGestionProyectoInversor();
                                                                                 int gestionProyecto = lecturaDatos.nextInt();
                                                                                 lecturaDatos.nextLine();
 
@@ -3730,35 +2629,13 @@ public class Main {
                                                                     if (proyectosFinanciaInv1 >= 2) {
                                                                         if (nombre2 != null && participaInv1Proyecto2) {
                                                                             System.out.println("\nProyecto 2:");
-                                                                            System.out.println("Nombre: " + nombre2 + "\nDescripción: " + descripcion2 + "\nCategoría: " + categoria2 +
-                                                                                    "\nCantidad necesaria: " + cantidadNecesaria2 + " €\nCantidad que has aportado: " + inversion1Proyecto2 + " €" +
-                                                                                    "\nFecha inicio: " + fechaInicio2 + "\nFecha fin: " + fechaFin2);
-                                                                            System.out.println("Recompensas: 1) " + recompensa2_1 + " (" + precio2_1 + " €), 2) " + recompensa2_2 + " (" + precio2_2 + " €), 3) " + recompensa2_3 + " (" + precio2_3 + " €)");
+                                                                            vistaProyectoInversorDetalle(nombre2, descripcion2, categoria2, cantidadNecesaria2, inversion1Proyecto2, fechaInicio2, fechaFin2, recompensa2_1, precio2_1, recompensa2_2, precio2_2, recompensa2_3, precio2_3);
+                                                                            graficoProgreso(cantidadFinanciada2, cantidadNecesaria2);
 
-                                                                            // Calcular el porcentaje de progreso
-                                                                            double porcentajeProgreso = (cantidadFinanciada2 / cantidadNecesaria2) * 100;
-
-                                                                            // Pintar la barra de progreso
-                                                                            System.out.println("\nBarra de Progreso:");
-                                                                            System.out.print("[");
-
-                                                                            int totalCaracteres = 50; // Longitud total de la barra
-                                                                            int caracteresLlenos = (int) (porcentajeProgreso / (100.0 / totalCaracteres)); // Caracteres llenos, se hace una regla de 3
-                                                                            for (int i = 0; i < totalCaracteres; i++) {
-                                                                                if (i < caracteresLlenos) {
-                                                                                    System.out.print("#"); // Parte llena de la barra
-                                                                                } else {
-                                                                                    System.out.print("-"); // Parte vacía de la barra
-                                                                                }
-                                                                            }
-                                                                            System.out.printf("] %.2f %%\n", porcentajeProgreso);
-
+                                                                            //SALIR proyecto 2
                                                                             boolean salirGestionProyecto = false;
-                                                                            //MODIFICAR - ELIMINAR proyecto 2
                                                                             while (!salirGestionProyecto) {
-                                                                                System.out.println("""
-                                                                                        \nSeleccione una opción:
-                                                                                        1. Salir""");
+                                                                                menuGestionProyectoInversor();
                                                                                 int gestionProyecto = lecturaDatos.nextInt();
                                                                                 lecturaDatos.nextLine();
 
@@ -3772,34 +2649,13 @@ public class Main {
                                                                         }
                                                                         else if (nombre3 != null && participaInv1Proyecto3) {
                                                                             System.out.println("\nProyecto 3:");
-                                                                            System.out.println("Nombre: " + nombre3 + "\nDescripción: " + descripcion3 + "\nCategoría: " + categoria3 +
-                                                                                    "\nCantidad necesaria: " + cantidadNecesaria3 + " €\nCantidad que has aportado: " + inversion1Proyecto3 + " €" +
-                                                                                    "\nFecha inicio: " + fechaInicio3 + "\nFecha fin: " + fechaFin3);
-                                                                            System.out.println("Recompensas: 1) " + recompensa3_1 + " (" + precio3_1 + " €), 2) " + recompensa3_2 + " (" + precio3_2 + " €), 3) " + recompensa3_3 + " (" + precio3_3 + " €)");
+                                                                            vistaProyectoInversorDetalle(nombre3, descripcion3, categoria3, cantidadNecesaria3, inversion1Proyecto3, fechaInicio3, fechaFin3, recompensa3_1, precio3_1, recompensa3_2, precio3_2, recompensa3_3, precio3_3);
+                                                                            graficoProgreso(cantidadFinanciada3, cantidadNecesaria3);
 
-                                                                            // Calcular el porcentaje de progreso
-                                                                            double porcentajeProgreso = (cantidadFinanciada3 / cantidadNecesaria3) * 100;
-
-                                                                            // Pintar la barra de progreso
-                                                                            System.out.println("\nBarra de Progreso:");
-                                                                            System.out.print("[");
-
-                                                                            int totalCaracteres = 50; // Longitud total de la barra
-                                                                            int caracteresLlenos = (int) (porcentajeProgreso / (100.0 / totalCaracteres)); // Caracteres llenos, se hace una regla de 3
-                                                                            for (int i = 0; i < totalCaracteres; i++) {
-                                                                                if (i < caracteresLlenos) {
-                                                                                    System.out.print("#"); // Parte llena de la barra
-                                                                                } else {
-                                                                                    System.out.print("-"); // Parte vacía de la barra
-                                                                                }
-                                                                            }
-                                                                            System.out.printf("] %.2f %%\n", porcentajeProgreso);
-
+                                                                            //SALIR proyecto 3
                                                                             boolean salirGestionProyecto = false;
                                                                             while (!salirGestionProyecto) {
-                                                                                System.out.println("""
-                                                                                        \nSeleccione una opción:
-                                                                                        1. Salir""");
+                                                                                menuGestionProyectoInversor();
                                                                                 int gestionProyecto = lecturaDatos.nextInt();
                                                                                 lecturaDatos.nextLine();
 
@@ -3813,35 +2669,13 @@ public class Main {
                                                                         }
                                                                         else if (nombre1 != null && participaInv1Proyecto1) {
                                                                             System.out.println("\nProyecto 1:");
-                                                                            System.out.println("Nombre: " + nombre1 + "\nDescripción: " + descripcion1 + "\nCategoría: " + categoria1 +
-                                                                                    "\nCantidad necesaria: " + cantidadNecesaria1 + " €\nCantidad que has aportado: " + inversion1Proyecto1 + " €" +
-                                                                                    "\nFecha inicio: " + fechaInicio1 + "\nFecha fin: " + fechaFin1);
-                                                                            System.out.println("Recompensas: 1) " + recompensa1_1 + " (" + precio1_1 + " €), 2) " + recompensa1_2 + " (" + precio1_2 + " €), 3) " + recompensa1_3 + " (" + precio1_3 + " €)");
+                                                                            vistaProyectoInversorDetalle(nombre1, descripcion1, categoria1, cantidadNecesaria1, inversion1Proyecto1, fechaInicio1, fechaFin1, recompensa1_1, precio1_1, recompensa1_2, precio1_2, recompensa1_3, precio1_3);
+                                                                            graficoProgreso(cantidadFinanciada1, cantidadNecesaria1);
 
-                                                                            // Calcular el porcentaje de progreso
-                                                                            double porcentajeProgreso = (cantidadFinanciada1 / cantidadNecesaria1) * 100;
-
-                                                                            // Pintar la barra de progreso
-                                                                            System.out.println("\nBarra de Progreso:");
-                                                                            System.out.print("[");
-
-                                                                            int totalCaracteres = 50; // Longitud total de la barra
-                                                                            int caracteresLlenos = (int) (porcentajeProgreso / (100.0 / totalCaracteres)); // Caracteres llenos, se hace una regla de 3
-                                                                            for (int i = 0; i < totalCaracteres; i++) {
-                                                                                if (i < caracteresLlenos) {
-                                                                                    System.out.print("#"); // Parte llena de la barra
-                                                                                } else {
-                                                                                    System.out.print("-"); // Parte vacía de la barra
-                                                                                }
-                                                                            }
-                                                                            System.out.printf("] %.2f %%\n", porcentajeProgreso);
-
+                                                                            //SALIR proyecto 1
                                                                             boolean salirGestionProyecto = false;
-                                                                            //MODIFICAR - ELIMINAR proyecto 1
                                                                             while (!salirGestionProyecto) {
-                                                                                System.out.println("""
-                                                                                        \nSeleccione una opción:
-                                                                                        1. Salir""");
+                                                                                menuGestionProyectoInversor();
                                                                                 int gestionProyecto = lecturaDatos.nextInt();
                                                                                 lecturaDatos.nextLine();
 
@@ -3865,34 +2699,13 @@ public class Main {
                                                                     if (proyectosFinanciaInv1 == 3) {
                                                                         if (nombre3 != null && participaInv1Proyecto3) {
                                                                             System.out.println("\nProyecto 3:");
-                                                                            System.out.println("Nombre: " + nombre3 + "\nDescripción: " + descripcion3 + "\nCategoría: " + categoria3 +
-                                                                                    "\nCantidad necesaria: " + cantidadNecesaria3 + " €\nCantidad que has aportado: " + inversion1Proyecto3 + " €" +
-                                                                                    "\nFecha inicio: " + fechaInicio3 + "\nFecha fin: " + fechaFin3);
-                                                                            System.out.println("Recompensas: 1) " + recompensa3_1 + " (" + precio3_1 + " €), 2) " + recompensa3_2 + " (" + precio3_2 + " €), 3) " + recompensa3_3 + " (" + precio3_3 + " €)");
+                                                                            vistaProyectoInversorDetalle(nombre3, descripcion3, categoria3, cantidadNecesaria3, inversion1Proyecto3, fechaInicio3, fechaFin3, recompensa3_1, precio3_1, recompensa3_2, precio3_2, recompensa3_3, precio3_3);
+                                                                            graficoProgreso(cantidadFinanciada3, cantidadNecesaria3);
 
-                                                                            // Calcular el porcentaje de progreso
-                                                                            double porcentajeProgreso = (cantidadFinanciada3 / cantidadNecesaria3) * 100;
-
-                                                                            // Pintar la barra de progreso
-                                                                            System.out.println("\nBarra de Progreso:");
-                                                                            System.out.print("[");
-
-                                                                            int totalCaracteres = 50; // Longitud total de la barra
-                                                                            int caracteresLlenos = (int) (porcentajeProgreso / (100.0 / totalCaracteres)); // Caracteres llenos, se hace una regla de 3
-                                                                            for (int i = 0; i < totalCaracteres; i++) {
-                                                                                if (i < caracteresLlenos) {
-                                                                                    System.out.print("#"); // Parte llena de la barra
-                                                                                } else {
-                                                                                    System.out.print("-"); // Parte vacía de la barra
-                                                                                }
-                                                                            }
-                                                                            System.out.printf("] %.2f %%\n", porcentajeProgreso);
-
+                                                                            //SALIR proyecto 3
                                                                             boolean salirGestionProyecto = false;
                                                                             while (!salirGestionProyecto) {
-                                                                                System.out.println("""
-                                                                                        \nSeleccione una opción:
-                                                                                        1. Salir""");
+                                                                                menuGestionProyectoInversor();
                                                                                 int gestionProyecto = lecturaDatos.nextInt();
                                                                                 lecturaDatos.nextLine();
 
@@ -3906,35 +2719,13 @@ public class Main {
                                                                         }
                                                                         else if (nombre1 != null && participaInv1Proyecto1) {
                                                                             System.out.println("\nProyecto 1:");
-                                                                            System.out.println("Nombre: " + nombre1 + "\nDescripción: " + descripcion1 + "\nCategoría: " + categoria1 +
-                                                                                    "\nCantidad necesaria: " + cantidadNecesaria1 + " €\nCantidad que has aportado: " + inversion1Proyecto1 + " €" +
-                                                                                    "\nFecha inicio: " + fechaInicio1 + "\nFecha fin: " + fechaFin1);
-                                                                            System.out.println("Recompensas: 1) " + recompensa1_1 + " (" + precio1_1 + " €), 2) " + recompensa1_2 + " (" + precio1_2 + " €), 3) " + recompensa1_3 + " (" + precio1_3 + " €)");
+                                                                            vistaProyectoInversorDetalle(nombre1, descripcion1, categoria1, cantidadNecesaria1, inversion1Proyecto1, fechaInicio1, fechaFin1, recompensa1_1, precio1_1, recompensa1_2, precio1_2, recompensa1_3, precio1_3);
+                                                                            graficoProgreso(cantidadFinanciada1, cantidadNecesaria1);
 
-                                                                            // Calcular el porcentaje de progreso
-                                                                            double porcentajeProgreso = (cantidadFinanciada1 / cantidadNecesaria1) * 100;
-
-                                                                            // Pintar la barra de progreso
-                                                                            System.out.println("\nBarra de Progreso:");
-                                                                            System.out.print("[");
-
-                                                                            int totalCaracteres = 50; // Longitud total de la barra
-                                                                            int caracteresLlenos = (int) (porcentajeProgreso / (100.0 / totalCaracteres)); // Caracteres llenos, se hace una regla de 3
-                                                                            for (int i = 0; i < totalCaracteres; i++) {
-                                                                                if (i < caracteresLlenos) {
-                                                                                    System.out.print("#"); // Parte llena de la barra
-                                                                                } else {
-                                                                                    System.out.print("-"); // Parte vacía de la barra
-                                                                                }
-                                                                            }
-                                                                            System.out.printf("] %.2f %%\n", porcentajeProgreso);
-
+                                                                            //SALIR proyecto 1
                                                                             boolean salirGestionProyecto = false;
-                                                                            //MODIFICAR - ELIMINAR proyecto 1
                                                                             while (!salirGestionProyecto) {
-                                                                                System.out.println("""
-                                                                                        \nSeleccione una opción:
-                                                                                        1. Salir""");
+                                                                                menuGestionProyectoInversor();
                                                                                 int gestionProyecto = lecturaDatos.nextInt();
                                                                                 lecturaDatos.nextLine();
 
@@ -3948,35 +2739,13 @@ public class Main {
                                                                         }
                                                                         else if (nombre2 != null && participaInv1Proyecto2) {
                                                                             System.out.println("\nProyecto 2:");
-                                                                            System.out.println("Nombre: " + nombre2 + "\nDescripción: " + descripcion2 + "\nCategoría: " + categoria2 +
-                                                                                    "\nCantidad necesaria: " + cantidadNecesaria2 + " €\nCantidad que has aportado: " + inversion1Proyecto2 + " €" +
-                                                                                    "\nFecha inicio: " + fechaInicio2 + "\nFecha fin: " + fechaFin2);
-                                                                            System.out.println("Recompensas: 1) " + recompensa2_1 + " (" + precio2_1 + " €), 2) " + recompensa2_2 + " (" + precio2_2 + " €), 3) " + recompensa2_3 + " (" + precio2_3 + " €)");
+                                                                            vistaProyectoInversorDetalle(nombre2, descripcion2, categoria2, cantidadNecesaria2, inversion1Proyecto2, fechaInicio2, fechaFin2, recompensa2_1, precio2_1, recompensa2_2, precio2_2, recompensa2_3, precio2_3);
+                                                                            graficoProgreso(cantidadFinanciada2, cantidadNecesaria2);
 
-                                                                            // Calcular el porcentaje de progreso
-                                                                            double porcentajeProgreso = (cantidadFinanciada2 / cantidadNecesaria2) * 100;
-
-                                                                            // Pintar la barra de progreso
-                                                                            System.out.println("\nBarra de Progreso:");
-                                                                            System.out.print("[");
-
-                                                                            int totalCaracteres = 50; // Longitud total de la barra
-                                                                            int caracteresLlenos = (int) (porcentajeProgreso / (100.0 / totalCaracteres)); // Caracteres llenos, se hace una regla de 3
-                                                                            for (int i = 0; i < totalCaracteres; i++) {
-                                                                                if (i < caracteresLlenos) {
-                                                                                    System.out.print("#"); // Parte llena de la barra
-                                                                                } else {
-                                                                                    System.out.print("-"); // Parte vacía de la barra
-                                                                                }
-                                                                            }
-                                                                            System.out.printf("] %.2f %%\n", porcentajeProgreso);
-
+                                                                            //SALIR proyecto 2
                                                                             boolean salirGestionProyecto = false;
-                                                                            //MODIFICAR - ELIMINAR proyecto 2
                                                                             while (!salirGestionProyecto) {
-                                                                                System.out.println("""
-                                                                                        \nSeleccione una opción:
-                                                                                        1. Salir""");
+                                                                                menuGestionProyectoInversor();
                                                                                 int gestionProyecto = lecturaDatos.nextInt();
                                                                                 lecturaDatos.nextLine();
 
@@ -4010,23 +2779,18 @@ public class Main {
                                                         }
                                                     }
                                                     //Se evalua para usuario Inversor 2
-                                                    if (npc2) {
+                                                    else if (npc2) {
                                                         if (nombre1 != null && participaInv2Proyecto1) {
                                                             System.out.println("\nProyecto 1:");
-                                                            System.out.println("Nombre: " + nombre1 + "\nDescripción: " + descripcion1 + "\nCategoría: " + categoria1 +
-                                                                    "\nCantidad necesaria: " + cantidadNecesaria1 + " €\nCantidad que has aportado: " + inversion2Proyecto1 + " €");
+                                                            vistaProyectoInversor(nombre1, descripcion1, categoria1, cantidadNecesaria1, inversion2Proyecto1);
                                                         }
-
                                                         if (nombre2 != null && participaInv2Proyecto2) {
                                                             System.out.println("\nProyecto 2:");
-                                                            System.out.println("Nombre: " + nombre2 + "\nDescripción: " + descripcion2 + "\nCategoría: " + categoria2 +
-                                                                    "\nCantidad necesaria: " + cantidadNecesaria2 + " €\nCantidad que has aportado: " + inversion2Proyecto2 + " €");
+                                                            vistaProyectoInversor(nombre2, descripcion2, categoria2, cantidadNecesaria2, inversion2Proyecto2);
                                                         }
-
                                                         if (nombre3 != null && participaInv2Proyecto3) {
                                                             System.out.println("\nProyecto 3:");
-                                                            System.out.println("Nombre: " + nombre3 + "\nDescripción: " + descripcion3 + "\nCategoría: " + categoria3 +
-                                                                    "\nCantidad necesaria: " + cantidadNecesaria3 + " €\nCantidad que has aportado: " + inversion2Proyecto3 + " €");
+                                                            vistaProyectoInversor(nombre3, descripcion3, categoria3, cantidadNecesaria3, inversion2Proyecto3);
                                                         }
 
                                                         if (proyectosFinanciaInv2 == 0) {
@@ -4035,29 +2799,7 @@ public class Main {
                                                         }
             //3.1.1.6. INVERSOR 2 - VISTA DETALLADA MENÚ
                                                         if (proyectosFinanciaInv2 > 0) {
-                                                            System.out.println("\nVer vista detallada: ");
-
-                                                            for (int i = 1; i <= proyectosFinanciaInv2; i++) {
-                                                                System.out.print(i + ". Proyecto ");
-                                                                if (i == 1) {
-                                                                    if (nombre1 != null && participaInv2Proyecto1) System.out.println("1: " + nombre1);
-                                                                    else if (nombre2 != null && participaInv2Proyecto2) System.out.println("2: " + nombre2);
-                                                                    else if (nombre3 != null && participaInv2Proyecto3) System.out.println("3: " + nombre3);
-                                                                } else if (i == 2) {
-                                                                    if (nombre2 != null && participaInv2Proyecto2) System.out.println("2: " + nombre2);
-                                                                    else if (nombre3 != null && participaInv2Proyecto3) System.out.println("3: " + nombre3);
-                                                                    else if (nombre1 != null && participaInv2Proyecto1) System.out.println("1: " + nombre1);
-                                                                } else if (i == 3) {
-                                                                    if (nombre3 != null && participaInv2Proyecto3) System.out.println("3: " + nombre3);
-                                                                    else if (nombre1 != null && participaInv2Proyecto1) System.out.println("1: " + nombre1);
-                                                                    else if (nombre2 != null && participaInv2Proyecto2) System.out.println("2: " + nombre2);
-                                                                }
-                                                            }
-
-                                                            if (proyectosFinanciaInv2 == 1) System.out.print("2. ");
-                                                            else if (proyectosFinanciaInv2 == 2) System.out.print("3. ");
-                                                            else if (proyectosFinanciaInv2 == 3) System.out.print("4. ");
-                                                            System.out.println("Salir");
+                                                            menuVistaDetalladaInversor(proyectosFinanciaInv2, nombre1, nombre2, nombre3, participaInv2Proyecto1, participaInv2Proyecto2, participaInv2Proyecto3);
                                                             int selecProyectoDetalle = lecturaDatos.nextInt();
                                                             lecturaDatos.nextLine();
 
@@ -4067,35 +2809,13 @@ public class Main {
                                                                     if (proyectosFinanciaInv2 >= 1) {
                                                                         if (nombre1 != null && participaInv2Proyecto1) {
                                                                             System.out.println("\nProyecto 1:");
-                                                                            System.out.println("Nombre: " + nombre1 + "\nDescripción: " + descripcion1 + "\nCategoría: " + categoria1 +
-                                                                                    "\nCantidad necesaria: " + cantidadNecesaria1 + " €\nCantidad que has aportado: " + inversion2Proyecto1 + " €" +
-                                                                                    "\nFecha inicio: " + fechaInicio1 + "\nFecha fin: " + fechaFin1);
-                                                                            System.out.println("Recompensas: 1) " + recompensa1_1 + " (" + precio1_1 + " €), 2) " + recompensa1_2 + " (" + precio1_2 + " €), 3) " + recompensa1_3 + " (" + precio1_3 + " €)");
+                                                                            vistaProyectoInversorDetalle(nombre1, descripcion1, categoria1, cantidadNecesaria1, inversion2Proyecto1, fechaInicio1, fechaFin1, recompensa1_1, precio1_1, recompensa1_2, precio1_2, recompensa1_3, precio1_3);
+                                                                            graficoProgreso(cantidadFinanciada1, cantidadNecesaria1);
 
-                                                                            // Calcular el porcentaje de progreso
-                                                                            double porcentajeProgreso = (cantidadFinanciada1 / cantidadNecesaria1) * 100;
-
-                                                                            // Pintar la barra de progreso
-                                                                            System.out.println("\nBarra de Progreso:");
-                                                                            System.out.print("[");
-
-                                                                            int totalCaracteres = 50; // Longitud total de la barra
-                                                                            int caracteresLlenos = (int) (porcentajeProgreso / (100.0 / totalCaracteres)); // Caracteres llenos, se hace una regla de 3
-                                                                            for (int i = 0; i < totalCaracteres; i++) {
-                                                                                if (i < caracteresLlenos) {
-                                                                                    System.out.print("#"); // Parte llena de la barra
-                                                                                } else {
-                                                                                    System.out.print("-"); // Parte vacía de la barra
-                                                                                }
-                                                                            }
-                                                                            System.out.printf("] %.2f %%\n", porcentajeProgreso);
-
+                                                                            //SALIR proyecto 1
                                                                             boolean salirGestionProyecto = false;
-                                                                            //MODIFICAR - ELIMINAR proyecto 1
                                                                             while (!salirGestionProyecto) {
-                                                                                System.out.println("""
-                                                                                        \nSeleccione una opción:
-                                                                                        1. Salir""");
+                                                                                menuGestionProyectoInversor();
                                                                                 int gestionProyecto = lecturaDatos.nextInt();
                                                                                 lecturaDatos.nextLine();
 
@@ -4109,35 +2829,13 @@ public class Main {
                                                                         }
                                                                         else if (nombre2 != null && participaInv2Proyecto2) {
                                                                             System.out.println("\nProyecto 2:");
-                                                                            System.out.println("Nombre: " + nombre2 + "\nDescripción: " + descripcion2 + "\nCategoría: " + categoria2 +
-                                                                                    "\nCantidad necesaria: " + cantidadNecesaria2 + " €\nCantidad que has aportado: " + inversion2Proyecto2 + " €" +
-                                                                                    "\nFecha inicio: " + fechaInicio2 + "\nFecha fin: " + fechaFin2);
-                                                                            System.out.println("Recompensas: 1) " + recompensa2_1 + " (" + precio2_1 + " €), 2) " + recompensa2_2 + " (" + precio2_2 + " €), 3) " + recompensa2_3 + " (" + precio2_3 + " €)");
+                                                                            vistaProyectoInversorDetalle(nombre2, descripcion2, categoria2, cantidadNecesaria2, inversion2Proyecto2, fechaInicio2, fechaFin2, recompensa2_1, precio2_1, recompensa2_2, precio2_2, recompensa2_3, precio2_3);
+                                                                            graficoProgreso(cantidadFinanciada2, cantidadNecesaria2);
 
-                                                                            // Calcular el porcentaje de progreso
-                                                                            double porcentajeProgreso = (cantidadFinanciada2 / cantidadNecesaria2) * 100;
-
-                                                                            // Pintar la barra de progreso
-                                                                            System.out.println("\nBarra de Progreso:");
-                                                                            System.out.print("[");
-
-                                                                            int totalCaracteres = 50; // Longitud total de la barra
-                                                                            int caracteresLlenos = (int) (porcentajeProgreso / (100.0 / totalCaracteres)); // Caracteres llenos, se hace una regla de 3
-                                                                            for (int i = 0; i < totalCaracteres; i++) {
-                                                                                if (i < caracteresLlenos) {
-                                                                                    System.out.print("#"); // Parte llena de la barra
-                                                                                } else {
-                                                                                    System.out.print("-"); // Parte vacía de la barra
-                                                                                }
-                                                                            }
-                                                                            System.out.printf("] %.2f %%\n", porcentajeProgreso);
-
+                                                                            //SALIR proyecto 2
                                                                             boolean salirGestionProyecto = false;
-                                                                            //MODIFICAR - ELIMINAR proyecto 2
                                                                             while (!salirGestionProyecto) {
-                                                                                System.out.println("""
-                                                                                        \nSeleccione una opción:
-                                                                                        1. Salir""");
+                                                                                menuGestionProyectoInversor();
                                                                                 int gestionProyecto = lecturaDatos.nextInt();
                                                                                 lecturaDatos.nextLine();
 
@@ -4151,34 +2849,13 @@ public class Main {
                                                                         }
                                                                         else if (nombre3 != null && participaInv2Proyecto3) {
                                                                             System.out.println("\nProyecto 3:");
-                                                                            System.out.println("Nombre: " + nombre3 + "\nDescripción: " + descripcion3 + "\nCategoría: " + categoria3 +
-                                                                                    "\nCantidad necesaria: " + cantidadNecesaria3 + " €\nCantidad que has aportado: " + inversion2Proyecto3 + " €" +
-                                                                                    "\nFecha inicio: " + fechaInicio3 + "\nFecha fin: " + fechaFin3);
-                                                                            System.out.println("Recompensas: 1) " + recompensa3_1 + " (" + precio3_1 + " €), 2) " + recompensa3_2 + " (" + precio3_2 + " €), 3) " + recompensa3_3 + " (" + precio3_3 + " €)");
+                                                                            vistaProyectoInversorDetalle(nombre3, descripcion3, categoria3, cantidadNecesaria3, inversion2Proyecto3, fechaInicio3, fechaFin3, recompensa3_1, precio3_1, recompensa3_2, precio3_2, recompensa3_3, precio3_3);
+                                                                            graficoProgreso(cantidadFinanciada3, cantidadNecesaria3);
 
-                                                                            // Calcular el porcentaje de progreso
-                                                                            double porcentajeProgreso = (cantidadFinanciada3 / cantidadNecesaria3) * 100;
-
-                                                                            // Pintar la barra de progreso
-                                                                            System.out.println("\nBarra de Progreso:");
-                                                                            System.out.print("[");
-
-                                                                            int totalCaracteres = 50; // Longitud total de la barra
-                                                                            int caracteresLlenos = (int) (porcentajeProgreso / (100.0 / totalCaracteres)); // Caracteres llenos, se hace una regla de 3
-                                                                            for (int i = 0; i < totalCaracteres; i++) {
-                                                                                if (i < caracteresLlenos) {
-                                                                                    System.out.print("#"); // Parte llena de la barra
-                                                                                } else {
-                                                                                    System.out.print("-"); // Parte vacía de la barra
-                                                                                }
-                                                                            }
-                                                                            System.out.printf("] %.2f %%\n", porcentajeProgreso);
-
+                                                                            //SALIR proyecto 3
                                                                             boolean salirGestionProyecto = false;
                                                                             while (!salirGestionProyecto) {
-                                                                                System.out.println("""
-                                                                                        \nSeleccione una opción:
-                                                                                        1. Salir""");
+                                                                                menuGestionProyectoInversor();
                                                                                 int gestionProyecto = lecturaDatos.nextInt();
                                                                                 lecturaDatos.nextLine();
 
@@ -4201,35 +2878,13 @@ public class Main {
                                                                     if (proyectosFinanciaInv2 >= 2) {
                                                                         if (nombre2 != null && participaInv2Proyecto2) {
                                                                             System.out.println("\nProyecto 2:");
-                                                                            System.out.println("Nombre: " + nombre2 + "\nDescripción: " + descripcion2 + "\nCategoría: " + categoria2 +
-                                                                                    "\nCantidad necesaria: " + cantidadNecesaria2 + " €\nCantidad que has aportado: " + inversion2Proyecto2 + " €" +
-                                                                                    "\nFecha inicio: " + fechaInicio2 + "\nFecha fin: " + fechaFin2);
-                                                                            System.out.println("Recompensas: 1) " + recompensa2_1 + " (" + precio2_1 + " €), 2) " + recompensa2_2 + " (" + precio2_2 + " €), 3) " + recompensa2_3 + " (" + precio2_3 + " €)");
+                                                                            vistaProyectoInversorDetalle(nombre2, descripcion2, categoria2, cantidadNecesaria2, inversion2Proyecto2, fechaInicio2, fechaFin2, recompensa2_1, precio2_1, recompensa2_2, precio2_2, recompensa2_3, precio2_3);
+                                                                            graficoProgreso(cantidadFinanciada2, cantidadNecesaria2);
 
-                                                                            // Calcular el porcentaje de progreso
-                                                                            double porcentajeProgreso = (cantidadFinanciada2 / cantidadNecesaria2) * 100;
-
-                                                                            // Pintar la barra de progreso
-                                                                            System.out.println("\nBarra de Progreso:");
-                                                                            System.out.print("[");
-
-                                                                            int totalCaracteres = 50; // Longitud total de la barra
-                                                                            int caracteresLlenos = (int) (porcentajeProgreso / (100.0 / totalCaracteres)); // Caracteres llenos, se hace una regla de 3
-                                                                            for (int i = 0; i < totalCaracteres; i++) {
-                                                                                if (i < caracteresLlenos) {
-                                                                                    System.out.print("#"); // Parte llena de la barra
-                                                                                } else {
-                                                                                    System.out.print("-"); // Parte vacía de la barra
-                                                                                }
-                                                                            }
-                                                                            System.out.printf("] %.2f %%\n", porcentajeProgreso);
-
+                                                                            //SALIR proyecto 2
                                                                             boolean salirGestionProyecto = false;
-                                                                            //MODIFICAR - ELIMINAR proyecto 2
                                                                             while (!salirGestionProyecto) {
-                                                                                System.out.println("""
-                                                                                        \nSeleccione una opción:
-                                                                                        1. Salir""");
+                                                                                menuGestionProyectoInversor();
                                                                                 int gestionProyecto = lecturaDatos.nextInt();
                                                                                 lecturaDatos.nextLine();
 
@@ -4243,34 +2898,13 @@ public class Main {
                                                                         }
                                                                         else if (nombre3 != null && participaInv2Proyecto3) {
                                                                             System.out.println("\nProyecto 3:");
-                                                                            System.out.println("Nombre: " + nombre3 + "\nDescripción: " + descripcion3 + "\nCategoría: " + categoria3 +
-                                                                                    "\nCantidad necesaria: " + cantidadNecesaria3 + " €\nCantidad que has aportado: " + inversion2Proyecto3 + " €" +
-                                                                                    "\nFecha inicio: " + fechaInicio3 + "\nFecha fin: " + fechaFin3);
-                                                                            System.out.println("Recompensas: 1) " + recompensa3_1 + " (" + precio3_1 + " €), 2) " + recompensa3_2 + " (" + precio3_2 + " €), 3) " + recompensa3_3 + " (" + precio3_3 + " €)");
+                                                                            vistaProyectoInversorDetalle(nombre3, descripcion3, categoria3, cantidadNecesaria3, inversion2Proyecto3, fechaInicio3, fechaFin3, recompensa3_1, precio3_1, recompensa3_2, precio3_2, recompensa3_3, precio3_3);
+                                                                            graficoProgreso(cantidadFinanciada3, cantidadNecesaria3);
 
-                                                                            // Calcular el porcentaje de progreso
-                                                                            double porcentajeProgreso = (cantidadFinanciada3 / cantidadNecesaria3) * 100;
-
-                                                                            // Pintar la barra de progreso
-                                                                            System.out.println("\nBarra de Progreso:");
-                                                                            System.out.print("[");
-
-                                                                            int totalCaracteres = 50; // Longitud total de la barra
-                                                                            int caracteresLlenos = (int) (porcentajeProgreso / (100.0 / totalCaracteres)); // Caracteres llenos, se hace una regla de 3
-                                                                            for (int i = 0; i < totalCaracteres; i++) {
-                                                                                if (i < caracteresLlenos) {
-                                                                                    System.out.print("#"); // Parte llena de la barra
-                                                                                } else {
-                                                                                    System.out.print("-"); // Parte vacía de la barra
-                                                                                }
-                                                                            }
-                                                                            System.out.printf("] %.2f %%\n", porcentajeProgreso);
-
+                                                                            //SALIR proyecto 3
                                                                             boolean salirGestionProyecto = false;
                                                                             while (!salirGestionProyecto) {
-                                                                                System.out.println("""
-                                                                                        \nSeleccione una opción:
-                                                                                        1. Salir""");
+                                                                                menuGestionProyectoInversor();
                                                                                 int gestionProyecto = lecturaDatos.nextInt();
                                                                                 lecturaDatos.nextLine();
 
@@ -4284,35 +2918,13 @@ public class Main {
                                                                         }
                                                                         else if (nombre1 != null && participaInv2Proyecto1) {
                                                                             System.out.println("\nProyecto 1:");
-                                                                            System.out.println("Nombre: " + nombre1 + "\nDescripción: " + descripcion1 + "\nCategoría: " + categoria1 +
-                                                                                    "\nCantidad necesaria: " + cantidadNecesaria1 + " €\nCantidad que has aportado: " + inversion2Proyecto1 + " €" +
-                                                                                    "\nFecha inicio: " + fechaInicio1 + "\nFecha fin: " + fechaFin1);
-                                                                            System.out.println("Recompensas: 1) " + recompensa1_1 + " (" + precio1_1 + " €), 2) " + recompensa1_2 + " (" + precio1_2 + " €), 3) " + recompensa1_3 + " (" + precio1_3 + " €)");
+                                                                            vistaProyectoInversorDetalle(nombre1, descripcion1, categoria1, cantidadNecesaria1, inversion2Proyecto1, fechaInicio1, fechaFin1, recompensa1_1, precio1_1, recompensa1_2, precio1_2, recompensa1_3, precio1_3);
+                                                                            graficoProgreso(cantidadFinanciada1, cantidadNecesaria1);
 
-                                                                            // Calcular el porcentaje de progreso
-                                                                            double porcentajeProgreso = (cantidadFinanciada1 / cantidadNecesaria1) * 100;
-
-                                                                            // Pintar la barra de progreso
-                                                                            System.out.println("\nBarra de Progreso:");
-                                                                            System.out.print("[");
-
-                                                                            int totalCaracteres = 50; // Longitud total de la barra
-                                                                            int caracteresLlenos = (int) (porcentajeProgreso / (100.0 / totalCaracteres)); // Caracteres llenos, se hace una regla de 3
-                                                                            for (int i = 0; i < totalCaracteres; i++) {
-                                                                                if (i < caracteresLlenos) {
-                                                                                    System.out.print("#"); // Parte llena de la barra
-                                                                                } else {
-                                                                                    System.out.print("-"); // Parte vacía de la barra
-                                                                                }
-                                                                            }
-                                                                            System.out.printf("] %.2f %%\n", porcentajeProgreso);
-
+                                                                            //SALIR proyecto 1
                                                                             boolean salirGestionProyecto = false;
-                                                                            //MODIFICAR - ELIMINAR proyecto 1
                                                                             while (!salirGestionProyecto) {
-                                                                                System.out.println("""
-                                                                                        \nSeleccione una opción:
-                                                                                        1. Salir""");
+                                                                                menuGestionProyectoInversor();
                                                                                 int gestionProyecto = lecturaDatos.nextInt();
                                                                                 lecturaDatos.nextLine();
 
@@ -4335,34 +2947,13 @@ public class Main {
                                                                     if (proyectosFinanciaInv2 == 3) {
                                                                         if (nombre3 != null && participaInv2Proyecto3) {
                                                                             System.out.println("\nProyecto 3:");
-                                                                            System.out.println("Nombre: " + nombre3 + "\nDescripción: " + descripcion3 + "\nCategoría: " + categoria3 +
-                                                                                    "\nCantidad necesaria: " + cantidadNecesaria3 + " €\nCantidad que has aportado: " + inversion2Proyecto3 + " €" +
-                                                                                    "\nFecha inicio: " + fechaInicio3 + "\nFecha fin: " + fechaFin3);
-                                                                            System.out.println("Recompensas: 1) " + recompensa3_1 + " (" + precio3_1 + " €), 2) " + recompensa3_2 + " (" + precio3_2 + " €), 3) " + recompensa3_3 + " (" + precio3_3 + " €)");
+                                                                            vistaProyectoInversorDetalle(nombre3, descripcion3, categoria3, cantidadNecesaria3, inversion2Proyecto3, fechaInicio3, fechaFin3, recompensa3_1, precio3_1, recompensa3_2, precio3_2, recompensa3_3, precio3_3);
+                                                                            graficoProgreso(cantidadFinanciada3, cantidadNecesaria3);
 
-                                                                            // Calcular el porcentaje de progreso
-                                                                            double porcentajeProgreso = (cantidadFinanciada3 / cantidadNecesaria3) * 100;
-
-                                                                            // Pintar la barra de progreso
-                                                                            System.out.println("\nBarra de Progreso:");
-                                                                            System.out.print("[");
-
-                                                                            int totalCaracteres = 50; // Longitud total de la barra
-                                                                            int caracteresLlenos = (int) (porcentajeProgreso / (100.0 / totalCaracteres)); // Caracteres llenos, se hace una regla de 3
-                                                                            for (int i = 0; i < totalCaracteres; i++) {
-                                                                                if (i < caracteresLlenos) {
-                                                                                    System.out.print("#"); // Parte llena de la barra
-                                                                                } else {
-                                                                                    System.out.print("-"); // Parte vacía de la barra
-                                                                                }
-                                                                            }
-                                                                            System.out.printf("] %.2f %%\n", porcentajeProgreso);
-
+                                                                            //SALIR proyecto 3
                                                                             boolean salirGestionProyecto = false;
                                                                             while (!salirGestionProyecto) {
-                                                                                System.out.println("""
-                                                                                        \nSeleccione una opción:
-                                                                                        1. Salir""");
+                                                                                menuGestionProyectoInversor();
                                                                                 int gestionProyecto = lecturaDatos.nextInt();
                                                                                 lecturaDatos.nextLine();
 
@@ -4376,35 +2967,13 @@ public class Main {
                                                                         }
                                                                         else if (nombre1 != null && participaInv2Proyecto1) {
                                                                             System.out.println("\nProyecto 1:");
-                                                                            System.out.println("Nombre: " + nombre1 + "\nDescripción: " + descripcion1 + "\nCategoría: " + categoria1 +
-                                                                                    "\nCantidad necesaria: " + cantidadNecesaria1 + " €\nCantidad que has aportado: " + inversion2Proyecto1 + " €" +
-                                                                                    "\nFecha inicio: " + fechaInicio1 + "\nFecha fin: " + fechaFin1);
-                                                                            System.out.println("Recompensas: 1) " + recompensa1_1 + " (" + precio1_1 + " €), 2) " + recompensa1_2 + " (" + precio1_2 + " €), 3) " + recompensa1_3 + " (" + precio1_3 + " €)");
+                                                                            vistaProyectoInversorDetalle(nombre1, descripcion1, categoria1, cantidadNecesaria1, inversion2Proyecto1, fechaInicio1, fechaFin1, recompensa1_1, precio1_1, recompensa1_2, precio1_2, recompensa1_3, precio1_3);
+                                                                            graficoProgreso(cantidadFinanciada1, cantidadNecesaria1);
 
-                                                                            // Calcular el porcentaje de progreso
-                                                                            double porcentajeProgreso = (cantidadFinanciada1 / cantidadNecesaria1) * 100;
-
-                                                                            // Pintar la barra de progreso
-                                                                            System.out.println("\nBarra de Progreso:");
-                                                                            System.out.print("[");
-
-                                                                            int totalCaracteres = 50; // Longitud total de la barra
-                                                                            int caracteresLlenos = (int) (porcentajeProgreso / (100.0 / totalCaracteres)); // Caracteres llenos, se hace una regla de 3
-                                                                            for (int i = 0; i < totalCaracteres; i++) {
-                                                                                if (i < caracteresLlenos) {
-                                                                                    System.out.print("#"); // Parte llena de la barra
-                                                                                } else {
-                                                                                    System.out.print("-"); // Parte vacía de la barra
-                                                                                }
-                                                                            }
-                                                                            System.out.printf("] %.2f %%\n", porcentajeProgreso);
-
+                                                                            //SALIR proyecto 1
                                                                             boolean salirGestionProyecto = false;
-                                                                            //MODIFICAR - ELIMINAR proyecto 1
                                                                             while (!salirGestionProyecto) {
-                                                                                System.out.println("""
-                                                                                        \nSeleccione una opción:
-                                                                                        1. Salir""");
+                                                                                menuGestionProyectoInversor();
                                                                                 int gestionProyecto = lecturaDatos.nextInt();
                                                                                 lecturaDatos.nextLine();
 
@@ -4418,35 +2987,13 @@ public class Main {
                                                                         }
                                                                         else if (nombre2 != null && participaInv2Proyecto2) {
                                                                             System.out.println("\nProyecto 2:");
-                                                                            System.out.println("Nombre: " + nombre2 + "\nDescripción: " + descripcion2 + "\nCategoría: " + categoria2 +
-                                                                                    "\nCantidad necesaria: " + cantidadNecesaria2 + " €\nCantidad que has aportado: " + inversion2Proyecto2 + " €" +
-                                                                                    "\nFecha inicio: " + fechaInicio2 + "\nFecha fin: " + fechaFin2);
-                                                                            System.out.println("Recompensas: 1) " + recompensa2_1 + " (" + precio2_1 + " €), 2) " + recompensa2_2 + " (" + precio2_2 + " €), 3) " + recompensa2_3 + " (" + precio2_3 + " €)");
+                                                                            vistaProyectoInversorDetalle(nombre2, descripcion2, categoria2, cantidadNecesaria2, inversion2Proyecto2, fechaInicio2, fechaFin2, recompensa2_1, precio2_1, recompensa2_2, precio2_2, recompensa2_3, precio2_3);
+                                                                            graficoProgreso(cantidadFinanciada2, cantidadNecesaria2);
 
-                                                                            // Calcular el porcentaje de progreso
-                                                                            double porcentajeProgreso = (cantidadFinanciada2 / cantidadNecesaria2) * 100;
-
-                                                                            // Pintar la barra de progreso
-                                                                            System.out.println("\nBarra de Progreso:");
-                                                                            System.out.print("[");
-
-                                                                            int totalCaracteres = 50; // Longitud total de la barra
-                                                                            int caracteresLlenos = (int) (porcentajeProgreso / (100.0 / totalCaracteres)); // Caracteres llenos, se hace una regla de 3
-                                                                            for (int i = 0; i < totalCaracteres; i++) {
-                                                                                if (i < caracteresLlenos) {
-                                                                                    System.out.print("#"); // Parte llena de la barra
-                                                                                } else {
-                                                                                    System.out.print("-"); // Parte vacía de la barra
-                                                                                }
-                                                                            }
-                                                                            System.out.printf("] %.2f %%\n", porcentajeProgreso);
-
+                                                                            //SALIR proyecto 2
                                                                             boolean salirGestionProyecto = false;
-                                                                            //MODIFICAR - ELIMINAR proyecto 2
                                                                             while (!salirGestionProyecto) {
-                                                                                System.out.println("""
-                                                                                        \nSeleccione una opción:
-                                                                                        1. Salir""");
+                                                                                menuGestionProyectoInversor();
                                                                                 int gestionProyecto = lecturaDatos.nextInt();
                                                                                 lecturaDatos.nextLine();
 
@@ -4493,13 +3040,8 @@ public class Main {
                                 case 2:
     //3.2. INVERSOR - PROYECTOS
                                     boolean salirSubMenuProyectos = false;
-
                                     while (!salirSubMenuProyectos) { //El bucle finaliza cuando se le da 3. Salir, salirSubMenu = true y te sales del menú Mis proyectos para ir al menu gestor.
-                                        System.out.println("""
-                                        \n--- PROYECTOS ---
-                                        Seleccione una opción:
-                                        1. Ver proyectos existentes
-                                        2. Salir""");
+                                        menuProyectos();
                                         int seleccionProyectos = lecturaDatos.nextInt();
                                         lecturaDatos.nextLine();
 
@@ -4514,20 +3056,15 @@ public class Main {
                                                     // Si proyectosCreados tiene un valor determinado, se muestran todos los proyectos con valor inferior al actual (todos los creados previamente)
                                                     if (nombre1 != null) {
                                                         System.out.println("\nProyecto 1:");
-                                                        System.out.println("Nombre: " + nombre1 + "\nDescripción: " + descripcion1 + "\nCategoría: " + categoria1 +
-                                                                "\nCantidad necesaria: " + cantidadNecesaria1 + " €\nCantidad financiada: " + cantidadFinanciada1 + " €");
+                                                        vistaProyecto(nombre1, descripcion1, categoria1, cantidadNecesaria1, cantidadFinanciada1);
                                                     }
-
                                                     if (nombre2 != null) {
                                                         System.out.println("\nProyecto 2:");
-                                                        System.out.println("Nombre: " + nombre2 + "\nDescripción: " + descripcion2 + "\nCategoría: " + categoria2 +
-                                                                "\nCantidad necesaria: " + cantidadNecesaria2 + " €\nCantidad financiada: " + cantidadFinanciada2 + " €");
+                                                        vistaProyecto(nombre2, descripcion2, categoria2, cantidadNecesaria2, cantidadFinanciada2);
                                                     }
-
                                                     if (nombre3 != null) {
                                                         System.out.println("\nProyecto 3:");
-                                                        System.out.println("Nombre: " + nombre3 + "\nDescripción: " + descripcion3 + "\nCategoría: " + categoria3 +
-                                                                "\nCantidad necesaria: " + cantidadNecesaria3 + " €\nCantidad financiada: " + cantidadFinanciada3 + " €");
+                                                        vistaProyecto(nombre3, descripcion3, categoria3, cantidadNecesaria3, cantidadFinanciada3);
                                                     }
 
                                                     if (proyectosCreados == 0) {
@@ -4536,31 +3073,7 @@ public class Main {
                                                     }
 
                                                     if (proyectosCreados > 0) {
-                                                        System.out.println("\nVer vista detallada: ");
-            //3.2.1.1. INVERSOR - VISTA DETALLADA MENÚ
-                                                        for (int i = 1; i <= proyectosCreados; i++) {
-                                                            System.out.print(i + ". Proyecto ");
-                                                            if (i == 1) {
-                                                                if (nombre1 != null) System.out.println("1: " + nombre1);
-                                                                else if (nombre2 != null) System.out.println("2: " + nombre2);
-                                                                else if (nombre3 != null) System.out.println("3: " + nombre3);
-                                                            }
-                                                            else if (i == 2) {
-                                                                if (nombre2 != null) System.out.println("2: " + nombre2);
-                                                                else if (nombre3 != null) System.out.println("3: " + nombre3);
-                                                                else if (nombre1 != null) System.out.println("1: " + nombre1);
-                                                            }
-                                                            else if (i == 3) {
-                                                                if (nombre3 != null) System.out.println("3: " + nombre3);
-                                                                else if (nombre1 != null) System.out.println("1: " + nombre1);
-                                                                else if (nombre2 != null) System.out.println("2: " + nombre2);
-                                                            }
-                                                        }
-
-                                                        if (proyectosCreados == 1) System.out.print("2. ");
-                                                        else if (proyectosCreados == 2) System.out.print("3. ");
-                                                        else if (proyectosCreados == 3) System.out.print("4. ");
-                                                        System.out.println("Salir");
+                                                        menuVistaDetallada(proyectosCreados, nombre1, nombre2, nombre3);
                                                         int selecProyectoDetalle = lecturaDatos.nextInt();
                                                         lecturaDatos.nextLine();
 
@@ -4570,36 +3083,13 @@ public class Main {
                                                                 if (proyectosCreados >= 1) {
                                                                     if (nombre1 != null) {
                                                                         System.out.println("\nProyecto 1:");
-                                                                        System.out.println("Nombre: " + nombre1 + "\nDescripción: " + descripcion1 + "\nCategoría: " + categoria1 +
-                                                                                "\nCantidad necesaria: " + cantidadNecesaria1 + " €\nCantidad financiada: " + cantidadFinanciada1 + " €" +
-                                                                                "\nFecha inicio: " + fechaInicio1 + "\nFecha fin: " + fechaFin1);
-                                                                        System.out.println("Recompensas: 1) " + recompensa1_1 + " (" + precio1_1 + " €), 2) " + recompensa1_2 + " (" + precio1_2 + " €), 3) " + recompensa1_3 + " (" + precio1_3 + " €)");
+                                                                        vistaProyectoDetalle(nombre1, descripcion1, categoria1, cantidadNecesaria1, cantidadFinanciada1, fechaInicio1, fechaFin1, recompensa1_1, precio1_1, recompensa1_2, precio1_2, recompensa1_3, precio1_3);
+                                                                        graficoProgreso(cantidadFinanciada1, cantidadNecesaria1);
 
-                                                                        // Calcular el porcentaje de progreso
-                                                                        double porcentajeProgreso = (cantidadFinanciada1 / cantidadNecesaria1) * 100;
-
-                                                                        // Pintar la barra de progreso
-                                                                        System.out.println("\nBarra de Progreso:");
-                                                                        System.out.print("[");
-
-                                                                        int totalCaracteres = 50; // Longitud total de la barra
-                                                                        int caracteresLlenos = (int) (porcentajeProgreso / (100.0 / totalCaracteres)); // Caracteres llenos, se hace una regla de 3
-                                                                        for (int i = 0; i < totalCaracteres; i++) {
-                                                                            if (i < caracteresLlenos) {
-                                                                                System.out.print("#"); // Parte llena de la barra
-                                                                            } else {
-                                                                                System.out.print("-"); // Parte vacía de la barra
-                                                                            }
-                                                                        }
-                                                                        System.out.printf("] %.2f %%\n", porcentajeProgreso);
-
+                                                        //INVERTIR - proyecto 1
                                                                         boolean salirGestionProyecto = false;
-                                                                        //INVERTIR - proyecto 1
                                                                         while (!salirGestionProyecto) {
-                                                                            System.out.println("""
-                                                                             \nSeleccione una opción:
-                                                                             1. Invertir en el proyecto
-                                                                             2. Salir""");
+                                                                            menuInvertirProyecto();
                                                                             int gestionProyecto = lecturaDatos.nextInt();
                                                                             lecturaDatos.nextLine();
 
@@ -4608,11 +3098,7 @@ public class Main {
                                                                                     boolean salirSubMenuRecompensa = false;
 
                                                                                     while (!salirSubMenuRecompensa) {
-                                                                                        System.out.println("\nSelecciona la inversión: ");
-                                                                                        System.out.println("1. Recompensa 1: " + recompensa1_1 + " (" + precio1_1 + " €)");
-                                                                                        System.out.println("2. Recompensa 2: " + recompensa1_2 + " (" + precio1_2 + " €)");
-                                                                                        System.out.println("3. Recompensa 3: " + recompensa1_3 + " (" + precio1_3 + " €)");
-                                                                                        System.out.println("4. Salir");
+                                                                                        menuInvertirRecompensa(recompensa1_1, precio1_1, recompensa1_2, precio1_2, recompensa1_3, precio1_3);
                                                                                         int seleccionInversion = lecturaDatos.nextInt();
                                                                                         lecturaDatos.nextLine();
 
@@ -4629,7 +3115,7 @@ public class Main {
                                                                                                     }
                                                                                                     else System.out.println("No tienes suficiente saldo. Añade más para invertir.");
                                                                                                 }
-                                                                                                if (npc2) {
+                                                                                                else if (npc2) {
                                                                                                     if (saldoInversor2 > precio1_1) {
                                                                                                         System.out.println("Has invertido " + precio1_1 + " € en el proyecto. Has obtenido la recompensa 1: " + recompensa1_1);
                                                                                                         cantidadFinanciada1 += precio1_1;
@@ -4652,7 +3138,7 @@ public class Main {
                                                                                                     }
                                                                                                     else System.out.println("No tienes suficiente saldo. Añade más para invertir.");
                                                                                                 }
-                                                                                                if (npc2) {
+                                                                                                else if (npc2) {
                                                                                                     if (saldoInversor2 > precio1_2) {
                                                                                                         System.out.println("Has invertido " + precio1_2 + " € en el proyecto.Has obtenido la recompensa 2: " + recompensa1_2);
                                                                                                         cantidadFinanciada1 += precio1_2;
@@ -4676,7 +3162,7 @@ public class Main {
                                                                                                     }
                                                                                                     else System.out.println("No tienes suficiente saldo. Añade más para invertir.");
                                                                                                 }
-                                                                                                if (npc2) {
+                                                                                                else if (npc2) {
                                                                                                     if (saldoInversor2 > precio1_3) {
                                                                                                         System.out.println("Has invertido " + precio1_3 + " € en el proyecto.Has obtenido la recompensa 2: " + recompensa1_3);
                                                                                                         cantidadFinanciada1 += precio1_3;
@@ -4712,36 +3198,13 @@ public class Main {
                                                                     }
                                                                     else if (nombre2 != null) {
                                                                         System.out.println("\nProyecto 2:");
-                                                                        System.out.println("Nombre: " + nombre2 + "\nDescripción: " + descripcion2 + "\nCategoría: " + categoria2 +
-                                                                                "\nCantidad necesaria: " + cantidadNecesaria2 + " €\nCantidad financiada: " + cantidadFinanciada2 + " €" +
-                                                                                "\nFecha inicio: " + fechaInicio2 + "\nFecha fin: " + fechaFin2);
-                                                                        System.out.println("Recompensas: 1) " + recompensa2_1 + " (" + precio2_1 + " €), 2) " + recompensa2_2 + " (" + precio2_2 + " €), 3) " + recompensa2_3 + " (" + precio2_3 + " €)");
+                                                                        vistaProyectoDetalle(nombre2, descripcion2, categoria2, cantidadNecesaria2, cantidadFinanciada2, fechaInicio2, fechaFin2, recompensa2_1, precio2_1, recompensa2_2, precio2_2, recompensa2_3, precio2_3);
+                                                                        graficoProgreso(cantidadFinanciada2, cantidadNecesaria2);
 
-                                                                        // Calcular el porcentaje de progreso
-                                                                        double porcentajeProgreso = (cantidadFinanciada2 / cantidadNecesaria2) * 100;
-
-                                                                        // Pintar la barra de progreso
-                                                                        System.out.println("\nBarra de Progreso:");
-                                                                        System.out.print("[");
-
-                                                                        int totalCaracteres = 50; // Longitud total de la barra
-                                                                        int caracteresLlenos = (int) (porcentajeProgreso / (100.0 / totalCaracteres)); // Caracteres llenos, se hace una regla de 3
-                                                                        for (int i = 0; i < totalCaracteres; i++) {
-                                                                            if (i < caracteresLlenos) {
-                                                                                System.out.print("#"); // Parte llena de la barra
-                                                                            } else {
-                                                                                System.out.print("-"); // Parte vacía de la barra
-                                                                            }
-                                                                        }
-                                                                        System.out.printf("] %.2f %%\n", porcentajeProgreso);
-
+                                                        //INVERTIR - proyecto 2
                                                                         boolean salirGestionProyecto = false;
-                                                                        //INVERTIR - proyecto 2
                                                                         while (!salirGestionProyecto) {
-                                                                            System.out.println("""
-                                                                            \nSeleccione una opción:
-                                                                             1. Invertir en el proyecto
-                                                                             2. Salir""");
+                                                                            menuInvertirProyecto();
                                                                             int gestionProyecto = lecturaDatos.nextInt();
                                                                             lecturaDatos.nextLine();
 
@@ -4750,11 +3213,7 @@ public class Main {
                                                                                     boolean salirSubMenuRecompensa = false;
 
                                                                                     while (!salirSubMenuRecompensa) {
-                                                                                        System.out.println("\nSelecciona la inversión: ");
-                                                                                        System.out.println("1. Recompensa 1: " + recompensa2_1 + " (" + precio2_1 + " €)");
-                                                                                        System.out.println("2. Recompensa 2: " + recompensa2_2 + " (" + precio2_2 + " €)");
-                                                                                        System.out.println("3. Recompensa 3: " + recompensa2_3 + " (" + precio2_3 + " €)");
-                                                                                        System.out.println("4. Salir");
+                                                                                        menuInvertirRecompensa(recompensa2_1, precio2_1, recompensa2_2, precio2_2, recompensa2_3, precio2_3);
                                                                                         int seleccionInversion = lecturaDatos.nextInt();
                                                                                         lecturaDatos.nextLine();
 
@@ -4771,7 +3230,7 @@ public class Main {
                                                                                                     }
                                                                                                     else System.out.println("No tienes suficiente saldo. Añade más para invertir.");
                                                                                                 }
-                                                                                                if (npc2) {
+                                                                                                else if (npc2) {
                                                                                                     if (saldoInversor2 > precio2_1) {
                                                                                                         System.out.println("Has invertido " + precio2_1 + " € en el proyecto. Has obtenido la recompensa 1: " + recompensa2_1);
                                                                                                         cantidadFinanciada2 += precio2_1;
@@ -4794,7 +3253,7 @@ public class Main {
                                                                                                     }
                                                                                                     else System.out.println("No tienes suficiente saldo. Añade más para invertir.");
                                                                                                 }
-                                                                                                if (npc2) {
+                                                                                                else if (npc2) {
                                                                                                     if (saldoInversor2 > precio2_2) {
                                                                                                         System.out.println("Has invertido " + precio2_2 + " € en el proyecto.Has obtenido la recompensa 2: " + recompensa2_2);
                                                                                                         cantidadFinanciada2 += precio2_2;
@@ -4818,7 +3277,7 @@ public class Main {
                                                                                                     }
                                                                                                     else System.out.println("No tienes suficiente saldo. Añade más para invertir.");
                                                                                                 }
-                                                                                                if (npc2) {
+                                                                                                else if (npc2) {
                                                                                                     if (saldoInversor2 > precio2_3) {
                                                                                                         System.out.println("Has invertido " + precio2_3 + " € en el proyecto. Has obtenido la recompensa 2: " + recompensa2_3);
                                                                                                         cantidadFinanciada2 += precio2_3;
@@ -4854,35 +3313,13 @@ public class Main {
                                                                     }
                                                                     else if (nombre3 != null) {
                                                                         System.out.println("\nProyecto 3:");
-                                                                        System.out.println("Nombre: " + nombre3 + "\nDescripción: " + descripcion3 + "\nCategoría: " + categoria3 +
-                                                                                "\nCantidad necesaria: " + cantidadNecesaria3 + " €\nCantidad financiada: " + cantidadFinanciada3 + " €" +
-                                                                                "\nFecha inicio: " + fechaInicio3 + "\nFecha fin: " + fechaFin3);
-                                                                        System.out.println("Recompensas: 1) " + recompensa3_1 + " (" + precio3_1 + " €), 2) " + recompensa3_2 + " (" + precio3_2 + " €), 3) " + recompensa3_3 + " (" + precio3_3 + " €)");
+                                                                        vistaProyectoDetalle(nombre3, descripcion3, categoria3, cantidadNecesaria3, cantidadFinanciada3, fechaInicio3, fechaFin3, recompensa3_1, precio3_1, recompensa3_2, precio3_2, recompensa3_3, precio3_3);
+                                                                        graficoProgreso(cantidadFinanciada3, cantidadNecesaria3);
 
-                                                                        // Calcular el porcentaje de progreso
-                                                                        double porcentajeProgreso = (cantidadFinanciada3 / cantidadNecesaria3) * 100;
-
-                                                                        // Pintar la barra de progreso
-                                                                        System.out.println("\nBarra de Progreso:");
-                                                                        System.out.print("[");
-
-                                                                        int totalCaracteres = 50; // Longitud total de la barra
-                                                                        int caracteresLlenos = (int) (porcentajeProgreso / (100.0 / totalCaracteres)); // Caracteres llenos, se hace una regla de 3
-                                                                        for (int i = 0; i < totalCaracteres; i++) {
-                                                                            if (i < caracteresLlenos) {
-                                                                                System.out.print("#"); // Parte llena de la barra
-                                                                            } else {
-                                                                                System.out.print("-"); // Parte vacía de la barra
-                                                                            }
-                                                                        }
-                                                                        System.out.printf("] %.2f %%\n", porcentajeProgreso);
-
+                                                        //INVERTIR - proyecto 3
                                                                         boolean salirGestionProyecto = false;
                                                                         while (!salirGestionProyecto) {
-                                                                            System.out.println("""
-                                                                            \nSeleccione una opción:
-                                                                            1. Invertir en el proyecto
-                                                                            2. Salir""");
+                                                                            menuInvertirProyecto();
                                                                             int gestionProyecto = lecturaDatos.nextInt();
                                                                             lecturaDatos.nextLine();
 
@@ -4891,11 +3328,7 @@ public class Main {
                                                                                     boolean salirSubMenuRecompensa = false;
 
                                                                                     while (!salirSubMenuRecompensa) {
-                                                                                        System.out.println("\nSelecciona la inversión: ");
-                                                                                        System.out.println("1. Recompensa 1: " + recompensa2_1 + " (" + precio2_1 + " €)");
-                                                                                        System.out.println("2. Recompensa 2: " + recompensa2_2 + " (" + precio2_2 + " €)");
-                                                                                        System.out.println("3. Recompensa 3: " + recompensa2_3 + " (" + precio2_3 + " €)");
-                                                                                        System.out.println("4. Salir");
+                                                                                        menuInvertirRecompensa(recompensa3_1, precio3_1, recompensa3_2, precio3_2, recompensa3_3, precio3_3);
                                                                                         int seleccionInversion = lecturaDatos.nextInt();
                                                                                         lecturaDatos.nextLine();
 
@@ -4913,7 +3346,7 @@ public class Main {
                                                                                                     }
                                                                                                     else System.out.println("No tienes suficiente saldo. Añade más para invertir.");
                                                                                                 }
-                                                                                                if (npc2) {
+                                                                                                else if (npc2) {
                                                                                                     if (saldoInversor2 > precio3_1) {
                                                                                                         System.out.println("Has invertido " + precio3_1 + " € en el proyecto. Has obtenido la recompensa 1: " + recompensa3_1);
                                                                                                         cantidadFinanciada3 += precio3_1;
@@ -4936,7 +3369,7 @@ public class Main {
                                                                                                     }
                                                                                                     else System.out.println("No tienes suficiente saldo. Añade más para invertir.");
                                                                                                 }
-                                                                                                if (npc2) {
+                                                                                                else if (npc2) {
                                                                                                     if (saldoInversor2 > precio3_2) {
                                                                                                         System.out.println("Has invertido " + precio3_2 + " € en el proyecto.Has obtenido la recompensa 2: " + recompensa3_2);
                                                                                                         cantidadFinanciada3 += precio3_2;
@@ -4959,7 +3392,7 @@ public class Main {
                                                                                                     }
                                                                                                     else System.out.println("No tienes suficiente saldo. Añade más para invertir.");
                                                                                                 }
-                                                                                                if (npc2) {
+                                                                                                else if (npc2) {
                                                                                                     if (saldoInversor2 > precio3_3) {
                                                                                                         System.out.println("Has invertido " + precio3_3 + " € en el proyecto. Has obtenido la recompensa 2: " + recompensa3_3);
                                                                                                         cantidadFinanciada3 += precio3_3;
@@ -5005,36 +3438,13 @@ public class Main {
                                                                 if (proyectosCreados >= 2) {
                                                                     if (nombre2 != null) {
                                                                         System.out.println("\nProyecto 2:");
-                                                                        System.out.println("Nombre: " + nombre2 + "\nDescripción: " + descripcion2 + "\nCategoría: " + categoria2 +
-                                                                                "\nCantidad necesaria: " + cantidadNecesaria2 + " €\nCantidad financiada: " + cantidadFinanciada2 + " €" +
-                                                                                "\nFecha inicio: " + fechaInicio2 + "\nFecha fin: " + fechaFin2);
-                                                                        System.out.println("Recompensas: 1) " + recompensa2_1 + " (" + precio2_1 + " €), 2) " + recompensa2_2 + " (" + precio2_2 + " €), 3) " + recompensa2_3 + " (" + precio2_3 + " €)");
+                                                                        vistaProyectoDetalle(nombre2, descripcion2, categoria2, cantidadNecesaria2, cantidadFinanciada2, fechaInicio2, fechaFin2, recompensa2_1, precio2_1, recompensa2_2, precio2_2, recompensa2_3, precio2_3);
+                                                                        graficoProgreso(cantidadFinanciada2, cantidadNecesaria2);
 
-                                                                        // Calcular el porcentaje de progreso
-                                                                        double porcentajeProgreso = (cantidadFinanciada2 / cantidadNecesaria2) * 100;
-
-                                                                        // Pintar la barra de progreso
-                                                                        System.out.println("\nBarra de Progreso:");
-                                                                        System.out.print("[");
-
-                                                                        int totalCaracteres = 50; // Longitud total de la barra
-                                                                        int caracteresLlenos = (int) (porcentajeProgreso / (100.0 / totalCaracteres)); // Caracteres llenos, se hace una regla de 3
-                                                                        for (int i = 0; i < totalCaracteres; i++) {
-                                                                            if (i < caracteresLlenos) {
-                                                                                System.out.print("#"); // Parte llena de la barra
-                                                                            } else {
-                                                                                System.out.print("-"); // Parte vacía de la barra
-                                                                            }
-                                                                        }
-                                                                        System.out.printf("] %.2f %%\n", porcentajeProgreso);
-
-                                                                        boolean salirGestionProyecto = false;
                                                                         //INVERTIR - proyecto 2
+                                                                        boolean salirGestionProyecto = false;
                                                                         while (!salirGestionProyecto) {
-                                                                            System.out.println("""
-                                                                            \nSeleccione una opción:
-                                                                             1. Invertir en el proyecto
-                                                                             2. Salir""");
+                                                                            menuInvertirProyecto();
                                                                             int gestionProyecto = lecturaDatos.nextInt();
                                                                             lecturaDatos.nextLine();
 
@@ -5043,11 +3453,7 @@ public class Main {
                                                                                     boolean salirSubMenuRecompensa = false;
 
                                                                                     while (!salirSubMenuRecompensa) {
-                                                                                        System.out.println("\nSelecciona la inversión: ");
-                                                                                        System.out.println("1. Recompensa 1: " + recompensa2_1 + " (" + precio2_1 + " €)");
-                                                                                        System.out.println("2. Recompensa 2: " + recompensa2_2 + " (" + precio2_2 + " €)");
-                                                                                        System.out.println("3. Recompensa 3: " + recompensa2_3 + " (" + precio2_3 + " €)");
-                                                                                        System.out.println("4. Salir");
+                                                                                        menuInvertirRecompensa(recompensa2_1, precio2_1, recompensa2_2, precio2_2, recompensa2_3, precio2_3);
                                                                                         int seleccionInversion = lecturaDatos.nextInt();
                                                                                         lecturaDatos.nextLine();
 
@@ -5064,7 +3470,7 @@ public class Main {
                                                                                                     }
                                                                                                     else System.out.println("No tienes suficiente saldo. Añade más para invertir.");
                                                                                                 }
-                                                                                                if (npc2) {
+                                                                                                else if (npc2) {
                                                                                                     if (saldoInversor2 > precio2_1) {
                                                                                                         System.out.println("Has invertido " + precio2_1 + " € en el proyecto. Has obtenido la recompensa 1: " + recompensa2_1);
                                                                                                         cantidadFinanciada2 += precio2_1;
@@ -5087,7 +3493,7 @@ public class Main {
                                                                                                     }
                                                                                                     else System.out.println("No tienes suficiente saldo. Añade más para invertir.");
                                                                                                 }
-                                                                                                if (npc2) {
+                                                                                                else if (npc2) {
                                                                                                     if (saldoInversor2 > precio2_2) {
                                                                                                         System.out.println("Has invertido " + precio2_2 + " € en el proyecto.Has obtenido la recompensa 2: " + recompensa2_2);
                                                                                                         cantidadFinanciada2 += precio2_2;
@@ -5111,7 +3517,7 @@ public class Main {
                                                                                                     }
                                                                                                     else System.out.println("No tienes suficiente saldo. Añade más para invertir.");
                                                                                                 }
-                                                                                                if (npc2) {
+                                                                                                else if (npc2) {
                                                                                                     if (saldoInversor2 > precio2_3) {
                                                                                                         System.out.println("Has invertido " + precio2_3 + " € en el proyecto. Has obtenido la recompensa 2: " + recompensa2_3);
                                                                                                         cantidadFinanciada2 += precio2_3;
@@ -5147,35 +3553,13 @@ public class Main {
                                                                     }
                                                                     else if (nombre3 != null) {
                                                                         System.out.println("\nProyecto 3:");
-                                                                        System.out.println("Nombre: " + nombre3 + "\nDescripción: " + descripcion3 + "\nCategoría: " + categoria3 +
-                                                                                "\nCantidad necesaria: " + cantidadNecesaria3 + " €\nCantidad financiada: " + cantidadFinanciada3 + " €" +
-                                                                                "\nFecha inicio: " + fechaInicio3 + "\nFecha fin: " + fechaFin3);
-                                                                        System.out.println("Recompensas: 1) " + recompensa3_1 + " (" + precio3_1 + " €), 2) " + recompensa3_2 + " (" + precio3_2 + " €), 3) " + recompensa3_3 + " (" + precio3_3 + " €)");
+                                                                        vistaProyectoDetalle(nombre3, descripcion3, categoria3, cantidadNecesaria3, cantidadFinanciada3, fechaInicio3, fechaFin3, recompensa3_1, precio3_1, recompensa3_2, precio3_2, recompensa3_3, precio3_3);
+                                                                        graficoProgreso(cantidadFinanciada3, cantidadNecesaria3);
 
-                                                                        // Calcular el porcentaje de progreso
-                                                                        double porcentajeProgreso = (cantidadFinanciada3 / cantidadNecesaria3) * 100;
-
-                                                                        // Pintar la barra de progreso
-                                                                        System.out.println("\nBarra de Progreso:");
-                                                                        System.out.print("[");
-
-                                                                        int totalCaracteres = 50; // Longitud total de la barra
-                                                                        int caracteresLlenos = (int) (porcentajeProgreso / (100.0 / totalCaracteres)); // Caracteres llenos, se hace una regla de 3
-                                                                        for (int i = 0; i < totalCaracteres; i++) {
-                                                                            if (i < caracteresLlenos) {
-                                                                                System.out.print("#"); // Parte llena de la barra
-                                                                            } else {
-                                                                                System.out.print("-"); // Parte vacía de la barra
-                                                                            }
-                                                                        }
-                                                                        System.out.printf("] %.2f %%\n", porcentajeProgreso);
-
+                                                                        //INVERTIR - proyecto 3
                                                                         boolean salirGestionProyecto = false;
                                                                         while (!salirGestionProyecto) {
-                                                                            System.out.println("""
-                                                                            \nSeleccione una opción:
-                                                                            1. Invertir en el proyecto
-                                                                            2. Salir""");
+                                                                            menuInvertirProyecto();
                                                                             int gestionProyecto = lecturaDatos.nextInt();
                                                                             lecturaDatos.nextLine();
 
@@ -5184,11 +3568,7 @@ public class Main {
                                                                                     boolean salirSubMenuRecompensa = false;
 
                                                                                     while (!salirSubMenuRecompensa) {
-                                                                                        System.out.println("\nSelecciona la inversión: ");
-                                                                                        System.out.println("1. Recompensa 1: " + recompensa2_1 + " (" + precio2_1 + " €)");
-                                                                                        System.out.println("2. Recompensa 2: " + recompensa2_2 + " (" + precio2_2 + " €)");
-                                                                                        System.out.println("3. Recompensa 3: " + recompensa2_3 + " (" + precio2_3 + " €)");
-                                                                                        System.out.println("4. Salir");
+                                                                                        menuInvertirRecompensa(recompensa3_1, precio3_1, recompensa3_2, precio3_2, recompensa3_3, precio3_3);
                                                                                         int seleccionInversion = lecturaDatos.nextInt();
                                                                                         lecturaDatos.nextLine();
 
@@ -5206,7 +3586,7 @@ public class Main {
                                                                                                     }
                                                                                                     else System.out.println("No tienes suficiente saldo. Añade más para invertir.");
                                                                                                 }
-                                                                                                if (npc2) {
+                                                                                                else if (npc2) {
                                                                                                     if (saldoInversor2 > precio3_1) {
                                                                                                         System.out.println("Has invertido " + precio3_1 + " € en el proyecto. Has obtenido la recompensa 1: " + recompensa3_1);
                                                                                                         cantidadFinanciada3 += precio3_1;
@@ -5229,7 +3609,7 @@ public class Main {
                                                                                                     }
                                                                                                     else System.out.println("No tienes suficiente saldo. Añade más para invertir.");
                                                                                                 }
-                                                                                                if (npc2) {
+                                                                                                else if (npc2) {
                                                                                                     if (saldoInversor2 > precio3_2) {
                                                                                                         System.out.println("Has invertido " + precio3_2 + " € en el proyecto.Has obtenido la recompensa 2: " + recompensa3_2);
                                                                                                         cantidadFinanciada3 += precio3_2;
@@ -5252,7 +3632,7 @@ public class Main {
                                                                                                     }
                                                                                                     else System.out.println("No tienes suficiente saldo. Añade más para invertir.");
                                                                                                 }
-                                                                                                if (npc2) {
+                                                                                                else if (npc2) {
                                                                                                     if (saldoInversor2 > precio3_3) {
                                                                                                         System.out.println("Has invertido " + precio3_3 + " € en el proyecto. Has obtenido la recompensa 2: " + recompensa3_3);
                                                                                                         cantidadFinanciada3 += precio3_3;
@@ -5288,36 +3668,13 @@ public class Main {
                                                                     }
                                                                     else if (nombre1 != null) {
                                                                         System.out.println("\nProyecto 1:");
-                                                                        System.out.println("Nombre: " + nombre1 + "\nDescripción: " + descripcion1 + "\nCategoría: " + categoria1 +
-                                                                                "\nCantidad necesaria: " + cantidadNecesaria1 + " €\nCantidad financiada: " + cantidadFinanciada1 + " €" +
-                                                                                "\nFecha inicio: " + fechaInicio1 + "\nFecha fin: " + fechaFin1);
-                                                                        System.out.println("Recompensas: 1) " + recompensa1_1 + " (" + precio1_1 + " €), 2) " + recompensa1_2 + " (" + precio1_2 + " €), 3) " + recompensa1_3 + " (" + precio1_3 + " €)");
+                                                                        vistaProyectoDetalle(nombre1, descripcion1, categoria1, cantidadNecesaria1, cantidadFinanciada1, fechaInicio1, fechaFin1, recompensa1_1, precio1_1, recompensa1_2, precio1_2, recompensa1_3, precio1_3);
+                                                                        graficoProgreso(cantidadFinanciada1, cantidadNecesaria1);
 
-                                                                        // Calcular el porcentaje de progreso
-                                                                        double porcentajeProgreso = (cantidadFinanciada1 / cantidadNecesaria1) * 100;
-
-                                                                        // Pintar la barra de progreso
-                                                                        System.out.println("\nBarra de Progreso:");
-                                                                        System.out.print("[");
-
-                                                                        int totalCaracteres = 50; // Longitud total de la barra
-                                                                        int caracteresLlenos = (int) (porcentajeProgreso / (100.0 / totalCaracteres)); // Caracteres llenos, se hace una regla de 3
-                                                                        for (int i = 0; i < totalCaracteres; i++) {
-                                                                            if (i < caracteresLlenos) {
-                                                                                System.out.print("#"); // Parte llena de la barra
-                                                                            } else {
-                                                                                System.out.print("-"); // Parte vacía de la barra
-                                                                            }
-                                                                        }
-                                                                        System.out.printf("] %.2f %%\n", porcentajeProgreso);
-
-                                                                        boolean salirGestionProyecto = false;
                                                                         //INVERTIR - proyecto 1
+                                                                        boolean salirGestionProyecto = false;
                                                                         while (!salirGestionProyecto) {
-                                                                            System.out.println("""
-                                                                             \nSeleccione una opción:
-                                                                             1. Invertir en el proyecto
-                                                                             2. Salir""");
+                                                                            menuInvertirProyecto();
                                                                             int gestionProyecto = lecturaDatos.nextInt();
                                                                             lecturaDatos.nextLine();
 
@@ -5326,11 +3683,7 @@ public class Main {
                                                                                     boolean salirSubMenuRecompensa = false;
 
                                                                                     while (!salirSubMenuRecompensa) {
-                                                                                        System.out.println("\nSelecciona la inversión: ");
-                                                                                        System.out.println("1. Recompensa 1: " + recompensa1_1 + " (" + precio1_1 + " €)");
-                                                                                        System.out.println("2. Recompensa 2: " + recompensa1_2 + " (" + precio1_2 + " €)");
-                                                                                        System.out.println("3. Recompensa 3: " + recompensa1_3 + " (" + precio1_3 + " €)");
-                                                                                        System.out.println("4. Salir");
+                                                                                        menuInvertirRecompensa(recompensa1_1, precio1_1, recompensa1_2, precio1_2, recompensa1_3, precio1_3);
                                                                                         int seleccionInversion = lecturaDatos.nextInt();
                                                                                         lecturaDatos.nextLine();
 
@@ -5347,7 +3700,7 @@ public class Main {
                                                                                                     }
                                                                                                     else System.out.println("No tienes suficiente saldo. Añade más para invertir.");
                                                                                                 }
-                                                                                                if (npc2) {
+                                                                                                else if (npc2) {
                                                                                                     if (saldoInversor2 > precio1_1) {
                                                                                                         System.out.println("Has invertido " + precio1_1 + " € en el proyecto. Has obtenido la recompensa 1: " + recompensa1_1);
                                                                                                         cantidadFinanciada1 += precio1_1;
@@ -5370,7 +3723,7 @@ public class Main {
                                                                                                     }
                                                                                                     else System.out.println("No tienes suficiente saldo. Añade más para invertir.");
                                                                                                 }
-                                                                                                if (npc2) {
+                                                                                                else if (npc2) {
                                                                                                     if (saldoInversor2 > precio1_2) {
                                                                                                         System.out.println("Has invertido " + precio1_2 + " € en el proyecto.Has obtenido la recompensa 2: " + recompensa1_2);
                                                                                                         cantidadFinanciada1 += precio1_2;
@@ -5394,7 +3747,7 @@ public class Main {
                                                                                                     }
                                                                                                     else System.out.println("No tienes suficiente saldo. Añade más para invertir.");
                                                                                                 }
-                                                                                                if (npc2) {
+                                                                                                else if (npc2) {
                                                                                                     if (saldoInversor2 > precio1_3) {
                                                                                                         System.out.println("Has invertido " + precio1_3 + " € en el proyecto.Has obtenido la recompensa 2: " + recompensa1_3);
                                                                                                         cantidadFinanciada1 += precio1_3;
@@ -5440,35 +3793,13 @@ public class Main {
                                                                 if (proyectosCreados == 3) {
                                                                     if (nombre3 != null) {
                                                                         System.out.println("\nProyecto 3:");
-                                                                        System.out.println("Nombre: " + nombre3 + "\nDescripción: " + descripcion3 + "\nCategoría: " + categoria3 +
-                                                                                "\nCantidad necesaria: " + cantidadNecesaria3 + " €\nCantidad financiada: " + cantidadFinanciada3 + " €" +
-                                                                                "\nFecha inicio: " + fechaInicio3 + "\nFecha fin: " + fechaFin3);
-                                                                        System.out.println("Recompensas: 1) " + recompensa3_1 + " (" + precio3_1 + " €), 2) " + recompensa3_2 + " (" + precio3_2 + " €), 3) " + recompensa3_3 + " (" + precio3_3 + " €)");
+                                                                        vistaProyectoDetalle(nombre3, descripcion3, categoria3, cantidadNecesaria3, cantidadFinanciada3, fechaInicio3, fechaFin3, recompensa3_1, precio3_1, recompensa3_2, precio3_2, recompensa3_3, precio3_3);
+                                                                        graficoProgreso(cantidadFinanciada3, cantidadNecesaria3);
 
-                                                                        // Calcular el porcentaje de progreso
-                                                                        double porcentajeProgreso = (cantidadFinanciada3 / cantidadNecesaria3) * 100;
-
-                                                                        // Pintar la barra de progreso
-                                                                        System.out.println("\nBarra de Progreso:");
-                                                                        System.out.print("[");
-
-                                                                        int totalCaracteres = 50; // Longitud total de la barra
-                                                                        int caracteresLlenos = (int) (porcentajeProgreso / (100.0 / totalCaracteres)); // Caracteres llenos, se hace una regla de 3
-                                                                        for (int i = 0; i < totalCaracteres; i++) {
-                                                                            if (i < caracteresLlenos) {
-                                                                                System.out.print("#"); // Parte llena de la barra
-                                                                            } else {
-                                                                                System.out.print("-"); // Parte vacía de la barra
-                                                                            }
-                                                                        }
-                                                                        System.out.printf("] %.2f %%\n", porcentajeProgreso);
-
+                                                                        //INVERTIR - proyecto 3
                                                                         boolean salirGestionProyecto = false;
                                                                         while (!salirGestionProyecto) {
-                                                                            System.out.println("""
-                                                                            \nSeleccione una opción:
-                                                                            1. Invertir en el proyecto
-                                                                            2. Salir""");
+                                                                            menuInvertirProyecto();
                                                                             int gestionProyecto = lecturaDatos.nextInt();
                                                                             lecturaDatos.nextLine();
 
@@ -5477,11 +3808,7 @@ public class Main {
                                                                                     boolean salirSubMenuRecompensa = false;
 
                                                                                     while (!salirSubMenuRecompensa) {
-                                                                                        System.out.println("\nSelecciona la inversión: ");
-                                                                                        System.out.println("1. Recompensa 1: " + recompensa2_1 + " (" + precio2_1 + " €)");
-                                                                                        System.out.println("2. Recompensa 2: " + recompensa2_2 + " (" + precio2_2 + " €)");
-                                                                                        System.out.println("3. Recompensa 3: " + recompensa2_3 + " (" + precio2_3 + " €)");
-                                                                                        System.out.println("4. Salir");
+                                                                                        menuInvertirRecompensa(recompensa3_1, precio3_1, recompensa3_2, precio3_2, recompensa3_3, precio3_3);
                                                                                         int seleccionInversion = lecturaDatos.nextInt();
                                                                                         lecturaDatos.nextLine();
 
@@ -5499,7 +3826,7 @@ public class Main {
                                                                                                     }
                                                                                                     else System.out.println("No tienes suficiente saldo. Añade más para invertir.");
                                                                                                 }
-                                                                                                if (npc2) {
+                                                                                                else if (npc2) {
                                                                                                     if (saldoInversor2 > precio3_1) {
                                                                                                         System.out.println("Has invertido " + precio3_1 + " € en el proyecto. Has obtenido la recompensa 1: " + recompensa3_1);
                                                                                                         cantidadFinanciada3 += precio3_1;
@@ -5522,7 +3849,7 @@ public class Main {
                                                                                                     }
                                                                                                     else System.out.println("No tienes suficiente saldo. Añade más para invertir.");
                                                                                                 }
-                                                                                                if (npc2) {
+                                                                                                else if (npc2) {
                                                                                                     if (saldoInversor2 > precio3_2) {
                                                                                                         System.out.println("Has invertido " + precio3_2 + " € en el proyecto.Has obtenido la recompensa 2: " + recompensa3_2);
                                                                                                         cantidadFinanciada3 += precio3_2;
@@ -5545,7 +3872,7 @@ public class Main {
                                                                                                     }
                                                                                                     else System.out.println("No tienes suficiente saldo. Añade más para invertir.");
                                                                                                 }
-                                                                                                if (npc2) {
+                                                                                                else if (npc2) {
                                                                                                     if (saldoInversor2 > precio3_3) {
                                                                                                         System.out.println("Has invertido " + precio3_3 + " € en el proyecto. Has obtenido la recompensa 2: " + recompensa3_3);
                                                                                                         cantidadFinanciada3 += precio3_3;
@@ -5581,36 +3908,13 @@ public class Main {
                                                                     }
                                                                     else if (nombre1 != null) {
                                                                         System.out.println("\nProyecto 1:");
-                                                                        System.out.println("Nombre: " + nombre1 + "\nDescripción: " + descripcion1 + "\nCategoría: " + categoria1 +
-                                                                                "\nCantidad necesaria: " + cantidadNecesaria1 + " €\nCantidad financiada: " + cantidadFinanciada1 + " €" +
-                                                                                "\nFecha inicio: " + fechaInicio1 + "\nFecha fin: " + fechaFin1);
-                                                                        System.out.println("Recompensas: 1) " + recompensa1_1 + " (" + precio1_1 + " €), 2) " + recompensa1_2 + " (" + precio1_2 + " €), 3) " + recompensa1_3 + " (" + precio1_3 + " €)");
+                                                                        vistaProyectoDetalle(nombre1, descripcion1, categoria1, cantidadNecesaria1, cantidadFinanciada1, fechaInicio1, fechaFin1, recompensa1_1, precio1_1, recompensa1_2, precio1_2, recompensa1_3, precio1_3);
+                                                                        graficoProgreso(cantidadFinanciada1, cantidadNecesaria1);
 
-                                                                        // Calcular el porcentaje de progreso
-                                                                        double porcentajeProgreso = (cantidadFinanciada1 / cantidadNecesaria1) * 100;
-
-                                                                        // Pintar la barra de progreso
-                                                                        System.out.println("\nBarra de Progreso:");
-                                                                        System.out.print("[");
-
-                                                                        int totalCaracteres = 50; // Longitud total de la barra
-                                                                        int caracteresLlenos = (int) (porcentajeProgreso / (100.0 / totalCaracteres)); // Caracteres llenos, se hace una regla de 3
-                                                                        for (int i = 0; i < totalCaracteres; i++) {
-                                                                            if (i < caracteresLlenos) {
-                                                                                System.out.print("#"); // Parte llena de la barra
-                                                                            } else {
-                                                                                System.out.print("-"); // Parte vacía de la barra
-                                                                            }
-                                                                        }
-                                                                        System.out.printf("] %.2f %%\n", porcentajeProgreso);
-
-                                                                        boolean salirGestionProyecto = false;
                                                                         //INVERTIR - proyecto 1
+                                                                        boolean salirGestionProyecto = false;
                                                                         while (!salirGestionProyecto) {
-                                                                            System.out.println("""
-                                                                             \nSeleccione una opción:
-                                                                             1. Invertir en el proyecto
-                                                                             2. Salir""");
+                                                                            menuInvertirProyecto();
                                                                             int gestionProyecto = lecturaDatos.nextInt();
                                                                             lecturaDatos.nextLine();
 
@@ -5619,11 +3923,7 @@ public class Main {
                                                                                     boolean salirSubMenuRecompensa = false;
 
                                                                                     while (!salirSubMenuRecompensa) {
-                                                                                        System.out.println("\nSelecciona la inversión: ");
-                                                                                        System.out.println("1. Recompensa 1: " + recompensa1_1 + " (" + precio1_1 + " €)");
-                                                                                        System.out.println("2. Recompensa 2: " + recompensa1_2 + " (" + precio1_2 + " €)");
-                                                                                        System.out.println("3. Recompensa 3: " + recompensa1_3 + " (" + precio1_3 + " €)");
-                                                                                        System.out.println("4. Salir");
+                                                                                        menuInvertirRecompensa(recompensa1_1, precio1_1, recompensa1_2, precio1_2, recompensa1_3, precio1_3);
                                                                                         int seleccionInversion = lecturaDatos.nextInt();
                                                                                         lecturaDatos.nextLine();
 
@@ -5640,7 +3940,7 @@ public class Main {
                                                                                                     }
                                                                                                     else System.out.println("No tienes suficiente saldo. Añade más para invertir.");
                                                                                                 }
-                                                                                                if (npc2) {
+                                                                                                else if (npc2) {
                                                                                                     if (saldoInversor2 > precio1_1) {
                                                                                                         System.out.println("Has invertido " + precio1_1 + " € en el proyecto. Has obtenido la recompensa 1: " + recompensa1_1);
                                                                                                         cantidadFinanciada1 += precio1_1;
@@ -5663,7 +3963,7 @@ public class Main {
                                                                                                     }
                                                                                                     else System.out.println("No tienes suficiente saldo. Añade más para invertir.");
                                                                                                 }
-                                                                                                if (npc2) {
+                                                                                                else if (npc2) {
                                                                                                     if (saldoInversor2 > precio1_2) {
                                                                                                         System.out.println("Has invertido " + precio1_2 + " € en el proyecto.Has obtenido la recompensa 2: " + recompensa1_2);
                                                                                                         cantidadFinanciada1 += precio1_2;
@@ -5687,7 +3987,7 @@ public class Main {
                                                                                                     }
                                                                                                     else System.out.println("No tienes suficiente saldo. Añade más para invertir.");
                                                                                                 }
-                                                                                                if (npc2) {
+                                                                                                else if (npc2) {
                                                                                                     if (saldoInversor2 > precio1_3) {
                                                                                                         System.out.println("Has invertido " + precio1_3 + " € en el proyecto.Has obtenido la recompensa 2: " + recompensa1_3);
                                                                                                         cantidadFinanciada1 += precio1_3;
@@ -5723,36 +4023,13 @@ public class Main {
                                                                     }
                                                                     else if (nombre2 != null) {
                                                                         System.out.println("\nProyecto 2:");
-                                                                        System.out.println("Nombre: " + nombre2 + "\nDescripción: " + descripcion2 + "\nCategoría: " + categoria2 +
-                                                                                "\nCantidad necesaria: " + cantidadNecesaria2 + " €\nCantidad financiada: " + cantidadFinanciada2 + " €" +
-                                                                                "\nFecha inicio: " + fechaInicio2 + "\nFecha fin: " + fechaFin2);
-                                                                        System.out.println("Recompensas: 1) " + recompensa2_1 + " (" + precio2_1 + " €), 2) " + recompensa2_2 + " (" + precio2_2 + " €), 3) " + recompensa2_3 + " (" + precio2_3 + " €)");
+                                                                        vistaProyectoDetalle(nombre2, descripcion2, categoria2, cantidadNecesaria2, cantidadFinanciada2, fechaInicio2, fechaFin2, recompensa2_1, precio2_1, recompensa2_2, precio2_2, recompensa2_3, precio2_3);
+                                                                        graficoProgreso(cantidadFinanciada2, cantidadNecesaria2);
 
-                                                                        // Calcular el porcentaje de progreso
-                                                                        double porcentajeProgreso = (cantidadFinanciada2 / cantidadNecesaria2) * 100;
-
-                                                                        // Pintar la barra de progreso
-                                                                        System.out.println("\nBarra de Progreso:");
-                                                                        System.out.print("[");
-
-                                                                        int totalCaracteres = 50; // Longitud total de la barra
-                                                                        int caracteresLlenos = (int) (porcentajeProgreso / (100.0 / totalCaracteres)); // Caracteres llenos, se hace una regla de 3
-                                                                        for (int i = 0; i < totalCaracteres; i++) {
-                                                                            if (i < caracteresLlenos) {
-                                                                                System.out.print("#"); // Parte llena de la barra
-                                                                            } else {
-                                                                                System.out.print("-"); // Parte vacía de la barra
-                                                                            }
-                                                                        }
-                                                                        System.out.printf("] %.2f %%\n", porcentajeProgreso);
-
-                                                                        boolean salirGestionProyecto = false;
                                                                         //INVERTIR - proyecto 2
+                                                                        boolean salirGestionProyecto = false;
                                                                         while (!salirGestionProyecto) {
-                                                                            System.out.println("""
-                                                                            \nSeleccione una opción:
-                                                                             1. Invertir en el proyecto
-                                                                             2. Salir""");
+                                                                            menuInvertirProyecto();
                                                                             int gestionProyecto = lecturaDatos.nextInt();
                                                                             lecturaDatos.nextLine();
 
@@ -5761,11 +4038,7 @@ public class Main {
                                                                                     boolean salirSubMenuRecompensa = false;
 
                                                                                     while (!salirSubMenuRecompensa) {
-                                                                                        System.out.println("\nSelecciona la inversión: ");
-                                                                                        System.out.println("1. Recompensa 1: " + recompensa2_1 + " (" + precio2_1 + " €)");
-                                                                                        System.out.println("2. Recompensa 2: " + recompensa2_2 + " (" + precio2_2 + " €)");
-                                                                                        System.out.println("3. Recompensa 3: " + recompensa2_3 + " (" + precio2_3 + " €)");
-                                                                                        System.out.println("4. Salir");
+                                                                                        menuInvertirRecompensa(recompensa2_1, precio2_1, recompensa2_2, precio2_2, recompensa2_3, precio2_3);
                                                                                         int seleccionInversion = lecturaDatos.nextInt();
                                                                                         lecturaDatos.nextLine();
 
@@ -5782,7 +4055,7 @@ public class Main {
                                                                                                     }
                                                                                                     else System.out.println("No tienes suficiente saldo. Añade más para invertir.");
                                                                                                 }
-                                                                                                if (npc2) {
+                                                                                                else if (npc2) {
                                                                                                     if (saldoInversor2 > precio2_1) {
                                                                                                         System.out.println("Has invertido " + precio2_1 + " € en el proyecto. Has obtenido la recompensa 1: " + recompensa2_1);
                                                                                                         cantidadFinanciada2 += precio2_1;
@@ -5805,7 +4078,7 @@ public class Main {
                                                                                                     }
                                                                                                     else System.out.println("No tienes suficiente saldo. Añade más para invertir.");
                                                                                                 }
-                                                                                                if (npc2) {
+                                                                                                else if (npc2) {
                                                                                                     if (saldoInversor2 > precio2_2) {
                                                                                                         System.out.println("Has invertido " + precio2_2 + " € en el proyecto.Has obtenido la recompensa 2: " + recompensa2_2);
                                                                                                         cantidadFinanciada2 += precio2_2;
@@ -5829,7 +4102,7 @@ public class Main {
                                                                                                     }
                                                                                                     else System.out.println("No tienes suficiente saldo. Añade más para invertir.");
                                                                                                 }
-                                                                                                if (npc2) {
+                                                                                                else if (npc2) {
                                                                                                     if (saldoInversor2 > precio2_3) {
                                                                                                         System.out.println("Has invertido " + precio2_3 + " € en el proyecto. Has obtenido la recompensa 2: " + recompensa2_3);
                                                                                                         cantidadFinanciada2 += precio2_3;
@@ -5899,14 +4172,8 @@ public class Main {
                                 case 3:
     //3.3. INVERSOR - CARTERA DIGITAL
                                     boolean salirSubMenuCartera = false;
-
                                     while (!salirSubMenuCartera) {
-                                        System.out.println("""
-                                            \n --- CARTERA DIGITAL ---
-                                            Seleccione una opción:
-                                            1. Ver saldo actual
-                                            2. Añadir saldo
-                                            3. Salir""");
+                                        menuCartera();
                                         int seleccionCartera = lecturaDatos.nextInt();
                                         lecturaDatos.nextLine();
 
@@ -5914,14 +4181,14 @@ public class Main {
                                             case 1:
                                                 System.out.print("Tu saldo actual es de: ");
                                                 if (npc1) System.out.println(saldoInversor1 + " €");
-                                                if (npc2) System.out.println(saldoInversor2 + " €");
+                                                else if (npc2) System.out.println(saldoInversor2 + " €");
                                                 break;
                                             case 2:
                                                 System.out.print("Introduce la cantidad que vas a añadir (en €): ");
                                                 double sumaSaldo = lecturaDatos.nextDouble();
                                                 lecturaDatos.nextLine();
                                                 if (npc1) saldoInversor1 += sumaSaldo;
-                                                if (npc2) saldoInversor2 += sumaSaldo;
+                                                else if (npc2) saldoInversor2 += sumaSaldo;
                                                 System.out.println("Se han añadido " + sumaSaldo + " € a tu saldo actual.");
                                                 break;
                                             case 3:
@@ -5937,14 +4204,8 @@ public class Main {
                                 case 4:
     //3.4. INVERSOR - INVITAR AMIGO
                                     boolean salirSubMenuAmigos = false;
-
                                     while (!salirSubMenuAmigos) {
-                                        System.out.println("""
-                                            \n--- INVITA A UN AMIGO ---
-                                            Seleccione una opción:
-                                            1. Lista de amigos
-                                            2. Invitar amigo
-                                            3. Salir""");
+                                        menuInvitaAmigo();
                                         int seleccionAmigos = lecturaDatos.nextInt();
                                         lecturaDatos.nextLine();
 
@@ -5955,7 +4216,7 @@ public class Main {
                                                     if (amigosInversor1.isEmpty()) System.out.println("No tienes ningún amigo actualmente");
                                                     else System.out.println(amigosInversor1);
                                                 }
-                                                if (npc2) {
+                                                else if (npc2) {
                                                     if (amigosInversor2.isEmpty()) System.out.println("No tienes ningún amigo actualmente");
                                                     else System.out.println(amigosInversor2);
                                                 }
@@ -5964,7 +4225,7 @@ public class Main {
                                                 System.out.print("Introduce la cuenta de usuario de un amigo: ");
                                                 String cuentaAmigo = lecturaDatos.nextLine();
                                                 if (npc1) amigosInversor1 = amigosInversor1.concat("\n" + cuentaAmigo);
-                                                if (npc2) amigosInversor2 = amigosInversor2.concat("\n" + cuentaAmigo);
+                                                else if (npc2) amigosInversor2 = amigosInversor2.concat("\n" + cuentaAmigo);
                                                 System.out.println("Se ha añadido " + cuentaAmigo + " a tu lista de amigos.");
                                                 break;
                                             case 3:
@@ -5980,11 +4241,7 @@ public class Main {
                                 case 5:
     //3.5. INVERSOR - CONFIGURACION
                                     do {
-                                        System.out.println("""
-                                                Selecciona que quieres hacer:
-                                                1.-Cambiar el usuario
-                                                2.-Cambiar la contraseña
-                                                3.-Salir""");
+                                        menuConfiguracion();
                                         opcionConfig = lecturaDatos.nextInt();
                                         lecturaDatos.nextLine();
                                     } while (opcionConfig < 1 || opcionConfig > 3);
@@ -5997,7 +4254,8 @@ public class Main {
                                                 System.out.println();
                                                 System.out.println("Usuario cambiado exitosamente.");
                                                 break;
-                                            } else {
+                                            }
+                                            else {
                                                 usuarioNPC2 = lecturaDatos.nextLine();
                                                 System.out.println();
                                                 System.out.println("Usuario cambiado exitosamente.");
@@ -6010,7 +4268,8 @@ public class Main {
                                                 contraseniaNPC1 = lecturaDatos.nextLine();
                                                 System.out.println("Contraseña cambiada exitosamente.");
                                                 break;
-                                            } else {
+                                            }
+                                            else {
                                                 System.out.println("Introduce tu nueva contraseña: ");
                                                 contraseniaNPC2 = lecturaDatos.nextLine();
                                                 System.out.println("Contraseña cambiada exitosamente.");
@@ -6020,6 +4279,7 @@ public class Main {
                                             break;
                                         default:
                                             System.out.println("Has introducido un valor incorrecto.");
+                                            break;
                                     }
                                     break;
                                 case 6:
