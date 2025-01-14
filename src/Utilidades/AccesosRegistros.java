@@ -2,6 +2,8 @@ package Utilidades;
 
 import java.util.Scanner;
 
+import static Utilidades.EnviarCorreo.RegistroCorreo;
+
 public class AccesosRegistros {
 
     //Listado usuarios bloqueados
@@ -89,7 +91,18 @@ public class AccesosRegistros {
         boolean usuarioGestorBlocked=false;
         int contadorIntentos = 0, intentos = 2;;
         boolean registroGestor = false;
-        String usuarioGestor = "tornaceitor", contraseniaGestor = "54321";
+        String[] nombresGestores = new String[10];
+        nombresGestores[0]="tornaceitor";
+        nombresGestores[1]="toranceitor";
+        nombresGestores[2]="ElXokas";
+        nombresGestores[3]="M.Rajoy";
+        nombresGestores[4]="Guts";
+        String[] contraseniasGestores = new String[10];
+        contraseniasGestores[0]="0000";
+        contraseniasGestores[1]="1111";
+        contraseniasGestores[2]="2222";
+        contraseniasGestores[3]="3333";
+        contraseniasGestores[4]="4444";
         Scanner lecturaDatos = new Scanner(System.in);
 
         if (usuarioGestorBlocked) {
@@ -110,7 +123,7 @@ public class AccesosRegistros {
                     contraseniaLogin = lecturaDatos.nextLine().toLowerCase();
                     if (contraseniaLogin.equalsIgnoreCase("salir")) break;
 
-                    if ((usuarioLogin.equalsIgnoreCase(usuarioGestor) && contraseniaLogin.equalsIgnoreCase(contraseniaGestor))) {
+                    if (RegistroCorreo(nombresGestores,contraseniasGestores,usuarioLogin,contraseniaLogin)) {
                         registroGestor = true;
                         System.out.println("Inicio de sesión exitoso, bienvenido " + usuarioLogin + ".");
                     } else if (contadorIntentos < 3) {
@@ -134,6 +147,18 @@ public class AccesosRegistros {
         int contadorIntentos = 0, intentos = 2;
         String usuarioNPC1 = "soyunnpc1", contraseniaNPC1 = "6969";
         String usuarioNPC2 = "npcsisoy", contraseniaNPC2 = "9696";
+        String[] nombresInversores = new String[10];
+        nombresInversores[0]="Pepito";
+        nombresInversores[1]="Npc";
+        nombresInversores[2]="Cr7";
+        nombresInversores[3]="Messi";
+        nombresInversores[4]="Chicote";
+        String[] contraseniasInversores = new String[10];
+        contraseniasInversores[0]="0000";
+        contraseniasInversores[1]="1111";
+        contraseniasInversores[2]="2222";
+        contraseniasInversores[3]="3333";
+        contraseniasInversores[4]="4444";
         boolean  usuarioNPC1Blocked=false, usuarioNPC2Blocked=false, registroInversor = false, npc1=false,npc2=false;
         Scanner lecturaDatos = new Scanner(System.in);
 
@@ -163,18 +188,14 @@ public class AccesosRegistros {
                         System.out.println("Este usuario ha sido bloqueado por el administrador.");
                         break;
                     }
-                    if ((usuarioLogin.equalsIgnoreCase(usuarioNPC1) && contraseniaLogin.equalsIgnoreCase(contraseniaNPC1))) {
-                        registroInversor = true;
-                        npc1 = true;
+                    if(RegistroCorreo(nombresInversores,contraseniasInversores,usuarioLogin,contraseniaLogin)){
                         System.out.println("Inicio de sesión exitoso, bienvenido " + usuarioLogin + ".");
-                    } else if (usuarioLogin.equalsIgnoreCase(usuarioNPC2) && contraseniaLogin.equalsIgnoreCase(contraseniaNPC2)) {
-                        registroInversor = true;
-                        npc2 = true;
-                        System.out.println("Inicio de sesión exitoso, bienvenido " + usuarioLogin + ".");
+                        registroInversor=true;
                     } else if (contadorIntentos < 3) {
                         System.out.println("Usuario o contraseña incorrectos. Intenta de nuevo, le quedan " + intentos-- + " intentos.");
                         contadorIntentos++;
                     }
+
                 } else {
                     System.out.println();
                     System.out.println("Intentos agotados, usuario bloqueado.");
