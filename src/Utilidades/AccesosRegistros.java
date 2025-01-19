@@ -1,12 +1,26 @@
 package Utilidades;
 
 import java.util.Scanner;
-
+/**
+ * Clase con funciones relacinadas con el login y los registros de usuario.
+ *
+ * @author Alejandro Vergara Pozo, José Luis López Martos
+ * @version 1.0
+ * @since 3.0
+ */
 import static Utilidades.EnviarCorreo.RegistroCorreo;
 
 public class AccesosRegistros {
 
-    //Listado usuarios bloqueados
+
+    /**
+     * Gestiona el estado de bloqueo de los usuarios y permite desbloquearlos según la elección del administrador.
+     *
+     * @param usuarioGestorBlocked Estado inicial del bloqueo del usuario gestor.
+     * @param usuarioNPC1Blocked Estado inicial del bloqueo del usuario inversor 1.
+     * @param usuarioNPC2Blocked Estado inicial del bloqueo del usuario inversor 2.
+     * @since 3.0
+     */
     public static void usuariosBloqueados(boolean usuarioGestorBlocked,boolean usuarioNPC1Blocked, boolean usuarioNPC2Blocked){
         String usuarioGestor="tornaceitor", usuarioNPC1="soyunnpc1", usuarioNPC2="npcsisoy";
         usuarioGestorBlocked=usuarioGestorBlocked;
@@ -48,7 +62,12 @@ public class AccesosRegistros {
         }
     }
 
-    //Funcion resgistro admin
+    /**
+     * Permite iniciar sesión como administrador verificando las credenciales predefinidas.
+     * Proporciona acceso solo si el usuario y la contraseña coinciden con los valores almacenados.
+     *
+     * @since 3.0
+     */
     public static void registroAdmin(){
         //Variables log-in (admin)
         String usuarioLogin="", contraseniaLogin="";
@@ -84,7 +103,12 @@ public class AccesosRegistros {
         } while (!registroAdmin);
     }
 
-    //Funcion de log-in del gestor
+    /**
+     * Permite iniciar sesión como gestor verificando las credenciales predefinidas.
+     * Bloquea al usuario tras tres intentos fallidos consecutivos.
+     *
+     * @since 3.0
+     */
     public static void registroGestor(){
         //Variables log-in gestor
         String usuarioLogin="", contraseniaLogin="";
@@ -141,7 +165,13 @@ public class AccesosRegistros {
             // Te lleva a la creación de Proyectos
         }
     }
-
+    /**
+     * Permite iniciar sesión como inversor verificando las credenciales predefinidas.
+     * Bloquea a los usuarios tras tres intentos fallidos consecutivos.
+     * Gestiona dos usuarios inversores con credenciales diferentes.
+     *
+     * @since 3.0
+     */
     public static void registroInversor(){
         String usuarioLogin="", contraseniaLogin="";
         int contadorIntentos = 0, intentos = 2;
