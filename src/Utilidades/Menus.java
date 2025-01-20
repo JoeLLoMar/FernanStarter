@@ -18,14 +18,11 @@ public class Menus {
      * @return Un entero que representa la selección del usuario:
      *         1 para administrador, 2 para gestor, 3 para inversor, 4 para salir.
      */
+
+
     public static int menuInicial(){
         int tipoUsuario;
         Scanner lecturaDatos = new Scanner(System.in);
-
-        System.out.println("----------------------------");
-        System.out.println("¡Bienvenido a FernanStarter!");
-        System.out.println("----------------------------");
-        System.out.println();
 //0. LOGIN
         //Elección de perfil de usuario y log-in
         System.out.println("""

@@ -77,6 +77,7 @@ public class Main {
 
         do {
             Scanner lecturaDatos = new Scanner(System.in);
+            primerMenu();
             tipoUsuario=menuInicial();
             //Switch que valida que tipo de usuario has seleccionado y te pide iniciar sesión como tal
             switch (tipoUsuario) {
@@ -87,12 +88,12 @@ public class Main {
                     break;
     //0.2. LOGIN - GESTOR
                 case 2: //Accedes al login como gestor
-                    registroGestor();
+                    registroGestor(0,"default1","default2");
                     registroGestor=true;
                     break;
     //0.3. LOGIN - INVERSOR
                 case 3: //igual que el case 2 de gestor
-                    registroInversor();
+                    registroInversor(0,"default1","default2");
                     registroInversor=true;
                     break;
     //0.4. LOGIN - SALIR

@@ -9,6 +9,7 @@ import java.util.Scanner;
  * @since 3.0
  */
 import static Utilidades.EnviarCorreo.RegistroCorreo;
+import static Utilidades.Menus.menuInicial;
 
 public class AccesosRegistros {
 
@@ -68,6 +69,78 @@ public class AccesosRegistros {
      *
      * @since 3.0
      */
+    public static int registroUsuarios(String [] usuarios, String[] contrasenias, int posicionLibre,String nuevoUsuario, String nuevaContrasenia){
+        for (int i=0;i< usuarios.length;i++){
+            if (posicionLibre< usuarios.length){
+                usuarios[posicionLibre]= nuevoUsuario;
+                contrasenias[posicionLibre]=nuevaContrasenia;
+                //System.out.println("usuario" + usuarios[posicionLibre]);
+                //System.out.println("contraseña" + contrasenias[posicionLibre]);
+                posicionLibre++;
+                return posicionLibre;
+            }else {
+                System.out.println("No hay espacio disponible.");
+                return -1;
+            }
+        }
+        return  posicionLibre;
+    }
+
+    public static void primerMenu(){
+        int opcion=0,opcion2=0;
+        String nuevoUsuario="",nuevaContrasenia="";
+        Scanner lecturaDatos = new Scanner(System.in);
+
+        System.out.println("----------------------------");
+        System.out.println("¡Bienvenido a FernanStarter!");
+        System.out.println("----------------------------");
+        System.out.println();
+
+
+            System.out.println("""
+                ¿Qué quieres hacer?
+                1.- Iniciar sesión
+                2.- Registrarme
+                3.- Salir
+                """);
+            opcion=Integer.parseInt(lecturaDatos.nextLine());
+            switch (opcion){
+                case 1:
+                    break;
+                case 2:
+                    System.out.println();
+                    System.out.println("""
+                            Qué tipo de usuario vas a ser:
+                            1.-Gestor
+                            2.-Inversor
+                            """);
+                    opcion2= Integer.parseInt(lecturaDatos.nextLine());
+                    switch (opcion2){
+                        case 1:
+                            System.out.println("Introduce tu usuario: ");
+                            nuevoUsuario=lecturaDatos.nextLine().trim().toLowerCase();
+                            System.out.println("Introduce tu contraseña: ");
+                            nuevaContrasenia=lecturaDatos.nextLine().trim().toLowerCase();
+                            registroGestor(1,nuevoUsuario,nuevaContrasenia);
+                            break;
+
+                        case 2:
+                            System.out.println("Introduce tu usuario: ");
+                            nuevoUsuario=lecturaDatos.nextLine().trim().toLowerCase();
+                            System.out.println("Introduce tu contraseña: ");
+                            nuevaContrasenia=lecturaDatos.nextLine().trim().toLowerCase();
+                            registroInversor(1,nuevoUsuario,nuevaContrasenia);
+                            break;
+                    }
+                    break;
+                case 3:
+                    System.out.println("Saliendo...");
+                    break;
+                default:
+                    System.out.println("Opción incorrecta");
+            }
+    }
+
     public static void registroAdmin(){
         //Variables log-in (admin)
         String usuarioLogin="", contraseniaLogin="";
@@ -109,11 +182,11 @@ public class AccesosRegistros {
      *
      * @since 3.0
      */
-    public static void registroGestor(){
+    public static void registroGestor(int registro, String nuevoUsuario, String nuevaContrasenia){
         //Variables log-in gestor
         String usuarioLogin="", contraseniaLogin="";
         boolean usuarioGestorBlocked=false;
-        int contadorIntentos = 0, intentos = 2;;
+        int contadorIntentos = 0, intentos = 2, siguienteUsuarioGestor=5;
         boolean registroGestor = false;
         String[] nombresGestores = new String[10];
         nombresGestores[0]="tornaceitor";
@@ -127,7 +200,13 @@ public class AccesosRegistros {
         contraseniasGestores[2]="2222";
         contraseniasGestores[3]="3333";
         contraseniasGestores[4]="4444";
+
+
         Scanner lecturaDatos = new Scanner(System.in);
+        if(registro==1){
+            siguienteUsuarioGestor=registroUsuarios(nombresGestores,contraseniasGestores,siguienteUsuarioGestor,nuevoUsuario,nuevaContrasenia);
+            registro=0;
+        }
 
         if (usuarioGestorBlocked) {
             System.out.println("Este usuario ha sido bloqueado por el administrador.");
@@ -135,23 +214,33 @@ public class AccesosRegistros {
         } else {
             System.out.println();
             System.out.println("Usted ha elegido ingresar como gestor.");
+            System.out.println("Por seguridad, introduzca sus crendenciales para verificar su identidad.");
+            for(int j=0;j< nombresGestores.length;j++){
+                System.out.println("Usuario [" + j + "]= " + nombresGestores[j] + " con contraseña " + contraseniasGestores[j]);
+            }
             do {
                 if (contadorIntentos < 3) {
                     System.out.println();
                     System.out.println("Para salir del programa, escribe SALIR");
                     System.out.println("--------------------------------------");
+                    //System.out.println("usuario: " + nombresGestores[5]);
+                    //System.out.println("contraseña: " + contraseniasGestores[5]);
                     System.out.println("1.-Introduce usuario ");
-                    usuarioLogin = lecturaDatos.nextLine().toLowerCase();
+                    usuarioLogin = lecturaDatos.nextLine().trim().toLowerCase();
                     if (usuarioLogin.equalsIgnoreCase("salir")) break;
                     System.out.println("2.-Introduce la contraseña");
-                    contraseniaLogin = lecturaDatos.nextLine().toLowerCase();
+                    contraseniaLogin = lecturaDatos.nextLine().trim().toLowerCase();
                     if (contraseniaLogin.equalsIgnoreCase("salir")) break;
+                    System.out.println();
 
+                    System.out.println();
                     if (RegistroCorreo(nombresGestores,contraseniasGestores,usuarioLogin,contraseniaLogin)) {
                         registroGestor = true;
                         System.out.println("Inicio de sesión exitoso, bienvenido " + usuarioLogin + ".");
                     } else if (contadorIntentos < 3) {
                         System.out.println("Usuario o contraseña incorrectos. Intenta de nuevo, le quedan " + intentos-- + " intentos.");
+                        //System.out.println(nombresGestores[5]);
+                        //System.out.println(contraseniasGestores[5]);
                         contadorIntentos++;
                     }
                 } else {
@@ -165,6 +254,7 @@ public class AccesosRegistros {
             // Te lleva a la creación de Proyectos
         }
     }
+
     /**
      * Permite iniciar sesión como inversor verificando las credenciales predefinidas.
      * Bloquea a los usuarios tras tres intentos fallidos consecutivos.
@@ -172,9 +262,9 @@ public class AccesosRegistros {
      *
      * @since 3.0
      */
-    public static void registroInversor(){
+    public static void registroInversor(int registro, String nuevoUsuario, String nuevaContrasenia){
         String usuarioLogin="", contraseniaLogin="";
-        int contadorIntentos = 0, intentos = 2;
+        int contadorIntentos = 0, intentos = 2, siguienteUsuarioInversor=5;
         String usuarioNPC1 = "soyunnpc1", contraseniaNPC1 = "6969";
         String usuarioNPC2 = "npcsisoy", contraseniaNPC2 = "9696";
         String[] nombresInversores = new String[10];
@@ -189,8 +279,14 @@ public class AccesosRegistros {
         contraseniasInversores[2]="2222";
         contraseniasInversores[3]="3333";
         contraseniasInversores[4]="4444";
+
         boolean  usuarioNPC1Blocked=false, usuarioNPC2Blocked=false, registroInversor = false, npc1=false,npc2=false;
         Scanner lecturaDatos = new Scanner(System.in);
+
+        if(registro==1){
+            siguienteUsuarioInversor=registroUsuarios(nombresInversores,contraseniasInversores,siguienteUsuarioInversor,nuevoUsuario,nuevaContrasenia);
+            registro=0;
+        }
 
         if (usuarioNPC1Blocked && (usuarioLogin.equalsIgnoreCase(usuarioNPC1) && contraseniaLogin.equalsIgnoreCase(contraseniaNPC1))) {
             System.out.println("Este usuario ha sido bloqueado por el administrador.");

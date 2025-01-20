@@ -43,34 +43,42 @@ public class EnviarCorreo {
         }
     }
 
-    public static Boolean RegistroCorreo(String[] usuarios,String[] contrasenias, String usuario, String contrasenia) {
-        int codigoUsuario=0;
-        int codigo= (int) (Math.random()*9999 )+1;
+    public static Boolean RegistroCorreo(String[] usuarios, String[] contrasenias, String usuario, String contrasenia) {
+        int codigoUsuario = 0;
+        int codigo = (int) (Math.random() * 9999) + 1;
         String correoUsuario;
         Scanner lecturaDatos = new Scanner(System.in);
 
-        for(int i=0; i<usuarios.length;i++){
-            if (usuarios[i].equalsIgnoreCase(usuario) && contrasenias[i].equalsIgnoreCase(contrasenia)){
-                System.out.println("Se va a proceder a hacer una comprobación por email para verificar la integridad de su cuenta");
-                System.out.println("Introduce correo de usuario");
-                correoUsuario = lecturaDatos.nextLine();
-                String destinatario = correoUsuario; // Destinatario del mensaje
-                String asunto = "Código de verificación FernanStarter";
-                String cuerpo = "<h1>Automáticamente se ha solicitado un código de verificación a este gmail para comprobar que usted sea un usuario real.</h1>" +
-                        "<p>Código: </p>" + codigo;
-                enviarConGMail(destinatario, asunto, cuerpo);
-                System.out.println("Introduce el código de verificación");
-                codigoUsuario = Integer.parseInt(lecturaDatos.nextLine());
-                if(codigoUsuario == codigo){
-                    System.out.println("Credenciales correctos.");
+        System.out.println("Verificando usuario y contraseña...");
+        System.out.println();
+
+        for (int i = 0; i < usuarios.length; i++) {
+            if (usuarios[i] != null && contrasenias[i] != null) {
+                if (usuarios[i].trim().equalsIgnoreCase(usuario.trim()) &&
+                        contrasenias[i].trim().equalsIgnoreCase(contrasenia.trim())) {
                     System.out.println();
-                    return true;
+                    System.out.println("Se va a proceder a hacer una comprobación por email para verificar la integridad de su cuenta");
+                    System.out.println("Introduce correo de usuario");
+                    correoUsuario = lecturaDatos.nextLine();
+                    String destinatario = correoUsuario; // Destinatario del mensaje
+                    String asunto = "Código de verificación FernanStarter";
+                    String cuerpo = "<h1>Automáticamente se ha solicitado un código de verificación a este gmail para comprobar que usted sea un usuario real.</h1>" +
+                            "<p>Código: </p>" + codigo;
+                    enviarConGMail(destinatario, asunto, cuerpo);
+                    System.out.println("Introduce el código de verificación");
+                    codigoUsuario = Integer.parseInt(lecturaDatos.nextLine());
+                    if (codigoUsuario == codigo) {
+                        System.out.println("Credenciales correctos.");
+                        System.out.println();
+                        return true;
+                    } else {
+                        System.out.println("Código de verificación incorrecto.");
+                        return false;
+                    }
                 }
-            } else {
-                System.out.println("Credenciales incorrectos");
-                break;
             }
         }
+        System.out.println("Credenciales incorrectos");
         return false;
     }
 }
