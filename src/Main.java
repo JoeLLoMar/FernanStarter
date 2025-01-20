@@ -19,9 +19,27 @@ public class Main {
         String usuarioGestor = "tornaceitor", contraseniaGestor = "54321";
         String usuarioNPC1 = "soyunnpc1", contraseniaNPC1 = "6969";
         String usuarioNPC2 = "npcsisoy", contraseniaNPC2 = "9696";
-        boolean  usuarioNPC1Blocked=false, usuarioNPC2Blocked=false,usuarioGestorBlocked=false,npc1 = false, npc2 = false;;
+        boolean  usuarioNPC1Blocked=false, usuarioNPC2Blocked=false,usuarioGestorBlocked=false,npc1 = false, npc2 = false;
         boolean  registroInversor = false, cerrarSesion=false, admin=false,gestor=false;
         int opcionConfig = 0,contadorIntentos = 0;
+
+        //Arrays usuarios por tipos
+        final int MAX_GESTORES = 10;
+        final int MAX_INVERSORES = 10;
+
+        String[][] usuariosGestores = new String[MAX_GESTORES][2]; // 2 Campos: usuario, contraseña.
+        String[][] usuariosInversores = new String[MAX_INVERSORES][2];
+
+        usuariosInversores[0][0] = "Pepito";
+        usuariosInversores[0][1] = "0000";
+        usuariosInversores[1][0] = "Npc";
+        usuariosInversores[1][1] = "1111";
+        usuariosInversores[2][0] = "Cr7";
+        usuariosInversores[2][1] = "2222";
+        usuariosInversores[3][0] = "Messi";
+        usuariosInversores[3][1] = "3333";
+        usuariosInversores[4][0] = "Chicote";
+        usuariosInversores[4][1] = "4444";
 
         //Variables específicas inversor
         double saldoInversor1 = 0, saldoInversor2 = 0;
@@ -46,7 +64,7 @@ public class Main {
         String recompensa3_1 = null, recompensa3_2 = null, recompensa3_3 = null;
         double precio3_1 = -1, precio3_2 = -1, precio3_3 = -1;
 
-        //Arrays proyectos (2D)
+        //Arrays proyectos
         final int MAX_PROYECTOS = 20;
         final int MAX_RECOMPENSAS = 3;
 
@@ -70,6 +88,21 @@ public class Main {
             for (int j = 0; j < recompensasDescripcion[i].length; j++) {
                 recompensasDescripcion[i][j] = null;
                 recompensasPrecios[i][j] = -1;
+            }
+        }
+
+        //Arrays de inversiones
+        double[][] inversiones = new double[MAX_INVERSORES][MAX_PROYECTOS]; // 5 usuarios x 20 proyectos
+        boolean[][] proyectosInvertidos = new boolean[MAX_INVERSORES][MAX_PROYECTOS];
+
+        for (int i = 0; i < inversiones.length; i++) {
+            for (int j = 0; j < inversiones[i].length; j++) {
+                inversiones[i][j] = 0;
+            }
+        }
+        for (int i = 0; i < proyectosInvertidos.length; i++) {
+            for (int j = 0; j < proyectosInvertidos[i].length; j++) {
+                proyectosInvertidos[i][j] = false;
             }
         }
 
