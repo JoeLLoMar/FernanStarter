@@ -12,15 +12,15 @@ import static Utilidades.Menus.*;
  * @since 3.0
  */
 public class ProcesamientoDatos {
-    /**
-     * Muestra una vista básica del proyecto.
-     *
-     * @param nombre           Nombre del proyecto.
-     * @param descripcion      Breve descripción del proyecto.
-     * @param categoria        Categoría del proyecto.
-     * @param cantidadNecesaria Cantidad necesaria para completar el proyecto.
-     * @param cantidadFinanciada Cantidad que ya ha sido financiada.
-     */
+//    /**
+//     * Muestra una vista básica del proyecto.
+//     *
+//     * @param nombre           Nombre del proyecto.
+//     * @param descripcion      Breve descripción del proyecto.
+//     * @param categoria        Categoría del proyecto.
+//     * @param cantidadNecesaria Cantidad necesaria para completar el proyecto.
+//     * @param cantidadFinanciada Cantidad que ya ha sido financiada.
+//     */
 //    public static void vistaProyecto(String nombre, String descripcion, String categoria, double cantidadNecesaria, double cantidadFinanciada) {
 //        System.out.println("Nombre: " + nombre + "\nDescripción: " + descripcion + "\nCategoría: " + categoria +
 //                "\nCantidad necesaria: " + cantidadNecesaria + " €\nCantidad financiada: " + cantidadFinanciada + " €");
@@ -62,23 +62,23 @@ public class ProcesamientoDatos {
                 "\nCantidad necesaria: " + cantidadNecesaria + " €\nCantidad que has aportado: " + cantidadInvertida + " €");
     }
 
-    /**
-     * Muestra una vista detallada del proyecto, incluyendo recompensas y fechas clave.
-     *
-     * @param nombre           Nombre del proyecto.
-     * @param descripcion      Breve descripción del proyecto.
-     * @param categoria        Categoría del proyecto.
-     * @param cantidadNecesaria Cantidad necesaria para completar el proyecto.
-     * @param cantidadFinanciada Cantidad que ya ha sido financiada.
-     * @param fechaInicio      Fecha de inicio del proyecto.
-     * @param fechaFin         Fecha de finalización del proyecto.
-     * @param recompensa1      Descripción de la primera recompensa.
-     * @param precio1          Precio asociado a la primera recompensa.
-     * @param recompensa2      Descripción de la segunda recompensa.
-     * @param precio2          Precio asociado a la segunda recompensa.
-     * @param recompensa3      Descripción de la tercera recompensa.
-     * @param precio3          Precio asociado a la tercera recompensa.
-     */
+//    /**
+//     * Muestra una vista detallada del proyecto, incluyendo recompensas y fechas clave.
+//     *
+//     * @param nombre           Nombre del proyecto.
+//     * @param descripcion      Breve descripción del proyecto.
+//     * @param categoria        Categoría del proyecto.
+//     * @param cantidadNecesaria Cantidad necesaria para completar el proyecto.
+//     * @param cantidadFinanciada Cantidad que ya ha sido financiada.
+//     * @param fechaInicio      Fecha de inicio del proyecto.
+//     * @param fechaFin         Fecha de finalización del proyecto.
+//     * @param recompensa1      Descripción de la primera recompensa.
+//     * @param precio1          Precio asociado a la primera recompensa.
+//     * @param recompensa2      Descripción de la segunda recompensa.
+//     * @param precio2          Precio asociado a la segunda recompensa.
+//     * @param recompensa3      Descripción de la tercera recompensa.
+//     * @param precio3          Precio asociado a la tercera recompensa.
+//     */
 //    public static void vistaProyectoDetalle(String nombre, String descripcion, String categoria, double cantidadNecesaria, double cantidadFinanciada, String fechaInicio, String fechaFin, String recompensa1, double precio1, String recompensa2, double precio2, String recompensa3, double precio3) {
 //        System.out.println("Nombre: " + nombre + "\nDescripción: " + descripcion + "\nCategoría: " + categoria +
 //                "\nCantidad necesaria: " + cantidadNecesaria + " €\nCantidad financiada: " + cantidadFinanciada + " €" +
