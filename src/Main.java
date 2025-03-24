@@ -1,8 +1,6 @@
-import java.util.Scanner;
+/*import java.util.Scanner;
 
-import static Utilidades.AccesosRegistros.*;
-import static Utilidades.Menus.*;
-import static Utilidades.ProcesamientoDatos.*;
+import static es.iesfernandoiii.fernanstarter.utilidades.Menus.menuInicial;
 
 public class Main {
     //Parte donde nos morimos, es decir, pasamos 6k líneas a funciones
@@ -1087,3 +1085,4 @@ public class Main {
         }while(!cerrarPrograma);
     }
 }
+*/

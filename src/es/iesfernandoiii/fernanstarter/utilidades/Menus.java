@@ -1,4 +1,4 @@
-package Utilidades;
+package es.iesfernandoiii.fernanstarter.utilidades;
 
 import java.util.Scanner;
 
