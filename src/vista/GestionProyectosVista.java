@@ -1,4 +1,4 @@
-package es.iesfernandoiii.fernanstarter.vista;
+package vista;
 
 public class GestionProyectosVista {
 

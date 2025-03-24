@@ -1,6 +1,6 @@
 /*import java.util.Scanner;
 
-import static es.iesfernandoiii.fernanstarter.utilidades.Menus.menuInicial;
+import static utilidades.Menus.menuInicial;
 
 public class Main {
     //Parte donde nos morimos, es decir, pasamos 6k líneas a funciones

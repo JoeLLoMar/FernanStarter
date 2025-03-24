@@ -1,6 +1,5 @@
-package es.iesfernandoiii.fernanstarter.modelo;
+package modelo;
 
-import java.awt.*;
 import java.util.ArrayList;
 
 public class GestionProyectos {

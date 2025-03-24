@@ -1,4 +1,4 @@
-package es.iesfernandoiii.fernanstarter.modelo;
+package modelo;
 
 public class Administrador extends Usuario {
     private static int contadorAdministrador = 0;

@@ -1,4 +1,4 @@
-package es.iesfernandoiii.fernanstarter.modelo;
+package modelo;
 
 public interface Invertible {
     float aumentaInversion (float cantidad);

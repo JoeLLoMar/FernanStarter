@@ -1,4 +1,4 @@
-package es.iesfernandoiii.fernanstarter.modelo;
+package modelo;
 
 import java.util.ArrayList;
 

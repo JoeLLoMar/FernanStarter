@@ -1,16 +1,16 @@
-package es.iesfernandoiii.fernanstarter.modelo;
+package modelo;
 
 abstract public class Usuario {
     private static int contadorUsuarios = 0;
     private int id;
     private String nombre;
-    private String clave;
+    private String contraseña;
     private String email;
 
     public Usuario(String nombre, String clave, String email) {
         this.id = ++contadorUsuarios;
         this.nombre = nombre;
-        this.clave = clave;
+        this.contraseña = clave;
         this.email = email;
     }
 
@@ -30,12 +30,12 @@ abstract public class Usuario {
         this.nombre = nombre;
     }
 
-    public String getClave() {
-        return clave;
+    public String getContraseña() {
+        return contraseña;
     }
 
-    public void setClave(String clave) {
-        this.clave = clave;
+    public void setContraseña(String contraseña) {
+        this.contraseña = contraseña;
     }
 
     public String getEmail() {
@@ -51,7 +51,7 @@ abstract public class Usuario {
         return "Usuario{" +
                 "id=" + id +
                 ", nombre='" + nombre + '\'' +
-                ", clave='" + clave + '\'' +
+                ", contraseña='" + contraseña + '\'' +
                 ", email='" + email + '\'' +
                 '}';
     }

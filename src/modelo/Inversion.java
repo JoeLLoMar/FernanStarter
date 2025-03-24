@@ -1,4 +1,4 @@
-package es.iesfernandoiii.fernanstarter.modelo;
+package modelo;
 
 public class Inversion implements Invertible {
     private static int contadorInversiones = 0;

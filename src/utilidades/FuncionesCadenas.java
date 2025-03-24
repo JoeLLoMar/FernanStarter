@@ -1,4 +1,4 @@
-package es.iesfernandoiii.fernanstarter.utilidades;
+package utilidades;
 
 public class FuncionesCadenas {
     /**

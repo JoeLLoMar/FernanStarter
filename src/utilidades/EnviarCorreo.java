@@ -1,4 +1,4 @@
-package es.iesfernandoiii.fernanstarter.utilidades;
+package utilidades;
 
 import javax.mail.Message;
 import javax.mail.Session;

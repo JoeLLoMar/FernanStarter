@@ -1,4 +1,4 @@
-package es.iesfernandoiii.fernanstarter.utilidades;
+package utilidades;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;

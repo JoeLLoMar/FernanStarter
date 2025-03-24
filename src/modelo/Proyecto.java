@@ -1,4 +1,4 @@
-package es.iesfernandoiii.fernanstarter.modelo;
+package modelo;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
