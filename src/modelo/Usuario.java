@@ -46,6 +46,8 @@ abstract public class Usuario {
         this.email = email;
     }
 
+    public boolean validarContraseña(String contraseña) { return this.contraseña.equals(contraseña); }
+
     @Override
     public String toString() {
         return "Usuario{" +

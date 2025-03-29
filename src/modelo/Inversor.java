@@ -84,6 +84,9 @@ public class Inversor extends Usuario implements Bloqueable {
     }
 
     @Override
+    public boolean estaBloqueado() { return bloqueado; }
+
+    @Override
     public String toString() {
         return "Inversor{" +
                 "idInversor=" + idInversor +

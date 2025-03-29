@@ -19,6 +19,17 @@ public class GestionUsuarios {
         return null;
     }
 
+    public Usuario buscarUsuarioPorNombre(String nombre) {
+        for (Usuario u : listaUsuarios) {
+            if (u.getNombre().equals(nombre)) {
+                return u;
+            }
+        }
+        return null;
+    }
+
+    public void desbloquearUsuario(Bloqueable usuario) { usuario.desbloquear(); }
+
     public int buscarPosicion(int id) {
         for (int i = 0; i < listaUsuarios.size(); i++)
             if (listaUsuarios.get(i).getId() == id)
