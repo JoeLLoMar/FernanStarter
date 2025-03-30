@@ -51,9 +51,4 @@ public class GestionProyectos {
             return listaProyectos.set(posicion, proyecto);
         return null;
     }
-
-    public void mostrarProyectos() {
-        for (Proyecto p : listaProyectos)
-            System.out.println(p);
-    }
 }

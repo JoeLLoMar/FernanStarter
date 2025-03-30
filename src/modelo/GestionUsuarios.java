@@ -42,7 +42,7 @@ public class GestionUsuarios {
     }
 
     //¿Se ejecuta el método remove() en la definición de la condición?
-    public Usuario eliminarProyecto(Usuario usuario) {
+    public Usuario eliminarUsuario(Usuario usuario) {
         if(listaUsuarios.contains(usuario)) {
             listaUsuarios.remove(usuario);
             return usuario;
@@ -50,22 +50,16 @@ public class GestionUsuarios {
         return null;
     }
 
-    public Usuario eliminarProyecto(int posicion) {
+    public Usuario eliminarUsuario(int posicion) {
         if(listaUsuarios.contains(listaUsuarios.get(posicion))) {
             return listaUsuarios.remove(posicion);
         }
         return null;
     }
 
-    public Usuario modificaProyecto(int posicion, Usuario usuario) {
+    public Usuario modificarUsuario(int posicion, Usuario usuario) {
         if (posicion >= 0 && posicion < listaUsuarios.size())
             return listaUsuarios.set(posicion, usuario);
         return null;
     }
-
-    public void mostrarProyectos() {
-        for (Usuario p : listaUsuarios)
-            System.out.println(p);
-    }
-
 }

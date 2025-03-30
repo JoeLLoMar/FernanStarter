@@ -1,12 +1,21 @@
 package modelo;
 
 public class Recompensa {
+    private int idRecompensa;
     private String descripcion;
     private float precio;
 
     public Recompensa(String descripcion, float precio) {
         this.descripcion = descripcion;
         this.precio = precio;
+    }
+
+    public int getIdRecompensa() {
+        return idRecompensa;
+    }
+
+    public void setIdRecompensa(Proyecto proyecto) {
+        this.idRecompensa = proyecto.getListaRecompensas().size() + 1;
     }
 
     public String getDescripcion() {
@@ -27,9 +36,11 @@ public class Recompensa {
 
     @Override
     public String toString() {
-        return "Recompensa{" +
-                "descripcion='" + descripcion + '\'' +
-                ", precio=" + precio +
-                '}';
+        return "\nRECOMPENSA" +
+                "\n=============================================" +
+                "\nID de recompensa" + idRecompensa +
+                "\nDescripción: " + descripcion +
+                "\nPrecio: " + precio +
+                "\n=============================================";
     }
 }

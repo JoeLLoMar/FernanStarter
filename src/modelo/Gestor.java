@@ -58,10 +58,10 @@ public class Gestor extends Usuario implements Bloqueable {
 
     @Override
     public String toString() {
-        return "Gestor{" +
-                "idGestor=" + idGestor +
-                ", listaProyectos=" + listaProyectos +
-                ", contadorLogin=" + contadorLogin +
-                '}';
+        return "\nUSUARIO GESTOR" +
+                super.toString() +
+                "\nID de gestor: " + idGestor +
+                "\nProyectos creados: " + listaProyectos +
+                "\n=============================================";
     }
 }

@@ -1,11 +1,26 @@
 package vista;
 
+import modelo.Proyecto;
+
+import java.util.ArrayList;
+
 public class GestionProyectosVista {
+    private String colorTexto;
+    public static final String ROJO = "\u001B[31m";
+    public static final String VERDE = "\u001B[32m";
+    public static final String RESET = "\u001B[0m";
 
+    public void setColorTexto(String colorTexto) {
+        this.colorTexto = colorTexto;
+    }
 
-    public static void graficoProgreso(float cantidadActual, float cantidadTotal) {
+    public void mostrarMensaje(String mensaje) {
+        System.out.println(colorTexto + mensaje + RESET);
+    }
+
+    public static void graficoProgreso(Proyecto proyecto) {
         // Calcular el porcentaje de progreso
-        double porcentajeProgreso = (cantidadActual / cantidadTotal) * 100;
+        double porcentajeProgreso = (proyecto.getCantidadFinanciada() / proyecto.getCantidadNecesaria()) * 100;
 
         // Pintar la barra de progreso
         System.out.println("\nBarra de Progreso:");
@@ -21,5 +36,11 @@ public class GestionProyectosVista {
             }
         }
         System.out.printf("] %.2f %%\n", porcentajeProgreso);
+    }
+
+    public void mostrarProyectos(ArrayList<Proyecto> listaProyectos) {
+        for (Proyecto proyecto : listaProyectos) {
+            System.out.println(proyecto);
+        }
     }
 }

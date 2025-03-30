@@ -6,6 +6,7 @@ public class Inversion implements Invertible {
     private Proyecto proyectoInvertido;
     private float cantidadInvertida;
     private Inversor inversor;
+    private Recompensa recompensa;
 
     public Inversion(Proyecto proyectoInvertido, float cantidadInvertida, Inversor inversor) {
         this.idInversion = ++contadorInversiones;
@@ -68,11 +69,12 @@ public class Inversion implements Invertible {
 
     @Override
     public String toString() {
-        return "Inversion{" +
-                "idInversion=" + idInversion +
-                ", proyectoInvertido=" + proyectoInvertido +
-                ", cantidadInvertida=" + cantidadInvertida +
-                ", inversor=" + inversor +
-                '}';
+        return "\nINVERSIÓN" +
+                "\n=============================================" +
+                "\nID de la inversión: " + idInversion +
+                "\nProyecto invertido: " + proyectoInvertido +
+                "\nCantidad invertida: " + cantidadInvertida +
+                "\nInversor: " + inversor +
+                "\n=============================================";
     }
 }

@@ -10,7 +10,10 @@ public class Inversor extends Usuario implements Bloqueable {
     private int contadorLogin;
     private boolean bloqueado;
 
-    public Inversor(String nombre, String clave, String email) {
+    public Inversor(
+            String nombre,
+            String clave,
+            String email) {
         super(nombre, clave, email);
         this.idInversor = ++contadorInversor;
         this.listaInversiones = new ArrayList<Inversion>();
@@ -19,7 +22,13 @@ public class Inversor extends Usuario implements Bloqueable {
         this.bloqueado = false;
     }
 
-    public Inversor(String nombre, String clave, String email, ArrayList<Inversion> listaInversiones, float saldo, int contadorLogin) {
+    public Inversor(
+            String nombre,
+            String clave,
+            String email,
+            ArrayList<Inversion> listaInversiones,
+            float saldo,
+            int contadorLogin) {
         super(nombre, clave, email);
         this.idInversor = ++contadorInversor;
         this.listaInversiones = listaInversiones;
@@ -41,6 +50,11 @@ public class Inversor extends Usuario implements Bloqueable {
 
     public void setListaInversiones(ArrayList<Inversion> listaInversiones) {
         this.listaInversiones = listaInversiones;
+    }
+
+    public Inversion agregarInversion(Inversion inversion) {
+        listaInversiones.add(inversion);
+        return inversion;
     }
 
     public float getSaldo() {
@@ -73,14 +87,14 @@ public class Inversor extends Usuario implements Bloqueable {
 
     @Override
     public void bloquear() {
-        if (bloqueado = false)
-            if (contadorLogin >= 3)
-                bloqueado = true;
+        if (bloqueado = false && contadorLogin >= 3)
+            bloqueado = true;
     }
 
     @Override
     public void desbloquear() {
-        if (bloqueado = true) bloqueado = false;
+        if (bloqueado = true)
+            bloqueado = false;
     }
 
     @Override
@@ -88,11 +102,11 @@ public class Inversor extends Usuario implements Bloqueable {
 
     @Override
     public String toString() {
-        return "Inversor{" +
-                "idInversor=" + idInversor +
-                ", listaInversiones=" + listaInversiones +
-                ", saldo=" + saldo +
-                ", contadorLogin=" + contadorLogin +
-                '}';
+        return "\nUSUARIO INVERSOR" +
+                super.toString() +
+                "\nID de inversor: " + idInversor +
+                "\nInversiones realizadas: " + listaInversiones +
+                "\nSaldo restante: " + saldo +
+                "\n=============================================";
     }
 }

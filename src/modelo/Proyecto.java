@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 public class Proyecto {
     private static int contadorProyectos = 0;
+    private int contadorRecompensas;
     private int idProyecto;
     private String nombre;
     private String descripcion;
@@ -16,7 +17,14 @@ public class Proyecto {
     private ArrayList<Recompensa> listaRecompensas;
     private ArrayList<Inversion> listaInversiones;
 
-    public Proyecto(String nombre, String descripcion, Categoria categoria, LocalDate fechaInicio, LocalDate fechaFin, float cantidadNecesaria, ArrayList<Recompensa> listaRecompensas) {
+    public Proyecto(
+            String nombre,
+            String descripcion,
+            Categoria categoria,
+            LocalDate fechaInicio,
+            LocalDate fechaFin,
+            float cantidadNecesaria,
+            ArrayList<Recompensa> listaRecompensas) {
         this.idProyecto = ++contadorProyectos;
         this.nombre = nombre;
         this.descripcion = descripcion;
@@ -25,7 +33,8 @@ public class Proyecto {
         this.fechaFin = fechaFin;
         this.cantidadNecesaria = cantidadNecesaria;
         this.cantidadFinanciada = 0;
-        this.listaRecompensas = listaRecompensas;
+        this.listaRecompensas = new ArrayList<Recompensa>();
+        this.contadorRecompensas = 0;
         this.listaInversiones = new ArrayList<Inversion>();
     }
 
@@ -97,31 +106,34 @@ public class Proyecto {
         return listaRecompensas;
     }
 
-    public void setListaRecompensas(ArrayList<Recompensa> listaRecompensas) {
-        this.listaRecompensas = listaRecompensas;
+    public Recompensa agregarRecompensa(Recompensa recompensa) {
+        listaRecompensas.add(recompensa);
+        return recompensa;
     }
 
     public ArrayList<Inversion> getListaInversiones() {
         return listaInversiones;
     }
 
-    public void setListaInversiones(ArrayList<Inversion> listaInversiones) {
-        this.listaInversiones = listaInversiones;
+    public Inversion agregarInversion(Inversion inversion) {
+        listaInversiones.add(inversion);
+        return inversion;
     }
 
     @Override
     public String toString() {
-        return "Proyecto{" +
-                "idProyecto=" + idProyecto +
-                ", nombre='" + nombre + '\'' +
-                ", descripcion='" + descripcion + '\'' +
-                ", categoria=" + categoria +
-                ", fechaInicio=" + fechaInicio +
-                ", fechaFin=" + fechaFin +
-                ", cantidadNecesaria=" + cantidadNecesaria +
-                ", cantidadFinanciada=" + cantidadFinanciada +
-                ", listaRecompensas=" + listaRecompensas +
-                ", listaInversiones=" + listaInversiones +
-                '}';
+        return "\nPROYECTO" +
+                "\n=============================================" +
+                "\nID Proyecto: " + idProyecto +
+                "\nNombre: " + nombre +
+                "\nDescripcion: " + descripcion +
+                "\nCategoría: " + categoria +
+                "\nFecha de inicio: " + fechaInicio +
+                "\nFecha de fin: " + fechaFin +
+                "\nCantidad necesaria: " + cantidadNecesaria +
+                "\nCantidad financiada: " + cantidadFinanciada +
+                "\nLista de recompensas: " + listaRecompensas +
+                "\nLista de inversiones: " + listaInversiones +
+                "\n=============================================";
     }
 }
