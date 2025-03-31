@@ -4,4 +4,6 @@ public interface Bloqueable {
     void bloquear();
     boolean estaBloqueado();
     void desbloquear();
+
+    void incrementarIntentos();
 }

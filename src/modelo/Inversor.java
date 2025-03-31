@@ -85,6 +85,8 @@ public class Inversor extends Usuario implements Bloqueable {
         this.contadorLogin = contadorLogin;
     }
 
+    public void incrementarIntentos(){ this.contadorLogin += 1;}
+
     @Override
     public void bloquear() {
         if (bloqueado = false && contadorLogin >= 3)
