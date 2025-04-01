@@ -44,29 +44,18 @@ public class MenusVista {
                 2. Salir""");
     }
 
-    public void mostrarProyectosExistentes(ArrayList<Proyecto> listaProyectos) {
-        System.out.println("\n--- PROYECTOS EXISTENTES ---");
-        for (Proyecto proyecto : listaProyectos) {
-            System.out.println(proyecto);
-        }
-    }
-
-    public void menuVistaDetallada(int proyectosCreados, String[][] proyectos, double[][] cantidadesProyectos) {
-        // Mostrar menú con los proyectos disponibles
-        System.out.println("\n--- SELECCIONA UN PROYECTO PARA VER EN DETALLE ---");
-        for (int i = 0; i < proyectosCreados; i++) {
-            System.out.println((i + 1) + ". " + proyectos[i][0]); // Mostrar solo los nombres
-        }
-        System.out.println((proyectosCreados + 1) + ". Salir"); // Opción para salir
-    }
 
     public void menuGestionProyecto() {
         System.out.println("""
-                \nOpciones de gestión:
-                1. Modificar proyecto
-                2. Eliminar proyecto
-                3. Salir""");
+                \n--- OPCIONES DE PROYECTO ---
+                Seleccione una opción: 
+                1. Vista detallada
+                2. Modificar proyecto
+                3. Modificar recompensa
+                4. Eliminar proyecto
+                5. Salir""");
     }
+
 
     public void menuModificarProyecto() {
         System.out.println("""
@@ -85,7 +74,7 @@ public class MenusVista {
     // MENÚS ADMINISTRADOR
     public void menuPrincipalAdmin() {
         System.out.println("""
-                    \n--- MENÚ PRINCIPAL ---
+                    \n--- MENÚ PRINCIPAL ADMINISTRADOR ---
                     Seleccione una opción:
                     1. Panel de control
                     2. Proyectos
@@ -97,15 +86,16 @@ public class MenusVista {
         System.out.println("""
                 \n--- PANEL DE CONTROL ---
                 Seleccione una opción
-                1. Bloquear usuario
-                2. Desbloquear usuario
-                3. Salir""");
+                1. Ver usuarios registrados
+                2. Bloquear usuario
+                3. Desbloquear usuario
+                4. Salir""");
     }
 
 // MENÚS GESTOR
     public void menuPrincipalGestor() {
         System.out.println("""
-                \n--- MENÚ PRINCIPAL ---
+                \n--- MENÚ PRINCIPAL GESTOR ---
                 Seleccione una opción:
                 1. Mis proyectos
                 2. Configuración
@@ -121,17 +111,11 @@ public class MenusVista {
                 3. Salir""");
     }
 
-    public void menuProyectosCreados(Gestor gestor) {
-        System.out.println("\n--- PROYECTOS CREADOS ---");
-        for (Proyecto proyecto : gestor.getListaProyectos()) {
-            System.out.println(proyecto);
-        }
-    }
 
 // MENÚS INVERSOR
     public void menuPrincipalInversor() {
         System.out.println("""
-                \n--- MENÚ PRINCIPAL ---
+                \n--- MENÚ PRINCIPAL INVERSOR ---
                 Seleccione una opción:
                 1. Mis inversiones
                 2. Proyectos
@@ -149,13 +133,6 @@ public class MenusVista {
                 2. Salir""");
     }
 
-    public void menuProyectosFinanciados(Inversor inversor) {
-        System.out.println("\n--- PROYECTOS FINANCIADOS ---");
-        for (Inversion inversion : inversor.getListaInversiones()) {
-            System.out.println(inversion);
-        }
-    }
-
     public void menuInvertirProyecto() {
         System.out.println("""
                  \nSeleccione una opción:
@@ -163,14 +140,6 @@ public class MenusVista {
                  2. Salir""");
     }
 
-    public void menuInvertirRecompensas(Proyecto proyecto) {
-        System.out.println("""
-                \n--- LISTA RECOMPENSAS --- 
-                Seleccione recompensa a invertir: """);
-        for (Recompensa recompensa : proyecto.getListaRecompensas()) {
-            System.out.println(recompensa);
-        }
-    }
 
     public void menuCartera() {
         System.out.println("""
@@ -189,8 +158,4 @@ public class MenusVista {
                 2. Invitar amigo
                 3. Salir""");
     }
-
-
-
-
 }

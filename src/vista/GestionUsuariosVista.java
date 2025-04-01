@@ -3,6 +3,8 @@ package vista;
 import modelo.Usuario;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class GestionUsuariosVista {
     private String colorTexto;
@@ -18,9 +20,15 @@ public class GestionUsuariosVista {
         System.out.println(colorTexto + mensaje + RESET);
     }
 
-    public void mostrarListaUsuarios(ArrayList<Usuario> listaUsuarios) {
-        for (Usuario usuario : listaUsuarios) {
-            System.out.println(usuario);
+    public void mostrarListaUsuarios(HashMap<String, Usuario> listaUsuarios) {
+        for (Map.Entry pareja : listaUsuarios.entrySet()) {
+            System.out.println(pareja.getValue());
+        }
+    }
+
+    public void mostrarListaAmigos(Usuario usuario) {
+        for (Map.Entry pareja : usuario.getListaAmigos().entrySet()) {
+            System.out.println(pareja.getValue());
         }
     }
 }

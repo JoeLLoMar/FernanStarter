@@ -1,5 +1,8 @@
 package modelo;
 
+import utilidades.FuncionesFechas;
+
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class GestionProyectos {
@@ -7,6 +10,10 @@ public class GestionProyectos {
 
     public GestionProyectos() {
         this.listaProyectos = new ArrayList<Proyecto>();
+    }
+
+    public ArrayList<Proyecto> getListaProyectos() {
+        return listaProyectos;
     }
 
     public Proyecto agregarProyecto(Proyecto proyecto) {
@@ -46,9 +53,63 @@ public class GestionProyectos {
         return null;
     }
 
+    public Proyecto eliminarProyectoGestor(Gestor gestor, int posicion) {
+        Proyecto proyectoEliminado = gestor.eliminarProyecto(posicion);
+        return proyectoEliminado;
+    }
+
+    public Proyecto modificarNombre(Proyecto proyecto, String nombre) {
+        proyecto.setNombre(nombre);
+        return proyecto;
+    }
+
+    public Proyecto modificarDescripcion(Proyecto proyecto, String descripcion) {
+        proyecto.setDescripcion(descripcion);
+        return proyecto;
+    }
+
+    public Proyecto modificarCategoria(Proyecto proyecto, Categoria categoria) {
+        proyecto.setCategoria(categoria);
+        return proyecto;
+    }
+
+    public Proyecto modificarFechaInicio(Proyecto proyecto, LocalDate fecha) {
+        proyecto.setFechaInicio(fecha);
+        return proyecto;
+    }
+
+    public Proyecto modificarFechaFin(Proyecto proyecto, LocalDate fecha) {
+        proyecto.setFechaFin(fecha);
+        return proyecto;
+    }
+
+    public Proyecto modificarCantidadNecesaria(Proyecto proyecto, float cantidad) {
+        proyecto.setCantidadNecesaria(cantidad);
+        return proyecto;
+    }
+
+
     public Proyecto modificaProyecto(int posicion, Proyecto proyecto) {
         if (posicion >= 0 && posicion < listaProyectos.size())
             return listaProyectos.set(posicion, proyecto);
         return null;
+    }
+
+    public boolean validarCategoria(String categoria) {
+        return Categoria.validarCategoria(categoria);
+    }
+
+    public Categoria getCategoria(String categoria) {
+        if (validarCategoria(categoria)) {
+            return Categoria.valueOf(categoria.toUpperCase());
+        } else {
+            return null;
+        }
+    }
+
+    public Proyecto agregarRecompensa(Proyecto proyecto, Recompensa recompensa) {
+        proyecto.agregarRecompensa(recompensa);
+        recompensa.setIdRecompensa(proyecto);
+        return proyecto;
     }
 }

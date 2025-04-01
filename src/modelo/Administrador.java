@@ -19,7 +19,7 @@ public class Administrador extends Usuario {
 
     @Override
     public String toString() {
-        return "\nUSUARIO ADMINISTRADOR" +
+        return "\n\nUSUARIO ADMINISTRADOR" +
                 super.toString() +
                 "\nID de administrador: " + idAdmin +
                 "\n=============================================";

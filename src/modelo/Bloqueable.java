@@ -1,9 +1,9 @@
 package modelo;
 
 public interface Bloqueable {
-    void bloquear();
+    boolean bloquear();
     boolean estaBloqueado();
-    void desbloquear();
+    boolean desbloquear();
 
     void incrementarIntentos();
 }

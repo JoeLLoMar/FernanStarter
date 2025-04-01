@@ -7,7 +7,7 @@ public class Inversor extends Usuario implements Bloqueable {
     private int idInversor;
     private ArrayList<Inversion> listaInversiones;
     private float saldo;
-    private int contadorLogin;
+    private int iniciosSesionFallidos;
     private boolean bloqueado;
 
     public Inversor(
@@ -18,7 +18,7 @@ public class Inversor extends Usuario implements Bloqueable {
         this.idInversor = ++contadorInversor;
         this.listaInversiones = new ArrayList<Inversion>();
         this.saldo = 0;
-        this.contadorLogin = 0;
+        this.iniciosSesionFallidos = 0;
         this.bloqueado = false;
     }
 
@@ -28,12 +28,12 @@ public class Inversor extends Usuario implements Bloqueable {
             String email,
             ArrayList<Inversion> listaInversiones,
             float saldo,
-            int contadorLogin) {
+            int iniciosSesionFallidos) {
         super(nombre, clave, email);
         this.idInversor = ++contadorInversor;
         this.listaInversiones = listaInversiones;
         this.saldo = saldo;
-        this.contadorLogin = contadorLogin;
+        this.iniciosSesionFallidos = iniciosSesionFallidos;
     }
 
     public static int getContadorInversor() {
@@ -77,34 +77,42 @@ public class Inversor extends Usuario implements Bloqueable {
         return false;
     }
 
-    public int getContadorLogin() {
-        return contadorLogin;
+    public int getIniciosSesionFallidos() {
+        return iniciosSesionFallidos;
     }
 
-    public void setContadorLogin(int contadorLogin) {
-        this.contadorLogin = contadorLogin;
+    public void setIniciosSesionFallidos(int iniciosSesionFallidos) {
+        this.iniciosSesionFallidos = iniciosSesionFallidos;
     }
 
-    public void incrementarIntentos(){ this.contadorLogin += 1;}
+    public void incrementarIntentos(){ this.iniciosSesionFallidos += 1;}
 
     @Override
-    public void bloquear() {
-        if (bloqueado = false && contadorLogin >= 3)
+    public boolean bloquear() {
+        if (bloqueado = false && iniciosSesionFallidos >= 3) {
             bloqueado = true;
+            return true;
+        }
+        return false;
     }
 
     @Override
-    public void desbloquear() {
-        if (bloqueado = true)
+    public boolean desbloquear() {
+        if (bloqueado = true) {
             bloqueado = false;
+            return true;
+        }
+        return false;
     }
 
     @Override
-    public boolean estaBloqueado() { return bloqueado; }
+    public boolean estaBloqueado() {
+        return bloqueado;
+    }
 
     @Override
     public String toString() {
-        return "\nUSUARIO INVERSOR" +
+        return "\n\nUSUARIO INVERSOR" +
                 super.toString() +
                 "\nID de inversor: " + idInversor +
                 "\nInversiones realizadas: " + listaInversiones +

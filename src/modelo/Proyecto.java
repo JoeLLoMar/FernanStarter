@@ -1,5 +1,7 @@
 package modelo;
 
+import utilidades.FuncionesFechas;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 
@@ -16,6 +18,7 @@ public class Proyecto {
     private float cantidadFinanciada;
     private ArrayList<Recompensa> listaRecompensas;
     private ArrayList<Inversion> listaInversiones;
+    private Gestor creador;
 
     public Proyecto(
             String nombre,
@@ -24,7 +27,7 @@ public class Proyecto {
             LocalDate fechaInicio,
             LocalDate fechaFin,
             float cantidadNecesaria,
-            ArrayList<Recompensa> listaRecompensas) {
+            Gestor creador) {
         this.idProyecto = ++contadorProyectos;
         this.nombre = nombre;
         this.descripcion = descripcion;
@@ -36,6 +39,7 @@ public class Proyecto {
         this.listaRecompensas = new ArrayList<Recompensa>();
         this.contadorRecompensas = 0;
         this.listaInversiones = new ArrayList<Inversion>();
+        this.creador = creador;
     }
 
     public static int getContadorProyectos() {
@@ -106,6 +110,11 @@ public class Proyecto {
         return listaRecompensas;
     }
 
+    public Recompensa modificarRecompensa(Recompensa recompensa, int posicion) {
+        listaRecompensas.set(posicion, recompensa);
+        return recompensa;
+    }
+
     public Recompensa agregarRecompensa(Recompensa recompensa) {
         listaRecompensas.add(recompensa);
         return recompensa;
@@ -120,20 +129,19 @@ public class Proyecto {
         return inversion;
     }
 
+    public Gestor getCreador() {
+        return creador;
+    }
+
     @Override
     public String toString() {
         return "\nPROYECTO" +
                 "\n=============================================" +
                 "\nID Proyecto: " + idProyecto +
                 "\nNombre: " + nombre +
-                "\nDescripcion: " + descripcion +
                 "\nCategoría: " + categoria +
-                "\nFecha de inicio: " + fechaInicio +
-                "\nFecha de fin: " + fechaFin +
                 "\nCantidad necesaria: " + cantidadNecesaria +
                 "\nCantidad financiada: " + cantidadFinanciada +
-                "\nLista de recompensas: " + listaRecompensas +
-                "\nLista de inversiones: " + listaInversiones +
-                "\n=============================================";
+                "\n";
     }
 }

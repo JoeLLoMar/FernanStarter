@@ -6,14 +6,14 @@ public class Gestor extends Usuario implements Bloqueable {
     private static int contadorGestor = 0;
     private int idGestor;
     private ArrayList<Proyecto> listaProyectos;
-    private int contadorLogin;
+    private int iniciosSesionFallidos;
     private boolean bloqueado;
 
     public Gestor(String nombre, String clave, String email) {
         super(nombre, clave, email);
         this.idGestor = ++contadorGestor;
         this.listaProyectos = new ArrayList<Proyecto>();
-        this.contadorLogin = 0;
+        this.iniciosSesionFallidos = 0;
         bloqueado = false;
     }
 
@@ -33,26 +33,47 @@ public class Gestor extends Usuario implements Bloqueable {
         this.listaProyectos = listaProyectos;
     }
 
-    public int getContadorLogin() {
-        return contadorLogin;
+    public Proyecto agregarProyecto(Proyecto proyecto) {
+        listaProyectos.add(proyecto);
+        return proyecto;
     }
 
-    public void setContadorLogin(int contadorLogin) {
-        this.contadorLogin = contadorLogin;
+    public Proyecto eliminarProyecto(int posicion) {
+        if(listaProyectos.contains(listaProyectos.get(posicion))) {
+            return listaProyectos.remove(posicion);
+        }
+        return null;
     }
 
-    public void incrementarIntentos(){ this.contadorLogin += 1;}
+    public int getIniciosSesionFallidos() {
+        return iniciosSesionFallidos;
+    }
+
+    public void setIniciosSesionFallidos(int iniciosSesionFallidos) {
+        this.iniciosSesionFallidos = iniciosSesionFallidos;
+    }
+
+    public void incrementarIntentos() {
+        this.iniciosSesionFallidos += 1;
+    }
 
     @Override
-    public void bloquear() {
-        if (bloqueado = false)
-            if (contadorLogin >= 3)
-                bloqueado = true;
+    public boolean bloquear() {
+        if (bloqueado = false && iniciosSesionFallidos >= 3) {
+            bloqueado = true;
+            return true;
+        }
+        return false;
     }
 
     @Override
-    public void desbloquear() {
-        if (bloqueado = true) bloqueado = false;
+    public boolean desbloquear() {
+        if (bloqueado = true) {
+            bloqueado = false;
+            return true;
+        }
+        return false;
+
     }
 
     @Override
@@ -60,7 +81,7 @@ public class Gestor extends Usuario implements Bloqueable {
 
     @Override
     public String toString() {
-        return "\nUSUARIO GESTOR" +
+        return "\n\nUSUARIO GESTOR" +
                 super.toString() +
                 "\nID de gestor: " + idGestor +
                 "\nProyectos creados: " + listaProyectos +

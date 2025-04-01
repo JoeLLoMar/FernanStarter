@@ -25,14 +25,6 @@ public class MenusControlador {
         vista.menuProyectos();
     }
 
-    public void mostrarProyectosExistentes(ArrayList<Proyecto> listaProyectos) {
-        vista.mostrarProyectosExistentes(listaProyectos);
-    }
-
-//    public void menuVistaDetallada(int proyectosCreados, String[][] proyectos, double[][] cantidadesProyectos) {
-//        vista.menuVistaDetallada();
-//    }
-
     public void menuGestionProyecto() {
         vista.menuGestionProyecto();
     }
@@ -59,10 +51,6 @@ public class MenusControlador {
         vista.menuMisProyectos();
     }
 
-    public void menuProyectosCreados(Gestor gestor) {
-        vista.menuProyectosCreados(gestor);
-    }
-
     // MENÚS INVERSOR
     public void menuPrincipalInversor() {
         vista.menuPrincipalInversor();
@@ -72,16 +60,9 @@ public class MenusControlador {
         vista.menuMisInversiones();
     }
 
-    public void menuProyectosFinanciados(Inversor inversor) {
-        vista.menuProyectosFinanciados(inversor);
-    }
 
     public void menuInvertirProyecto() {
         vista.menuInvertirProyecto();
-    }
-
-    public void menuInvertirRecompensas(Proyecto proyecto) {
-        vista.menuInvertirRecompensas(proyecto);
     }
 
     public void menuCartera() {

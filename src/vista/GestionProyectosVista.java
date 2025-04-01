@@ -1,6 +1,7 @@
 package vista;
 
 import modelo.Proyecto;
+import utilidades.FuncionesFechas;
 
 import java.util.ArrayList;
 
@@ -36,6 +37,17 @@ public class GestionProyectosVista {
             }
         }
         System.out.printf("] %.2f %%\n", porcentajeProgreso);
+    }
+
+    public void vistaDetalladaProyecto(Proyecto proyecto) {
+        System.out.println(proyecto);
+        System.out.println(
+                "\nDescripcion: " + proyecto.getDescripcion() +
+                "\nFecha de inicio: " + FuncionesFechas.formatearFecha(proyecto.getFechaInicio()) +
+                "\nFecha de fin: " + FuncionesFechas.formatearFecha(proyecto.getFechaFin()) +
+                "\nLista de recompensas: " + proyecto.getListaRecompensas() +
+                "\nLista de inversiones: " + proyecto.getListaInversiones());
+        graficoProgreso(proyecto);
     }
 
     public void mostrarProyectos(ArrayList<Proyecto> listaProyectos) {

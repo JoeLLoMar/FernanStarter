@@ -1,65 +1,58 @@
 package modelo;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 
 public class GestionUsuarios {
-    private ArrayList<Usuario> listaUsuarios;
+    private HashMap<String, Usuario> listaUsuarios;
 
     public GestionUsuarios() {
-        this.listaUsuarios = new ArrayList<Usuario>();
+        listaUsuarios = new HashMap<>();
     }
 
-    public Usuario agregarUsuario(Usuario usuario) {
-        listaUsuarios.add(usuario);
-        return usuario;
+    public HashMap<String, Usuario> getListaUsuarios() {
+        return listaUsuarios;
     }
-    public Usuario buscarUsuario(int posicion) {
-        if (posicion >= 0 && posicion < listaUsuarios.size())
-            return listaUsuarios.get(posicion);
-        return null;
+
+    public Usuario agregarUsuario(String nombre, Usuario usuario) {
+        listaUsuarios.put(nombre, usuario);
+        return usuario;
     }
 
     public Usuario buscarUsuarioPorNombre(String nombre) {
-        for (Usuario u : listaUsuarios) {
-            if (u.getNombre().equals(nombre)) {
-                return u;
-            }
-        }
-        return null;
+        return listaUsuarios.get(nombre);
     }
 
-    public void desbloquearUsuario(Bloqueable usuario) { usuario.desbloquear(); }
-
-    public int buscarPosicion(int id) {
-        for (int i = 0; i < listaUsuarios.size(); i++)
-            if (listaUsuarios.get(i).getId() == id)
-                return i;
-        return -1;
+    public boolean bloquearUsuario(Bloqueable usuario) {
+        return usuario.bloquear();
     }
 
-    public int buscarPosicion(Usuario usuario) {
-        return listaUsuarios.indexOf(usuario);
+    public boolean desbloquearUsuario(Bloqueable usuario) {
+        return usuario.desbloquear();
+    }
+
+    public Usuario invitaAmigo(Usuario usuario, String nombre) {
+        Usuario amigo = buscarUsuarioPorNombre(nombre);
+        usuario.invitarAmigo(nombre, amigo);
+        return amigo;
     }
 
     //¿Se ejecuta el método remove() en la definición de la condición?
-    public Usuario eliminarUsuario(Usuario usuario) {
-        if(listaUsuarios.contains(usuario)) {
-            listaUsuarios.remove(usuario);
-            return usuario;
+    public Usuario eliminarUsuario(String nombre) {
+        if(listaUsuarios.containsKey(nombre)) {
+            return listaUsuarios.remove(nombre);
         }
         return null;
     }
 
-    public Usuario eliminarUsuario(int posicion) {
-        if(listaUsuarios.contains(listaUsuarios.get(posicion))) {
-            return listaUsuarios.remove(posicion);
+
+    public Usuario modificarUsuario(String nombre, Usuario usuario) {
+        if (listaUsuarios.containsKey(nombre)) {
+            return listaUsuarios.put(nombre, usuario);
         }
         return null;
     }
 
-    public Usuario modificarUsuario(int posicion, Usuario usuario) {
-        if (posicion >= 0 && posicion < listaUsuarios.size())
-            return listaUsuarios.set(posicion, usuario);
-        return null;
+    public Proyecto agregarProyectoGestor(Gestor gestor, Proyecto proyecto) {
+        return gestor.agregarProyecto(proyecto);
     }
 }

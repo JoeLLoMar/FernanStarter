@@ -15,7 +15,7 @@ public class Recompensa {
     }
 
     public void setIdRecompensa(Proyecto proyecto) {
-        this.idRecompensa = proyecto.getListaRecompensas().size() + 1;
+        this.idRecompensa = proyecto.getListaRecompensas().size();
     }
 
     public String getDescripcion() {
@@ -37,10 +37,10 @@ public class Recompensa {
     @Override
     public String toString() {
         return "\nRECOMPENSA" +
-                "\n=============================================" +
-                "\nID de recompensa" + idRecompensa +
+                "\n------------------------------------" +
+                "\nID de recompensa: " + idRecompensa +
                 "\nDescripción: " + descripcion +
                 "\nPrecio: " + precio +
-                "\n=============================================";
+                "\n";
     }
 }
