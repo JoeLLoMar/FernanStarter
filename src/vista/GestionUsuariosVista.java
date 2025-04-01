@@ -25,7 +25,7 @@ public class GestionUsuariosVista {
         }
     }
 
-    public void mostrarAmigos(Usuario usuario) {
+    public void mostrarListaAmigos(Usuario usuario) {
         for (Map.Entry pareja : usuario.getListaAmigos().entrySet()) {
             System.out.println(pareja.getValue());
         }

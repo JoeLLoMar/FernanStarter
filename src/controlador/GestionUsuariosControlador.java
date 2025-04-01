@@ -185,7 +185,7 @@ public class GestionUsuariosControlador {
 
     public void mostrarListaAmigos(Usuario usuario) {
         if (!usuario.getListaAmigos().isEmpty()) {
-            vista.mostrarAmigos(usuario);
+            vista.mostrarListaAmigos(usuario);
         } else {
             mostrarMensaje(GestionUsuariosVista.ROJO, "No hay amigos invitados.");
         }
