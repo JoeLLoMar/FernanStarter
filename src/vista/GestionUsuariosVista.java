@@ -2,7 +2,6 @@ package vista;
 
 import modelo.Usuario;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -26,7 +25,7 @@ public class GestionUsuariosVista {
         }
     }
 
-    public void mostrarListaAmigos(Usuario usuario) {
+    public void mostrarAmigos(Usuario usuario) {
         for (Map.Entry pareja : usuario.getListaAmigos().entrySet()) {
             System.out.println(pareja.getValue());
         }
