@@ -3,6 +3,7 @@ package controlador;
 import modelo.*;
 import vista.GestionUsuariosVista;
 
+
 public class GestionUsuariosControlador {
     private GestionUsuarios modelo;
     private GestionUsuariosVista vista;
@@ -184,7 +185,7 @@ public class GestionUsuariosControlador {
 
     public void mostrarListaAmigos(Usuario usuario) {
         if (!usuario.getListaAmigos().isEmpty()) {
-            vista.mostrarListaAmigos(usuario);
+            vista.mostrarAmigos(usuario);
         } else {
             mostrarMensaje(GestionUsuariosVista.ROJO, "No hay amigos invitados.");
         }

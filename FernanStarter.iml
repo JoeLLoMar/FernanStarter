@@ -11,5 +11,6 @@
     <orderEntry type="library" name="Java EE 6-Java EE 6" level="project" />
     <orderEntry type="library" name="Java EE 6-Java EE 6" level="project" />
     <orderEntry type="library" name="src" level="project" />
+    <orderEntry type="library" name="FernanStarter" level="project" />
   </component>
 </module>

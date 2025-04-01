@@ -5,6 +5,16 @@ import utilidades.FuncionesFechas;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
+/**
+ * Representa un proyecto con toda la información necesaria para su gestión.
+ * Contiene atributos como identificador, nombre, descripción, categoría, fechas,
+ * datos financieros y las listas de recompensas e inversiones asociadas.
+ *
+ * <p>Esta clase forma parte del modelo en la arquitectura MVC.</p>
+ *
+ * @author
+ * @version 1.0
+ */
 public class Proyecto {
     private static int contadorProyectos = 0;
     private int contadorRecompensas;
@@ -20,6 +30,17 @@ public class Proyecto {
     private ArrayList<Inversion> listaInversiones;
     private Gestor creador;
 
+    /**
+     * Constructor con parámetros para inicializar un proyecto.
+     *
+     * @param nombre Nombre del proyecto.
+     * @param descripcion Descripción del proyecto.
+     * @param categoria Categoría del proyecto.
+     * @param fechaInicio Fecha de inicio.
+     * @param fechaFin Fecha de finalización.
+     * @param cantidadNecesaria Monto necesario para financiar el proyecto.
+     * @param creador usario Gestor que ha creado el proyecto.
+     */
     public Proyecto(
             String nombre,
             String descripcion,
