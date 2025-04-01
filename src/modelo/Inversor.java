@@ -58,10 +58,13 @@ public class Inversor extends Usuario implements Bloqueable {
     }
 
     public float getSaldo() {
+        if (saldo >= 0)
         return saldo;
+        return -1;
     }
 
     public void setSaldo(float saldo) {
+        if (saldo < 0) return;
         this.saldo = saldo;
     }
 

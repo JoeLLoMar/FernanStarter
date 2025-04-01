@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="FernanStarter">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/ejecutable/FernanStarter.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

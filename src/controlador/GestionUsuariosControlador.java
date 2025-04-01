@@ -169,10 +169,25 @@ public class GestionUsuariosControlador {
     public void invitarAmigo(Usuario usuario, String nombre) {
         Usuario invitado = modelo.invitaAmigo(usuario, nombre);
         if (invitado != null) {
-            mostrarMensaje(GestionUsuariosVista.VERDE, "Has invitado a tu grupo de amigos al usuario " + usuario);
+            mostrarMensaje(GestionUsuariosVista.VERDE, "Has invitado a tu grupo de amigos al usuario " + invitado);
         } else {
             mostrarMensaje(GestionUsuariosVista.ROJO, "No se pudo invitar: el nombre es incorrecto o el usuario no existen.");
         }
+    }
+
+    public void mostrarSaldo(Inversor inversor) {
+        if (inversor.getSaldo() > 0) {
+            mostrarMensaje("", "El saldo en tu cartera digital es de: " + inversor.getSaldo() + " €.");
+        } else if (inversor.getSaldo() == 0) {
+            mostrarMensaje(GestionUsuariosVista.ROJO, "Te has quedado sin saldo en tu cartera digital.");
+        } else {
+            mostrarMensaje(GestionUsuariosVista.ROJO, "Error: el saldo en tu cartera digital no puede ser negativo.");
+        }
+    }
+
+    public void aumentarSaldo(Inversor inversor, float cantidad) {
+        inversor.aumentaSaldo(cantidad);
+        mostrarMensaje(GestionUsuariosVista.VERDE, "Has añadido " + cantidad + " € a tu cartera digital. \nTienes: " + inversor.getSaldo() + " €");
     }
 
     public void mostrarListaUsuarios() {

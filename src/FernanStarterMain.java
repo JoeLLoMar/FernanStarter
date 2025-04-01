@@ -2,7 +2,7 @@ import controlador.GestionProyectosControlador;
 import controlador.GestionUsuariosControlador;
 import controlador.MenusControlador;
 import modelo.*;
-import utilidades.*;
+import utilidades.FuncionesFechas;
 import vista.GestionProyectosVista;
 import vista.GestionUsuariosVista;
 import vista.MenusVista;
@@ -458,7 +458,31 @@ te llevara al menú correspondiente.
                         }
                         case 2 -> {
                         }
+            // CARTERA DIGITAL
+            //====================================================
                         case 3 -> {
+                            boolean salirSubmenu = false;
+                            while (!salirSubmenu) {
+                                menusControlador.menuCartera();
+                                int opcion3 = sc.nextInt();
+                                sc.nextLine();
+                                switch (opcion3) {
+                                    case 1 -> {
+                                        usuariosControlador.mostrarSaldo(usuarioInversor);
+                                    }
+                                    case 2 -> {
+                                        usuariosControlador.mostrarMensaje("", "Introduce el importe que vas a añadir a tu cartera.");
+                                        float cantidad = sc.nextFloat();
+                                        sc.nextLine();
+                                        usuariosControlador.aumentarSaldo(usuarioInversor, cantidad);
+                                    }
+                                    case 3 -> {
+                                        usuariosControlador.mostrarMensaje(GestionUsuariosVista.VERDE, "Volviendo a MENÚ PRINCIPAL INVERSOR");
+                                        salirSubmenu = true;
+                                    }
+                                    default -> usuariosControlador.mostrarMensaje(GestionUsuariosVista.ROJO, "Error: El valor introducido no es válido");
+                                }
+                            }
                         }
             // INVITA A UN AMIGO
             //====================================================
