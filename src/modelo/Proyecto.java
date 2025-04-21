@@ -1,6 +1,6 @@
 package modelo;
 
-import utilidades.FuncionesFechas;
+import Utilidades.*;
 
 import java.time.LocalDate;
 import java.util.ArrayList;

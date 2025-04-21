@@ -15,6 +15,14 @@ public class GestionUsuariosControlador {
         this.intentosFallidos = 0;
     }
 
+    public GestionUsuariosControlador(GestionUsuariosVista vista) {
+        this.vista = vista;
+    }
+
+    public boolean registrarNuevoUsuario(String nombre, String contrasena, String email, String tipo) {
+        return RegistroUsuarios.registrarUsuario(nombre, contrasena, email, tipo);
+    }
+
     public boolean login(String nombre, String contraseña) {
         Usuario usuario = modelo.buscarUsuarioPorNombre(nombre);
         if (usuario != null) {
