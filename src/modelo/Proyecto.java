@@ -1,6 +1,6 @@
 package modelo;
 
-import Utilidades.*;
+//import Utilidades.*;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -149,6 +149,38 @@ public class Proyecto {
         listaInversiones.add(inversion);
         return inversion;
     }
+
+    public String toCSV() {
+        return idProyecto + "," +
+                nombre + "," +
+                descripcion.replace(",", ";") + "," +
+                categoria + "," +
+                fechaInicio + "," +
+                fechaFin + "," +
+                cantidadNecesaria + "," +
+                cantidadFinanciada;
+    }
+
+
+    public static Proyecto fromCSV(String linea) {
+        String[] partes = linea.split(",");
+
+        int id = Integer.parseInt(partes[0]);
+        String nombre = partes[1];
+        String descripcion = partes[2].replace(";", ",");
+        Categoria categoria = Categoria.valueOf(partes[3]);
+        LocalDate fechaInicio = LocalDate.parse(partes[4]);
+        LocalDate fechaFin = LocalDate.parse(partes[5]);
+        float cantidadNecesaria = Float.parseFloat(partes[6]);
+        float cantidadFinanciada = Float.parseFloat(partes[7]);
+
+        Proyecto p = new Proyecto(nombre, descripcion, categoria, fechaInicio, fechaFin, cantidadNecesaria, null);
+        p.setCantidadFinanciada(cantidadFinanciada);
+        p.idProyecto = id;
+
+        return p;
+    }
+
 
     public Gestor getCreador() {
         return creador;

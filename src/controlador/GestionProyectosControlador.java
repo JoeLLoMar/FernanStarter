@@ -1,5 +1,6 @@
 package controlador;
 
+import Utilidades.LoggerSistema;
 import modelo.*;
 import utilidades.FuncionesFechas;
 import vista.GestionProyectosVista;
@@ -8,6 +9,7 @@ import vista.GestionUsuariosVista;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 import java.util.Arrays;
+import java.util.List;
 
 public class GestionProyectosControlador {
     private GestionProyectos modelo;
@@ -23,10 +25,13 @@ public class GestionProyectosControlador {
         vista.mostrarMensaje(mensaje);
     }
 
-    public void agregarProyecto(Proyecto proyecto) {
+    public void agregarProyecto(Proyecto proyecto, Usuario usuarioActual) {
         Proyecto proyectoAgregado = modelo.agregarProyecto(proyecto);
         if (proyectoAgregado != null) {
             mostrarMensaje(GestionProyectosVista.VERDE, "Proyecto agregado con éxito: " + proyecto);
+            LoggerSistema.registrar("Nuevo proyecto", usuarioActual.getNombre());
+            PersistenciaCSV.guardarProyectos(RegistroProyectos.getListaProyectos());
+
         } else {
             mostrarMensaje(GestionProyectosVista.ROJO, "No se pudo agregar el proyecto: el proyecto no existe");
         }

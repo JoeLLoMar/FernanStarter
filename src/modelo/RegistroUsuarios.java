@@ -1,6 +1,8 @@
 package modelo;
 
 import java.util.HashMap;
+import java.util.List;
+import java.util.ArrayList;
 
 public class RegistroUsuarios {
     private static HashMap<String, Usuario> usuarios = new HashMap<>();
@@ -37,4 +39,23 @@ public class RegistroUsuarios {
     public static HashMap<String, Usuario> getUsuarios() {
         return usuarios;
     }
+
+    public static List<Usuario> getListaUsuarios() {
+        return new ArrayList<>(usuarios.values());
+    }
+
+    public static void agregarUsuario(Usuario usuario) {
+        usuarios.put(usuario.getNombre(), usuario);
+    }
+
+    public static Usuario getUsuario(String nombre) {
+        return usuarios.get(nombre);
+    }
+
+    public static void cargarUsuariosPorDefecto() {
+        agregarUsuario(new Inversor("inversor1", "clave1","email1@gmail.com"));
+        agregarUsuario(new Inversor("inversor2", "clave2","email2@gmail.com"));
+        agregarUsuario(new Gestor("gestor1", "clave2","email3@gmail.com"));
+    }
+
 }

@@ -1,6 +1,7 @@
 import controlador.GestionProyectosControlador;
 import controlador.GestionUsuariosControlador;
 import controlador.MenusControlador;
+import controlador.*;
 import modelo.*;
 import utilidades.FuncionesFechas;
 import vista.GestionProyectosVista;
@@ -45,504 +46,533 @@ te llevara al menú correspondiente.
         boolean salirMenuInicio = false;
         boolean loginExitoso = false;
         Usuario usuario = null;
-        int opcion=0;
+        String nombre="";
+        String ultimo = GestorConfiguracion.getUltimoInicio(usuario.getNombre());
+        Usuario usuarioActual = LoginControlador.login();
+        usuario = null;
+        int opcion = 0;
 
         while (!loginExitoso) {
             do {
-                menusControlador.menuInicioSesion();
-
+                menusControlador.menuInicioSesion(); // Muestra las opciones: 1. Iniciar Sesión, 2. Registrarse
+                // Determinar las opciones del menú basándose en la configuración del acceso de invitado
+                if (GestorConfiguracion.permiteAccesoInvitado()) {
+                    System.out.println("3. Iniciar como invitado");
+                    System.out.println("4. Salir");
+                } else {
+                    System.out.println("3. Salir");
+                }
+                // Leer la entrada del usuario
                 while (!sc.hasNextInt()) {
-                    System.out.println("Entrada no válida. Por favor, ingrese un número entre 1 y 4.");
-                    sc.next();
+                    System.out.println("Entrada no válida. Por favor, ingrese un número válido.");
+                    sc.next(); // Descartar la entrada no válida
                 }
                 opcion = sc.nextInt();
-                sc.nextLine();
-                if (opcion < 1 || opcion > 4) {
-                    System.out.println("Opción no válida. Por favor, seleccione un número entre 1 y 4.");
+                sc.nextLine(); // Consumir la nueva línea
+                // Validar la entrada del usuario
+                if ((GestorConfiguracion.permiteAccesoInvitado() && (opcion < 1 || opcion > 4)) ||
+                        (!GestorConfiguracion.permiteAccesoInvitado() && (opcion < 1 || opcion > 3))) {
+                    System.out.println("Opción no válida. Intente de nuevo.");
                 }
-            } while (opcion < 1 || opcion > 4);
-
-            if (opcion == 4) {
+            } while ((GestorConfiguracion.permiteAccesoInvitado() && (opcion < 1 || opcion > 4)) ||
+                    (!GestorConfiguracion.permiteAccesoInvitado() && (opcion < 1 || opcion > 3)));
+            // Opción para salir
+            if ((GestorConfiguracion.permiteAccesoInvitado() && opcion == 4) ||
+                    (!GestorConfiguracion.permiteAccesoInvitado() && opcion == 3)) {
                 System.out.println("Saliendo del sistema...");
                 return;
             }
-
-            System.out.print("Ingrese su nombre de usuario: ");
-            String nombre = sc.nextLine();
-            System.out.print("Ingrese su contraseña: ");
-            String clave = sc.nextLine();
-
-            usuario = usuariosModelo.buscarUsuarioPorNombre(nombre);
-            if (usuario != null && usuario.getContraseña().equals(clave) && !(usuario instanceof Bloqueable && ((Bloqueable) usuario).estaBloqueado())) {
+            // Opción de invitado
+            if (GestorConfiguracion.permiteAccesoInvitado() && opcion == 3) {
+                usuario = new UsuarioInvitado();
                 loginExitoso = true;
+                System.out.println("Bienvenido, Invitado."); // Mensaje de bienvenida
             } else {
-                System.out.println("Credenciales incorrectas o usuario bloqueado. Intente de nuevo.");
-                if (usuario instanceof Bloqueable) {
-                    ((Bloqueable) usuario).incrementarIntentos();
+                // Proceso de inicio de sesión normal
+                System.out.print("Ingrese su nombre de usuario: ");
+                nombre = sc.nextLine();
+                System.out.print("Ingrese su contraseña: ");
+                String clave = sc.nextLine();
+                usuario = usuariosModelo.buscarUsuarioPorNombre(nombre);
+                if (usuario != null && usuario.getContraseña().equals(clave) &&
+                        !(usuario instanceof Bloqueable && ((Bloqueable) usuario).estaBloqueado())) {
+                    loginExitoso = true;
+                    ultimo = GestorConfiguracion.getUltimoInicio(usuario.getNombre()); // Obtén el último inicio de sesión
+                    if (ultimo != null) {
+                        System.out.println("Usted inició sesión por última vez: " + ultimo);
+                    }
+                    GestorConfiguracion.setUltimoInicio(usuario.getNombre());
+                } else {
+                    System.out.println("Credenciales incorrectas o usuario bloqueado. Intente de nuevo.");
+                    if (usuario instanceof Bloqueable) {
+                        ((Bloqueable) usuario).incrementarIntentos();
+                    }
                 }
             }
-    //============================================================
-    // MENÚS SEGÚN EL TIPO DE USUARIO
-    //============================================================
-            boolean salirMenu = false;
-            while (!salirMenu) {
-        //============================================================
-        // ADMINISTRADOR
-        //============================================================
-                if (usuario instanceof Administrador) {
-                    menusControlador.menuPrincipalAdmin();
-                    int opcion2 = sc.nextInt();
-                    sc.nextLine();
-                    switch (opcion2) {
-            // PANEL DE CONTROL
-            //====================================================
-                        case 1 -> {
-                            boolean salirSubmenu = false;
-                            while (!salirSubmenu) {
-                                menusControlador.menuPanelControl();
-                                int opcion3 = sc.nextInt();
-                                sc.nextLine();
-                                switch (opcion3) {
-                    // VER USUARIOS REGISTRADOS
-                    //====================================================
-                                    case 1 -> {
-                                        usuariosControlador.mostrarListaUsuarios();
-                                    }
-                    // BLOQUEAR USUARIO
-                    //====================================================
-                                    case 2 -> {
-                                        usuariosControlador.mostrarMensaje("", "Introduce el nombre del usuario: ");
-                                        Usuario usuarioSeleccionado = usuariosControlador.buscarUsuarioPorNombre(nombre);
-                                        usuariosControlador.bloquearUsuario(usuarioSeleccionado);
-                                    }
-                    // DESBLOQUEAR USUARIO
-                    //====================================================
-                                    case 3 -> {
-                                        usuariosControlador.mostrarMensaje("", "Introduce el nombre del usuario: ");
-                                        Usuario usuarioSeleccionado = usuariosControlador.buscarUsuarioPorNombre(nombre);
-                                        usuariosControlador.desbloquearUsuario(usuarioSeleccionado);
-                                    }
-                    // SALIR
-                    //====================================================
-                                    case 4 -> {
-                                        usuariosControlador.mostrarMensaje(GestionUsuariosVista.VERDE, "Volviendo a MENÚ PRINCIPAL ADMINISTRADOR");
-                                        salirSubmenu = true;
-                                    }
-                                    default -> usuariosControlador.mostrarMensaje(GestionUsuariosVista.ROJO, "Error: El valor introducido no es válido");
-                                }
-                            }
-                        }
-            // PROYECTOS
-            //====================================================
-                        case 2 -> {
-                            boolean salirSubmenu = false;
-                            while (!salirSubmenu) {
-                                menusControlador.menuProyectos();
-                                int opcion3 = sc.nextInt();
-                                sc.nextLine();
-                                switch (opcion3) {
-                                    // VER PROYECTOS EXISTENTES
-                                    //====================================================
-                                    case 1 -> {
-                                        proyectosControlador.mostrarTotalProyectos();
-                                        boolean salirSubmenu2 = false;
-                                        while (!salirSubmenu2) {
-                                            menusControlador.menuGestionProyecto();
-                                            int opcion4 = sc.nextInt();
-                                            sc.nextLine();
-                                            switch (opcion4) {
-                                                // VISTA DETALLADA
-                                                //====================================================
-                                                case 1 -> {
-                                                    proyectosControlador.mostrarMensaje("", "\nSelecciona el ID del proyecto: ");
-                                                    int idProyecto = sc.nextInt();
-                                                    int posicion = proyectosControlador.buscarPosicion(idProyecto);
-                                                    Proyecto proyectoBuscado = proyectosControlador.buscarProyecto(posicion);
-                                                    proyectosControlador.mostrarVistaDetallada(proyectoBuscado);
-                                                }
-                                                // MODIFICAR PROYECTO
-                                                //====================================================
-                                                case 2 -> {
-                                                    proyectosControlador.mostrarMensaje("", "\nSelecciona el ID del proyecto: ");
-                                                    int idProyecto = sc.nextInt();
-                                                    int posicion = proyectosControlador.buscarPosicion(idProyecto);
-                                                    Proyecto proyectoBuscado = proyectosControlador.buscarProyecto(posicion);
-                                                    proyectosControlador.mostrarMensaje("","\nModifica el proyecto. \nIntroduce el atributo que quieres modificar: ");
-                                                    String atributo = sc.nextLine();
-                                                    proyectosControlador.mostrarMensaje("","\nIntroduce el nuevo valor: ");
-                                                    String valor = sc.nextLine();
-                                                    proyectosControlador.modificarProyecto(proyectoBuscado, atributo, valor);
-                                                }
-                                                // MODIFICAR RECOMPENSA
-                                                //====================================================
-                                                case 3 -> {
-                                                    proyectosControlador.mostrarMensaje("", "\nSelecciona el ID del proyecto: ");
-                                                    int idProyecto = sc.nextInt();
-                                                    int posicion = proyectosControlador.buscarPosicion(idProyecto);
-                                                    Proyecto proyectoBuscado = proyectosControlador.buscarProyecto(posicion);
-                                                    proyectosControlador.mostrarMensaje("", "\nSelecciona el índice de la recompensa (0, 1 ó 2): ");
-                                                    int indice = sc.nextInt();
-                                                    sc.nextLine();
-                                                    proyectosControlador.mostrarMensaje("","\nModifica la recompensa. \nIntroduce el atributo que quieres modificar: ");
-                                                    String atributo = sc.nextLine();
-                                                    proyectosControlador.mostrarMensaje("","\nIntroduce el nuevo valor: ");
-                                                    String valor = sc.nextLine();
-                                                    proyectosControlador.modificarRecompensa(proyectoBuscado, indice, atributo, valor);
-                                                }
-                                                // ELIMINAR PROYECTO
-                                                //====================================================
-                                                case 4 -> {
-                                                    proyectosControlador.mostrarMensaje("", "\nSelecciona el ID del proyecto: ");
-                                                    int idProyecto = sc.nextInt();
-                                                    int posicion = proyectosControlador.buscarPosicion(idProyecto);
-                                                    Proyecto proyectoEliminado = proyectosControlador.buscarProyecto(posicion);
-                                                    proyectosControlador.eliminarProyecto(posicion);
-                                                    proyectosControlador.eliminarProyectoGestor(proyectoEliminado.getCreador(), posicion);
-                                                }
-                                                // SALIR
-                                                //====================================================
-                                                case 5 -> {
-                                                    usuariosControlador.mostrarMensaje(GestionUsuariosVista.VERDE, "Volviendo a MIS PROYECTOS.");
-                                                    salirSubmenu2 = true;
-                                                }
-                                                default -> usuariosControlador.mostrarMensaje(GestionUsuariosVista.ROJO, "Error: El valor introducido no es válido");
-                                            }
-                                        }
+        }
 
-                                    }
-                                    // SALIR
-                                    //====================================================
-                                    case 2 -> {
-                                        usuariosControlador.mostrarMensaje(GestionUsuariosVista.VERDE, "Volviendo a MENÚ PRINCIPAL GESTOR");
-                                        salirSubmenu = true;
-                                    }
-                                    default -> usuariosControlador.mostrarMensaje(GestionUsuariosVista.ROJO, "Error: El valor introducido no es válido");
-                                }
-                            }
-                        }
-            // CONFIGURACIÓN
-            //====================================================
-                        case 3 -> {
-                            boolean salirSubmenu = false;
-                            while (!salirSubmenu) {
-                                menusControlador.menuConfiguracion();
-                                int opcion3 = sc.nextInt();
-                                sc.nextLine();
-                                switch (opcion3) {
-                    // CAMBIAR NOMBRE DE USUARIO
-                    //====================================================
-                                    case 1 -> {
-                                        usuariosControlador.mostrarMensaje("", "Introduce tu nuevo nombre de usuario: ");
-                                        String nuevoNombre = sc.nextLine();
-                                        usuariosControlador.modificarUsuario(usuario, "nombre", nuevoNombre);
-                                    }
-                    // CAMBIAR CONTRASEÑA
-                    //====================================================
-                                    case 2 -> {
-                                        usuariosControlador.mostrarMensaje("", "Introduce tu nueva contraseña: ");
-                                        String nuevaClave = sc.nextLine();
-                                        usuariosControlador.modificarUsuario(usuario, "contraseña", nuevaClave);
-                                    }
-                    // SALIR
-                    //====================================================
-                                    case 3 -> {
-                                        usuariosControlador.mostrarMensaje(GestionUsuariosVista.VERDE, "Volviendo a MENÚ PRINCIPAL ADMINISTRADOR");
-                                        salirSubmenu = true;
-                                    }
-                                    default -> usuariosControlador.mostrarMensaje(GestionUsuariosVista.ROJO, "Error: El valor introducido no es válido");
-                                }
-                            }
-                        }
-            // CERRAR SESIÓN
-            //====================================================
-                        case 4 -> {
-                            usuariosControlador.mostrarMensaje(GestionUsuariosVista.VERDE, "Volviendo al menú de inicio.");
-                           salirMenu = true;
-                            loginExitoso = false;
-                        }
-                        default -> usuariosControlador.mostrarMensaje(GestionUsuariosVista.ROJO, "Error: El valor introducido no es válido");
-                    }
-                }
+
         //============================================================
-        // GESTOR
+        // MENÚS SEGÚN EL TIPO DE USUARIO
         //============================================================
-                else if (usuario instanceof Gestor) {
-                    Gestor usuarioGestor = (Gestor) usuario;
-                    menusControlador.menuPrincipalGestor();
-                    int opcion2 = sc.nextInt();
-                    sc.nextLine();
-                    switch (opcion2) {
-            // MIS PROYECTOS
-            //====================================================
-                        case 1 -> {
-                            boolean salirSubmenu = false;
-                            while (!salirSubmenu) {
-                                menusControlador.menuMisProyectos();
-                                int opcion3 = sc.nextInt();
-                                sc.nextLine();
-                                switch (opcion3) {
-                    // VER PROYECTOS CREADOS
+        boolean salirMenu = false;
+        while (!salirMenu) {
+            //============================================================
+            // ADMINISTRADOR
+            //============================================================
+            if (usuario instanceof Administrador) {
+                menusControlador.menuPrincipalAdmin();
+                int opcion2 = sc.nextInt();
+                sc.nextLine();
+                switch (opcion2) {
+                    // PANEL DE CONTROL
                     //====================================================
-                                    case 1 -> {
-                                        proyectosControlador.mostrarProyectosGestor(usuarioGestor);
-                                        boolean salirSubmenu2 = false;
-                                        while (!salirSubmenu2) {
-                                            menusControlador.menuGestionProyecto();
-                                            int opcion4 = sc.nextInt();
-                                            sc.nextLine();
-                                            switch (opcion4) {
-                                // VISTA DETALLADA
+                    case 1 -> {
+                        boolean salirSubmenu = false;
+                        while (!salirSubmenu) {
+                            menusControlador.menuPanelControl();
+                            int opcion3 = sc.nextInt();
+                            sc.nextLine();
+                            switch (opcion3) {
+                                // VER USUARIOS REGISTRADOS
                                 //====================================================
-                                                case 1 -> {
-                                                    proyectosControlador.mostrarMensaje("", "\nSelecciona el ID del proyecto: ");
-                                                    int idProyecto = sc.nextInt();
-                                                    int posicion = proyectosControlador.buscarPosicion(idProyecto);
-                                                    Proyecto proyectoBuscado = proyectosControlador.buscarProyecto(posicion);
-                                                    proyectosControlador.mostrarVistaDetallada(proyectoBuscado);
-                                                }
-                                // MODIFICAR PROYECTO
+                                case 1 -> {
+                                    usuariosControlador.mostrarListaUsuarios();
+                                }
+                                // BLOQUEAR USUARIO
                                 //====================================================
-                                                case 2 -> {
-                                                    proyectosControlador.mostrarMensaje("", "\nSelecciona el ID del proyecto: ");
-                                                    int idProyecto = sc.nextInt();
-                                                    int posicion = proyectosControlador.buscarPosicion(idProyecto);
-                                                    Proyecto proyectoBuscado = proyectosControlador.buscarProyecto(posicion);
-                                                    proyectosControlador.mostrarMensaje("","\nModifica el proyecto. \nIntroduce el atributo que quieres modificar: ");
-                                                    String atributo = sc.nextLine();
-                                                    proyectosControlador.mostrarMensaje("","\nIntroduce el nuevo valor: ");
-                                                    String valor = sc.nextLine();
-                                                    proyectosControlador.modificarProyecto(proyectoBuscado, atributo, valor);
-                                                }
-                                // MODIFICAR RECOMPENSA
+                                case 2 -> {
+                                    usuariosControlador.mostrarMensaje("", "Introduce el nombre del usuario: ");
+                                    Usuario usuarioSeleccionado = usuariosControlador.buscarUsuarioPorNombre(nombre);
+                                    usuariosControlador.bloquearUsuario(usuarioSeleccionado);
+                                }
+                                // DESBLOQUEAR USUARIO
                                 //====================================================
-                                                case 3 -> {
-                                                    proyectosControlador.mostrarMensaje("", "\nSelecciona el ID del proyecto: ");
-                                                    int idProyecto = sc.nextInt();
-                                                    int posicion = proyectosControlador.buscarPosicion(idProyecto);
-                                                    Proyecto proyectoBuscado = proyectosControlador.buscarProyecto(posicion);
-                                                    proyectosControlador.mostrarMensaje("", "\nSelecciona el índice de la recompensa (0, 1 ó 2): ");
-                                                    int indice = sc.nextInt();
-                                                    sc.nextLine();
-                                                    proyectosControlador.mostrarMensaje("","\nModifica la recompensa. \nIntroduce el atributo que quieres modificar: ");
-                                                    String atributo = sc.nextLine();
-                                                    proyectosControlador.mostrarMensaje("","\nIntroduce el nuevo valor: ");
-                                                    String valor = sc.nextLine();
-                                                    proyectosControlador.modificarRecompensa(proyectoBuscado, indice, atributo, valor);
-                                                }
-                                // ELIMINAR PROYECTO
-                                //====================================================
-                                                case 4 -> {
-                                                    proyectosControlador.mostrarMensaje("", "\nSelecciona el ID del proyecto: ");
-                                                    int idProyecto = sc.nextInt();
-                                                    int posicion = proyectosControlador.buscarPosicion(idProyecto);
-                                                    proyectosControlador.eliminarProyecto(posicion);
-                                                    proyectosControlador.eliminarProyectoGestor(usuarioGestor, posicion);
-                                                }
+                                case 3 -> {
+                                    usuariosControlador.mostrarMensaje("", "Introduce el nombre del usuario: ");
+                                    Usuario usuarioSeleccionado = usuariosControlador.buscarUsuarioPorNombre(nombre);
+                                    usuariosControlador.desbloquearUsuario(usuarioSeleccionado);
+                                }
                                 // SALIR
                                 //====================================================
-                                                case 5 -> {
-                                                    usuariosControlador.mostrarMensaje(GestionUsuariosVista.VERDE, "Volviendo a MIS PROYECTOS.");
-                                                    salirSubmenu2 = true;
-                                                }
-                                                default -> usuariosControlador.mostrarMensaje(GestionUsuariosVista.ROJO, "Error: El valor introducido no es válido");
+                                case 4 -> {
+                                    usuariosControlador.mostrarMensaje(GestionUsuariosVista.VERDE, "Volviendo a MENÚ PRINCIPAL ADMINISTRADOR");
+                                    salirSubmenu = true;
+                                }
+                                default -> usuariosControlador.mostrarMensaje(GestionUsuariosVista.ROJO, "Error: El valor introducido no es válido");
+                            }
+                        }
+                    }
+                    // PROYECTOS
+                    //====================================================
+                    case 2 -> {
+                        boolean salirSubmenu = false;
+                        while (!salirSubmenu) {
+                            menusControlador.menuProyectos();
+                            int opcion3 = sc.nextInt();
+                            sc.nextLine();
+                            switch (opcion3) {
+                                // VER PROYECTOS EXISTENTES
+                                //====================================================
+                                case 1 -> {
+                                    proyectosControlador.mostrarTotalProyectos();
+                                    boolean salirSubmenu2 = false;
+                                    while (!salirSubmenu2) {
+                                        menusControlador.menuGestionProyecto();
+                                        int opcion4 = sc.nextInt();
+                                        sc.nextLine();
+                                        switch (opcion4) {
+                                            // VISTA DETALLADA
+                                            //====================================================
+                                            case 1 -> {
+                                                proyectosControlador.mostrarMensaje("", "\nSelecciona el ID del proyecto: ");
+                                                int idProyecto = sc.nextInt();
+                                                int posicion = proyectosControlador.buscarPosicion(idProyecto);
+                                                Proyecto proyectoBuscado = proyectosControlador.buscarProyecto(posicion);
+                                                proyectosControlador.mostrarVistaDetallada(proyectoBuscado);
                                             }
+                                            // MODIFICAR PROYECTO
+                                            //====================================================
+                                            case 2 -> {
+                                                proyectosControlador.mostrarMensaje("", "\nSelecciona el ID del proyecto: ");
+                                                int idProyecto = sc.nextInt();
+                                                int posicion = proyectosControlador.buscarPosicion(idProyecto);
+                                                Proyecto proyectoBuscado = proyectosControlador.buscarProyecto(posicion);
+                                                proyectosControlador.mostrarMensaje("", "\nModifica el proyecto. \nIntroduce el atributo que quieres modificar: ");
+                                                String atributo = sc.nextLine();
+                                                proyectosControlador.mostrarMensaje("", "\nIntroduce el nuevo valor: ");
+                                                String valor = sc.nextLine();
+                                                proyectosControlador.modificarProyecto(proyectoBuscado, atributo, valor);
+                                            }
+                                            // MODIFICAR RECOMPENSA
+                                            //====================================================
+                                            case 3 -> {
+                                                proyectosControlador.mostrarMensaje("", "\nSelecciona el ID del proyecto: ");
+                                                int idProyecto = sc.nextInt();
+                                                int posicion = proyectosControlador.buscarPosicion(idProyecto);
+                                                Proyecto proyectoBuscado = proyectosControlador.buscarProyecto(posicion);
+                                                proyectosControlador.mostrarMensaje("", "\nSelecciona el índice de la recompensa (0, 1 ó 2): ");
+                                                int indice = sc.nextInt();
+                                                sc.nextLine();
+                                                proyectosControlador.mostrarMensaje("", "\nModifica la recompensa. \nIntroduce el atributo que quieres modificar: ");
+                                                String atributo = sc.nextLine();
+                                                proyectosControlador.mostrarMensaje("", "\nIntroduce el nuevo valor: ");
+                                                String valor = sc.nextLine();
+                                                proyectosControlador.modificarRecompensa(proyectoBuscado, indice, atributo, valor);
+                                            }
+                                            // ELIMINAR PROYECTO
+                                            //====================================================
+                                            case 4 -> {
+                                                proyectosControlador.mostrarMensaje("", "\nSelecciona el ID del proyecto: ");
+                                                int idProyecto = sc.nextInt();
+                                                int posicion = proyectosControlador.buscarPosicion(idProyecto);
+                                                Proyecto proyectoEliminado = proyectosControlador.buscarProyecto(posicion);
+                                                proyectosControlador.eliminarProyecto(posicion);
+                                                proyectosControlador.eliminarProyectoGestor(proyectoEliminado.getCreador(), posicion);
+                                            }
+                                            // SALIR
+                                            //====================================================
+                                            case 5 -> {
+                                                usuariosControlador.mostrarMensaje(GestionUsuariosVista.VERDE, "Volviendo a MIS PROYECTOS.");
+                                                salirSubmenu2 = true;
+                                            }
+                                            default -> usuariosControlador.mostrarMensaje(GestionUsuariosVista.ROJO, "Error: El valor introducido no es válido");
                                         }
-
                                     }
-                    // CREAR NUEVO PROYECTO
-                    //====================================================
-                                    case 2 -> {
-                                        proyectosControlador.mostrarMensaje("","\nCrea un nuevo proyecto. \nIntroduce el nombre: ");
-                                        String nombreProyecto = sc.nextLine();
-                                        proyectosControlador.mostrarMensaje("","\nIntroduce la descripción: ");
-                                        String descripcionProyecto = sc.nextLine();
-                                        proyectosControlador.mostrarMensaje("","\nIntroduce la categoría (ARTE, TECNOLOGIA, CINE, COMIDA, MODA, JUEGOS): ");
-                                        String categoriaTexto = sc.nextLine();
-                                        Categoria categoria = proyectosControlador.getCategoria(categoriaTexto);
-                                        proyectosControlador.mostrarMensaje("","\nIntroduce la fecha de creación (dd/MM/yyyy): ");
-                                        String fechaTexto = sc.nextLine();
-                                        LocalDate fechaInicio = FuncionesFechas.parsearFecha(fechaTexto);
-                                        proyectosControlador.mostrarMensaje("", "\nIntroduce la fecha de finalización (dd/MM/yyyy): ");
-                                        fechaTexto = sc.nextLine();
-                                        LocalDate fechaFin = FuncionesFechas.parsearFecha(fechaTexto);
-                                        proyectosControlador.mostrarMensaje("", "\nIntroduce el importe necesario para financiar el proyecto (€): ");
-                                        float cantidadNecesaria = sc.nextFloat();
-                                        sc.nextLine();
-                                        Proyecto nuevoProyecto = new Proyecto(nombreProyecto, descripcionProyecto, categoria, fechaInicio, fechaFin, cantidadNecesaria, usuarioGestor);
 
-                                        proyectosControlador.mostrarMensaje("", "\nCrea 3 recompensas para el proyecto. \nIntroduce la descripción de la recompensa 1: ");
-                                        String descripcionRecompensa1 = sc.nextLine();
-                                        proyectosControlador.mostrarMensaje("", "\nIntroduce el importe de la recompensa 1: ");
-                                        float importeRecompensa1 = sc.nextFloat();
-                                        sc.nextLine();
-                                        Recompensa recompensa1 = new Recompensa(descripcionRecompensa1, importeRecompensa1);
-
-                                        proyectosControlador.mostrarMensaje("", "\nIntroduce la descripción de la recompensa 2: ");
-                                        String descripcionRecompensa2 = sc.nextLine();
-                                        proyectosControlador.mostrarMensaje("", "\nIntroduce el importe de la recompensa 2: ");
-                                        float importeRecompensa2 = sc.nextFloat();
-                                        sc.nextLine();
-                                        Recompensa recompensa2 = new Recompensa(descripcionRecompensa2, importeRecompensa2);
-
-                                        proyectosControlador.mostrarMensaje("", "\nIntroduce la descripción de la recompensa 3: ");
-                                        String descripcionRecompensa3 = sc.nextLine();
-                                        proyectosControlador.mostrarMensaje("", "\nIntroduce el importe de la recompensa 3: ");
-                                        float importeRecompensa3 = sc.nextFloat();
-                                        sc.nextLine();
-                                        Recompensa recompensa3 = new Recompensa(descripcionRecompensa3, importeRecompensa3);
-
-                                        proyectosControlador.agregarRecompensa(nuevoProyecto, recompensa1);
-                                        proyectosControlador.agregarRecompensa(nuevoProyecto, recompensa2);
-                                        proyectosControlador.agregarRecompensa(nuevoProyecto, recompensa3);
-                                        proyectosControlador.agregarProyecto(nuevoProyecto);
-                                        usuariosControlador.agregarProyectoGestor(usuarioGestor, nuevoProyecto);
-                                    }
-                    // SALIR
-                    //====================================================
-                                    case 3 -> {
-                                        usuariosControlador.mostrarMensaje(GestionUsuariosVista.VERDE, "Volviendo a MENÚ PRINCIPAL GESTOR");
-                                        salirSubmenu = true;
-                                    }
-                                    default -> usuariosControlador.mostrarMensaje(GestionUsuariosVista.ROJO, "Error: El valor introducido no es válido");
                                 }
+                                // SALIR
+                                //====================================================
+                                case 2 -> {
+                                    usuariosControlador.mostrarMensaje(GestionUsuariosVista.VERDE, "Volviendo a MENÚ PRINCIPAL GESTOR");
+                                    salirSubmenu = true;
+                                }
+                                default -> usuariosControlador.mostrarMensaje(GestionUsuariosVista.ROJO, "Error: El valor introducido no es válido");
                             }
                         }
-            // CONFIGURACIÓN
-            //====================================================
-                        case 2 -> {
-                            boolean salirSubmenu = false;
-                            while (!salirSubmenu) {
-                                menusControlador.menuConfiguracion();
-                                int opcion3 = sc.nextInt();
-                                sc.nextLine();
-                                switch (opcion3) {
-                                    case 1 -> {
-                                        usuariosControlador.mostrarMensaje("", "\nIntroduce tu nuevo nombre de usuario: ");
-                                        String nuevoNombre = sc.nextLine();
-                                        usuariosControlador.modificarUsuario(usuario, "nombre", nuevoNombre);
-                                    }
-                                    case 2 -> {
-                                        usuariosControlador.mostrarMensaje("", "\nIntroduce tu nueva contraseña: ");
-                                        String nuevaClave = sc.nextLine();
-                                        usuariosControlador.modificarUsuario(usuario, "contraseña", nuevaClave);
-                                    }
-                                    case 3 -> {
-                                        usuariosControlador.mostrarMensaje(GestionUsuariosVista.VERDE, "Volviendo a MENÚ PRINCIPAL GESTOR");
-                                        salirSubmenu = true;
-                                    }
-                                    default -> usuariosControlador.mostrarMensaje(GestionUsuariosVista.ROJO, "Error: El valor introducido no es válido");
-                                }
-                            }
-                        }
-            // CERRAR SESIÓN
-            //====================================================
-                        case 3 -> {
-                            usuariosControlador.mostrarMensaje(GestionUsuariosVista.VERDE, "Volviendo al menú de inicio.");
-                            salirMenu = true;
-                            loginExitoso = false;
-                        }
-                        default -> usuariosControlador.mostrarMensaje(GestionUsuariosVista.ROJO, "Error: El valor introducido no es válido");
                     }
+                    // CONFIGURACIÓN
+                    //====================================================
+                    case 3 -> {
+                        boolean salirSubmenu = false;
+                        while (!salirSubmenu) {
+                            menusControlador.menuConfiguracion();
+                            int opcion3 = sc.nextInt();
+                            sc.nextLine();
+                            switch (opcion3) {
+                                // CAMBIAR NOMBRE DE USUARIO
+                                //====================================================
+                                case 1 -> {
+                                    usuariosControlador.mostrarMensaje("", "Introduce tu nuevo nombre de usuario: ");
+                                    String nuevoNombre = sc.nextLine();
+                                    usuariosControlador.modificarUsuario(usuario, "nombre", nuevoNombre);
+                                }
+                                // CAMBIAR CONTRASEÑA
+                                //====================================================
+                                case 2 -> {
+                                    usuariosControlador.mostrarMensaje("", "Introduce tu nueva contraseña: ");
+                                    String nuevaClave = sc.nextLine();
+                                    usuariosControlador.modificarUsuario(usuario, "contraseña", nuevaClave);
+                                }
+                                // SALIR
+                                //====================================================
+                                case 3 -> {
+                                    usuariosControlador.mostrarMensaje(GestionUsuariosVista.VERDE, "Volviendo a MENÚ PRINCIPAL ADMINISTRADOR");
+                                    salirSubmenu = true;
+                                }
+                                default -> usuariosControlador.mostrarMensaje(GestionUsuariosVista.ROJO, "Error: El valor introducido no es válido");
+                            }
+                        }
+                    }
+                    // CERRAR SESIÓN
+                    //====================================================
+                    case 4 -> {
+                        usuariosControlador.mostrarMensaje(GestionUsuariosVista.VERDE, "Volviendo al menú de inicio.");
+                        salirMenu = true;
+                        loginExitoso = false;
+                    }
+                    default -> usuariosControlador.mostrarMensaje(GestionUsuariosVista.ROJO, "Error: El valor introducido no es válido");
                 }
-        //============================================================
-        // INVERSOR
-        //============================================================
-                else if (usuario instanceof Inversor) {
-                    Inversor usuarioInversor = (Inversor) usuario;
-                    menusControlador.menuPrincipalInversor();
-                    int opcion2 = sc.nextInt();
-                    sc.nextLine();
-                    switch (opcion2) {
-                        case 1 -> {
-
-                        }
-                        case 2 -> {
-                        }
-            // CARTERA DIGITAL
-            //====================================================
-                        case 3 -> {
-                            boolean salirSubmenu = false;
-                            while (!salirSubmenu) {
-                                menusControlador.menuCartera();
-                                int opcion3 = sc.nextInt();
-                                sc.nextLine();
-                                switch (opcion3) {
-                                    case 1 -> {
-                                        usuariosControlador.mostrarSaldo(usuarioInversor);
-                                    }
-                                    case 2 -> {
-                                        usuariosControlador.mostrarMensaje("", "Introduce el importe que vas a añadir a tu cartera.");
-                                        float cantidad = sc.nextFloat();
+            }
+            //============================================================
+            // GESTOR
+            //============================================================
+            else if (usuario instanceof Gestor) {
+                Gestor usuarioGestor = (Gestor) usuario;
+                menusControlador.menuPrincipalGestor();
+                int opcion2 = sc.nextInt();
+                sc.nextLine();
+                switch (opcion2) {
+                    // MIS PROYECTOS
+                    //====================================================
+                    case 1 -> {
+                        boolean salirSubmenu = false;
+                        while (!salirSubmenu) {
+                            menusControlador.menuMisProyectos();
+                            int opcion3 = sc.nextInt();
+                            sc.nextLine();
+                            switch (opcion3) {
+                                // VER PROYECTOS CREADOS
+                                //====================================================
+                                case 1 -> {
+                                    proyectosControlador.mostrarProyectosGestor(usuarioGestor);
+                                    boolean salirSubmenu2 = false;
+                                    while (!salirSubmenu2) {
+                                        menusControlador.menuGestionProyecto();
+                                        int opcion4 = sc.nextInt();
                                         sc.nextLine();
-                                        usuariosControlador.aumentarSaldo(usuarioInversor, cantidad);
+                                        switch (opcion4) {
+                                            // VISTA DETALLADA
+                                            //====================================================
+                                            case 1 -> {
+                                                proyectosControlador.mostrarMensaje("", "\nSelecciona el ID del proyecto: ");
+                                                int idProyecto = sc.nextInt();
+                                                int posicion = proyectosControlador.buscarPosicion(idProyecto);
+                                                Proyecto proyectoBuscado = proyectosControlador.buscarProyecto(posicion);
+                                                proyectosControlador.mostrarVistaDetallada(proyectoBuscado);
+                                            }
+                                            // MODIFICAR PROYECTO
+                                            //====================================================
+                                            case 2 -> {
+                                                proyectosControlador.mostrarMensaje("", "\nSelecciona el ID del proyecto: ");
+                                                int idProyecto = sc.nextInt();
+                                                int posicion = proyectosControlador.buscarPosicion(idProyecto);
+                                                Proyecto proyectoBuscado = proyectosControlador.buscarProyecto(posicion);
+                                                proyectosControlador.mostrarMensaje("", "\nModifica el proyecto. \nIntroduce el atributo que quieres modificar: ");
+                                                String atributo = sc.nextLine();
+                                                proyectosControlador.mostrarMensaje("", "\nIntroduce el nuevo valor: ");
+                                                String valor = sc.nextLine();
+                                                proyectosControlador.modificarProyecto(proyectoBuscado, atributo, valor);
+                                            }
+                                            // MODIFICAR RECOMPENSA
+                                            //====================================================
+                                            case 3 -> {
+                                                proyectosControlador.mostrarMensaje("", "\nSelecciona el ID del proyecto: ");
+                                                int idProyecto = sc.nextInt();
+                                                int posicion = proyectosControlador.buscarPosicion(idProyecto);
+                                                Proyecto proyectoBuscado = proyectosControlador.buscarProyecto(posicion);
+                                                proyectosControlador.mostrarMensaje("", "\nSelecciona el índice de la recompensa (0, 1 ó 2): ");
+                                                int indice = sc.nextInt();
+                                                sc.nextLine();
+                                                proyectosControlador.mostrarMensaje("", "\nModifica la recompensa. \nIntroduce el atributo que quieres modificar: ");
+                                                String atributo = sc.nextLine();
+                                                proyectosControlador.mostrarMensaje("", "\nIntroduce el nuevo valor: ");
+                                                String valor = sc.nextLine();
+                                                proyectosControlador.modificarRecompensa(proyectoBuscado, indice, atributo, valor);
+                                            }
+                                            // ELIMINAR PROYECTO
+                                            //====================================================
+                                            case 4 -> {
+                                                proyectosControlador.mostrarMensaje("", "\nSelecciona el ID del proyecto: ");
+                                                int idProyecto = sc.nextInt();
+                                                int posicion = proyectosControlador.buscarPosicion(idProyecto);
+                                                proyectosControlador.eliminarProyecto(posicion);
+                                                proyectosControlador.eliminarProyectoGestor(usuarioGestor, posicion);
+                                            }
+                                            // SALIR
+                                            //====================================================
+                                            case 5 -> {
+                                                usuariosControlador.mostrarMensaje(GestionUsuariosVista.VERDE, "Volviendo a MIS PROYECTOS.");
+                                                salirSubmenu2 = true;
+                                            }
+                                            default -> usuariosControlador.mostrarMensaje(GestionUsuariosVista.ROJO, "Error: El valor introducido no es válido");
+                                        }
                                     }
-                                    case 3 -> {
-                                        usuariosControlador.mostrarMensaje(GestionUsuariosVista.VERDE, "Volviendo a MENÚ PRINCIPAL INVERSOR");
-                                        salirSubmenu = true;
-                                    }
-                                    default -> usuariosControlador.mostrarMensaje(GestionUsuariosVista.ROJO, "Error: El valor introducido no es válido");
+
                                 }
+                                // CREAR NUEVO PROYECTO
+                                //====================================================
+                                case 2 -> {
+                                    proyectosControlador.mostrarMensaje("", "\nCrea un nuevo proyecto. \nIntroduce el nombre: ");
+                                    String nombreProyecto = sc.nextLine();
+                                    proyectosControlador.mostrarMensaje("", "\nIntroduce la descripción: ");
+                                    String descripcionProyecto = sc.nextLine();
+                                    proyectosControlador.mostrarMensaje("", "\nIntroduce la categoría (ARTE, TECNOLOGIA, CINE, COMIDA, MODA, JUEGOS): ");
+                                    String categoriaTexto = sc.nextLine();
+                                    Categoria categoria = proyectosControlador.getCategoria(categoriaTexto);
+                                    proyectosControlador.mostrarMensaje("", "\nIntroduce la fecha de creación (dd/MM/yyyy): ");
+                                    String fechaTexto = sc.nextLine();
+                                    LocalDate fechaInicio = FuncionesFechas.parsearFecha(fechaTexto);
+                                    proyectosControlador.mostrarMensaje("", "\nIntroduce la fecha de finalización (dd/MM/yyyy): ");
+                                    fechaTexto = sc.nextLine();
+                                    LocalDate fechaFin = FuncionesFechas.parsearFecha(fechaTexto);
+                                    proyectosControlador.mostrarMensaje("", "\nIntroduce el importe necesario para financiar el proyecto (€): ");
+                                    float cantidadNecesaria = sc.nextFloat();
+                                    sc.nextLine();
+                                    Proyecto nuevoProyecto = new Proyecto(nombreProyecto, descripcionProyecto, categoria, fechaInicio, fechaFin, cantidadNecesaria, usuarioGestor);
+
+                                    proyectosControlador.mostrarMensaje("", "\nCrea 3 recompensas para el proyecto. \nIntroduce la descripción de la recompensa 1: ");
+                                    String descripcionRecompensa1 = sc.nextLine();
+                                    proyectosControlador.mostrarMensaje("", "\nIntroduce el importe de la recompensa 1: ");
+                                    float importeRecompensa1 = sc.nextFloat();
+                                    sc.nextLine();
+                                    Recompensa recompensa1 = new Recompensa(descripcionRecompensa1, importeRecompensa1);
+
+                                    proyectosControlador.mostrarMensaje("", "\nIntroduce la descripción de la recompensa 2: ");
+                                    String descripcionRecompensa2 = sc.nextLine();
+                                    proyectosControlador.mostrarMensaje("", "\nIntroduce el importe de la recompensa 2: ");
+                                    float importeRecompensa2 = sc.nextFloat();
+                                    sc.nextLine();
+                                    Recompensa recompensa2 = new Recompensa(descripcionRecompensa2, importeRecompensa2);
+
+                                    proyectosControlador.mostrarMensaje("", "\nIntroduce la descripción de la recompensa 3: ");
+                                    String descripcionRecompensa3 = sc.nextLine();
+                                    proyectosControlador.mostrarMensaje("", "\nIntroduce el importe de la recompensa 3: ");
+                                    float importeRecompensa3 = sc.nextFloat();
+                                    sc.nextLine();
+                                    Recompensa recompensa3 = new Recompensa(descripcionRecompensa3, importeRecompensa3);
+
+                                    proyectosControlador.agregarRecompensa(nuevoProyecto, recompensa1);
+                                    proyectosControlador.agregarRecompensa(nuevoProyecto, recompensa2);
+                                    proyectosControlador.agregarRecompensa(nuevoProyecto, recompensa3);
+                                    proyectosControlador.agregarProyecto(nuevoProyecto, usuarioActual);
+                                    usuariosControlador.agregarProyectoGestor(usuarioGestor, nuevoProyecto);
+                                }
+                                // SALIR
+                                //====================================================
+                                case 3 -> {
+                                    usuariosControlador.mostrarMensaje(GestionUsuariosVista.VERDE, "Volviendo a MENÚ PRINCIPAL GESTOR");
+                                    salirSubmenu = true;
+                                }
+                                default -> usuariosControlador.mostrarMensaje(GestionUsuariosVista.ROJO, "Error: El valor introducido no es válido");
                             }
                         }
-            // INVITA A UN AMIGO
-            //====================================================
-                        case 4 -> {
-                            boolean salirSubmenu = false;
-                            while (!salirSubmenu) {
-                                menusControlador.menuInvitaAmigo();
-                                int opcion3 = sc.nextInt();
-                                sc.nextLine();
-                                switch (opcion3) {
-                                    case 1 -> {
-                                        usuariosControlador.mostrarListaAmigos(usuarioInversor);
-                                    }
-                                    case 2 -> {
-                                        usuariosControlador.mostrarMensaje("", "Introduce el nombre del usuario que vas a invitar: ");
-                                        String nombreUsuario = sc.nextLine();
-                                        usuariosControlador.invitarAmigo(usuarioInversor, nombreUsuario);
-                                    }
-                                    case 3 -> {
-                                        usuariosControlador.mostrarMensaje(GestionUsuariosVista.VERDE, "Volviendo a MENÚ PRINCIPAL INVERSOR");
-                                        salirSubmenu = true;
-                                    }
-                                    default -> usuariosControlador.mostrarMensaje(GestionUsuariosVista.ROJO, "Error: El valor introducido no es válido");
-                                }
-                            }
-                        }
-            // CONFIGURACIÓN
-            //====================================================
-                        case 5 -> {
-                            boolean salirSubmenu = false;
-                            while (!salirSubmenu) {
-                                menusControlador.menuConfiguracion();
-                                int opcion3 = sc.nextInt();
-                                sc.nextLine();
-                                switch (opcion3) {
-                                    case 1 -> {
-                                        usuariosControlador.mostrarMensaje("", "\nIntroduce tu nuevo nombre de usuario: ");
-                                        String nuevoNombre = sc.nextLine();
-                                        usuariosControlador.modificarUsuario(usuario, "nombre", nuevoNombre);
-                                    }
-                                    case 2 -> {
-                                        usuariosControlador.mostrarMensaje("", "\nIntroduce tu nueva contraseña: ");
-                                        String nuevaClave = sc.nextLine();
-                                        usuariosControlador.modificarUsuario(usuario, "contraseña", nuevaClave);
-                                    }
-                                    case 3 -> {
-                                        usuariosControlador.mostrarMensaje(GestionUsuariosVista.VERDE, "Volviendo a MENÚ PRINCIPAL INVERSOR");
-                                        salirSubmenu = true;
-                                    }
-                                    default -> usuariosControlador.mostrarMensaje(GestionUsuariosVista.ROJO, "Error: El valor introducido no es válido");
-                                }
-                            }
-                        }
-                        case 6 -> {
-                            usuariosControlador.mostrarMensaje(GestionUsuariosVista.VERDE, "Volviendo al menú de inicio.");
-                            salirMenu = true;
-                            loginExitoso = false;
-                        }
-                        default -> usuariosControlador.mostrarMensaje(GestionUsuariosVista.ROJO, "Error: El valor introducido no es válido");
                     }
+                    // CONFIGURACIÓN
+                    //====================================================
+                    case 2 -> {
+                        boolean salirSubmenu = false;
+                        while (!salirSubmenu) {
+                            menusControlador.menuConfiguracion();
+                            int opcion3 = sc.nextInt();
+                            sc.nextLine();
+                            switch (opcion3) {
+                                case 1 -> {
+                                    usuariosControlador.mostrarMensaje("", "\nIntroduce tu nuevo nombre de usuario: ");
+                                    String nuevoNombre = sc.nextLine();
+                                    usuariosControlador.modificarUsuario(usuario, "nombre", nuevoNombre);
+                                }
+                                case 2 -> {
+                                    usuariosControlador.mostrarMensaje("", "\nIntroduce tu nueva contraseña: ");
+                                    String nuevaClave = sc.nextLine();
+                                    usuariosControlador.modificarUsuario(usuario, "contraseña", nuevaClave);
+                                }
+                                case 3 -> {
+                                    usuariosControlador.mostrarMensaje(GestionUsuariosVista.VERDE, "Volviendo a MENÚ PRINCIPAL GESTOR");
+                                    salirSubmenu = true;
+                                }
+                                default -> usuariosControlador.mostrarMensaje(GestionUsuariosVista.ROJO, "Error: El valor introducido no es válido");
+                            }
+                        }
+                    }
+                    // CERRAR SESIÓN
+                    //====================================================
+                    case 3 -> {
+                        usuariosControlador.mostrarMensaje(GestionUsuariosVista.VERDE, "Volviendo al menú de inicio.");
+                        salirMenu = true;
+                        loginExitoso = false;
+                    }
+                    default -> usuariosControlador.mostrarMensaje(GestionUsuariosVista.ROJO, "Error: El valor introducido no es válido");
+                }
+            }
+            //============================================================
+            // INVERSOR
+            //============================================================
+            else if (usuario instanceof Inversor) {
+                Inversor usuarioInversor = (Inversor) usuario;
+                menusControlador.menuPrincipalInversor();
+                int opcion2 = sc.nextInt();
+                sc.nextLine();
+                switch (opcion2) {
+                    case 1 -> {
+
+                    }
+                    case 2 -> {
+                    }
+                    // CARTERA DIGITAL
+                    //====================================================
+                    case 3 -> {
+                        boolean salirSubmenu = false;
+                        while (!salirSubmenu) {
+                            menusControlador.menuCartera();
+                            int opcion3 = sc.nextInt();
+                            sc.nextLine();
+                            switch (opcion3) {
+                                case 1 -> {
+                                    usuariosControlador.mostrarSaldo(usuarioInversor);
+                                }
+                                case 2 -> {
+                                    usuariosControlador.mostrarMensaje("", "Introduce el importe que vas a añadir a tu cartera.");
+                                    float cantidad = sc.nextFloat();
+                                    sc.nextLine();
+                                    usuariosControlador.aumentarSaldo(usuarioInversor, cantidad);
+                                }
+                                case 3 -> {
+                                    usuariosControlador.mostrarMensaje(GestionUsuariosVista.VERDE, "Volviendo a MENÚ PRINCIPAL INVERSOR");
+                                    salirSubmenu = true;
+                                }
+                                default -> usuariosControlador.mostrarMensaje(GestionUsuariosVista.ROJO, "Error: El valor introducido no es válido");
+                            }
+                        }
+                    }
+                    // INVITA A UN AMIGO
+                    //====================================================
+                    case 4 -> {
+                        boolean salirSubmenu = false;
+                        while (!salirSubmenu) {
+                            menusControlador.menuInvitaAmigo();
+                            int opcion3 = sc.nextInt();
+                            sc.nextLine();
+                            switch (opcion3) {
+                                case 1 -> {
+                                    usuariosControlador.mostrarListaAmigos(usuarioInversor);
+                                }
+                                case 2 -> {
+                                    usuariosControlador.mostrarMensaje("", "Introduce el nombre del usuario que vas a invitar: ");
+                                    String nombreUsuario = sc.nextLine();
+                                    usuariosControlador.invitarAmigo(usuarioInversor, nombreUsuario);
+                                }
+                                case 3 -> {
+                                    usuariosControlador.mostrarMensaje(GestionUsuariosVista.VERDE, "Volviendo a MENÚ PRINCIPAL INVERSOR");
+                                    salirSubmenu = true;
+                                }
+                                default -> usuariosControlador.mostrarMensaje(GestionUsuariosVista.ROJO, "Error: El valor introducido no es válido");
+                            }
+                        }
+                    }
+                    // CONFIGURACIÓN
+                    //====================================================
+                    case 5 -> {
+                        boolean salirSubmenu = false;
+                        while (!salirSubmenu) {
+                            menusControlador.menuConfiguracion();
+                            int opcion3 = sc.nextInt();
+                            sc.nextLine();
+                            switch (opcion3) {
+                                case 1 -> {
+                                    usuariosControlador.mostrarMensaje("", "\nIntroduce tu nuevo nombre de usuario: ");
+                                    String nuevoNombre = sc.nextLine();
+                                    usuariosControlador.modificarUsuario(usuario, "nombre", nuevoNombre);
+                                }
+                                case 2 -> {
+                                    usuariosControlador.mostrarMensaje("", "\nIntroduce tu nueva contraseña: ");
+                                    String nuevaClave = sc.nextLine();
+                                    usuariosControlador.modificarUsuario(usuario, "contraseña", nuevaClave);
+                                }
+                                case 3 -> {
+                                    usuariosControlador.mostrarMensaje(GestionUsuariosVista.VERDE, "Volviendo a MENÚ PRINCIPAL INVERSOR");
+                                    salirSubmenu = true;
+                                }
+                                default -> usuariosControlador.mostrarMensaje(GestionUsuariosVista.ROJO, "Error: El valor introducido no es válido");
+                            }
+                        }
+                    }
+                    case 6 -> {
+                        usuariosControlador.mostrarMensaje(GestionUsuariosVista.VERDE, "Volviendo al menú de inicio.");
+                        salirMenu = true;
+                        loginExitoso = false;
+                    }
+                    default -> usuariosControlador.mostrarMensaje(GestionUsuariosVista.ROJO, "Error: El valor introducido no es válido");
                 }
             }
         }

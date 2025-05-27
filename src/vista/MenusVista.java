@@ -1,13 +1,18 @@
 package vista;
 
+import Utilidades.LoggerSistema;
+import controlador.GestorConfiguracion;
+import controlador.LoginControlador;
 import modelo.*;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class MenusVista {
     private String colorTexto;
     public static final String ROJO = "\u001B[31m";
     public static final String VERDE = "\u001B[32m";
     public static final String RESET = "\u001B[0m";
+    private static final Scanner sc = new Scanner(System.in);
 
     public void setColorTexto(String colorTexto) {
         this.colorTexto = colorTexto;
@@ -157,5 +162,34 @@ public class MenusVista {
                 1. Lista de amigos
                 2. Invitar amigo
                 3. Salir""");
+    }
+
+    public static Usuario mostrarMenuLogin() {
+        Usuario usuario;
+
+        if (GestorConfiguracion.permiteAccesoInvitado()) {
+            System.out.println("=== INICIO DE SESIÓN ===");
+            System.out.println("1. Iniciar sesión con usuario");
+            System.out.println("2. Entrar como invitado");
+            System.out.print("Opción: ");
+            int opcion = sc.nextInt();
+            sc.nextLine();
+
+            if (opcion == 2) {
+                usuario = new UsuarioInvitado();
+                LoggerSistema.registrar("Inicio de sesión como invitado", "invitado");
+                return usuario;
+            }
+        }
+
+        // Si no hay acceso invitado, o elige opción 1
+        usuario = LoginControlador.login();
+        LoggerSistema.registrar("Inicio de sesión", usuario.getNombre());
+        String ultimo = GestorConfiguracion.getUltimoInicio(usuario.getNombre());
+        if (ultimo != null) {
+            System.out.println("Último inicio de sesión: " + ultimo);
+        }
+        GestorConfiguracion.setUltimoInicio(usuario.getNombre());
+        return usuario;
     }
 }
