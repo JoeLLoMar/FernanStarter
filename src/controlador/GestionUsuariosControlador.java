@@ -5,11 +5,11 @@ import vista.GestionUsuariosVista;
 
 
 public class GestionUsuariosControlador {
-    private GestionUsuarios modelo;
+    private DAOUsuarioSQL modelo;
     private GestionUsuariosVista vista;
     private int intentosFallidos;
 
-    public GestionUsuariosControlador(GestionUsuarios modelo, GestionUsuariosVista vista) {
+    public GestionUsuariosControlador(DAOUsuarioSQL modelo, GestionUsuariosVista vista) {
         this.modelo = modelo;
         this.vista = vista;
         this.intentosFallidos = 0;

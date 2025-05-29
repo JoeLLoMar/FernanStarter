@@ -3,7 +3,6 @@ package modelo;
 import java.util.HashMap;
 
 abstract public class Usuario {
-    private static int contadorUsuarios = 0;
     private int id;
     private String nombre;
     private String contraseña;
@@ -50,7 +49,9 @@ abstract public class Usuario {
         this.email = email;
     }
 
-    public boolean validarContraseña(String contraseña) { return this.contraseña.equals(contraseña); }
+    public boolean validarContraseña(String contraseña) {
+        return this.contraseña.equals(contraseña);
+    }
 
     public Usuario invitarAmigo(String nombre, Usuario amigo) {
         listaAmigos.put(nombre, amigo);

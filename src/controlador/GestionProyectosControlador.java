@@ -1,9 +1,8 @@
 package controlador;
 
 import modelo.*;
-import utilidades.FuncionesFechas;
-import vista.GestionProyectosVista;
-import vista.GestionUsuariosVista;
+import utilidades.*;
+import vista.*;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
@@ -114,13 +113,13 @@ public class GestionProyectosControlador {
 
                 case "cantidadnecesaria" -> {
                     float cantidadNecesaria = Float.parseFloat(valor.trim());
-                    proyecto.setCantidadNecesaria(cantidadNecesaria);
+                    proyecto.setCantidadObjetivo(cantidadNecesaria);
                     mostrarMensaje(GestionProyectosVista.VERDE,"Cantidad necesaria modificada correctamente.");
                 }
 
                 case "cantidadfinanciada" -> {
                     float cantidadFinanciada = Float.parseFloat(valor.trim());
-                    proyecto.setCantidadFinanciada(cantidadFinanciada);
+                    proyecto.setCantidadRecaudada(cantidadFinanciada);
                     mostrarMensaje(GestionProyectosVista.VERDE,"Cantidad financiada modificada correctamente.");
                 }
 

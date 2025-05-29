@@ -3,8 +3,6 @@ package modelo;
 import java.util.ArrayList;
 
 public class Inversor extends Usuario implements Bloqueable {
-    private static int contadorInversor = 0;
-    private int idInversor;
     private ArrayList<Inversion> listaInversiones;
     private float saldo;
     private int iniciosSesionFallidos;
@@ -15,7 +13,6 @@ public class Inversor extends Usuario implements Bloqueable {
             String clave,
             String email) {
         super(nombre, clave, email);
-        this.idInversor = ++contadorInversor;
         this.listaInversiones = new ArrayList<Inversion>();
         this.saldo = 0;
         this.iniciosSesionFallidos = 0;
@@ -30,18 +27,9 @@ public class Inversor extends Usuario implements Bloqueable {
             float saldo,
             int iniciosSesionFallidos) {
         super(nombre, clave, email);
-        this.idInversor = ++contadorInversor;
         this.listaInversiones = listaInversiones;
         this.saldo = saldo;
         this.iniciosSesionFallidos = iniciosSesionFallidos;
-    }
-
-    public static int getContadorInversor() {
-        return contadorInversor;
-    }
-
-    public int getIdInversor() {
-        return idInversor;
     }
 
     public ArrayList<Inversion> getListaInversiones() {
@@ -117,7 +105,6 @@ public class Inversor extends Usuario implements Bloqueable {
     public String toString() {
         return "\n\nUSUARIO INVERSOR" +
                 super.toString() +
-                "\nID de inversor: " + idInversor +
                 "\nInversiones realizadas: " + listaInversiones +
                 "\nSaldo restante: " + saldo +
                 "\n=============================================";

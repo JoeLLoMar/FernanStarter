@@ -2,7 +2,7 @@ import controlador.GestionProyectosControlador;
 import controlador.GestionUsuariosControlador;
 import controlador.MenusControlador;
 import modelo.*;
-import utilidades.FuncionesFechas;
+import utilidades.*;
 import vista.GestionProyectosVista;
 import vista.GestionUsuariosVista;
 import vista.MenusVista;

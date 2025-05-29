@@ -1,7 +1,5 @@
 package modelo;
 
-import utilidades.FuncionesFechas;
-
 import java.time.LocalDate;
 import java.util.ArrayList;
 
@@ -16,19 +14,17 @@ import java.util.ArrayList;
  * @version 1.0
  */
 public class Proyecto {
-    private static int contadorProyectos = 0;
-    private int contadorRecompensas;
     private int idProyecto;
     private String nombre;
     private String descripcion;
     private Categoria categoria;
     private LocalDate fechaInicio;
     private LocalDate fechaFin;
-    private float cantidadNecesaria;
-    private float cantidadFinanciada;
+    private float cantidadObjetivo;
+    private float cantidadRecaudada;
+    private Gestor creador;
     private ArrayList<Recompensa> listaRecompensas;
     private ArrayList<Inversion> listaInversiones;
-    private Gestor creador;
 
     /**
      * Constructor con parámetros para inicializar un proyecto.
@@ -38,33 +34,29 @@ public class Proyecto {
      * @param categoria Categoría del proyecto.
      * @param fechaInicio Fecha de inicio.
      * @param fechaFin Fecha de finalización.
-     * @param cantidadNecesaria Monto necesario para financiar el proyecto.
-     * @param creador usario Gestor que ha creado el proyecto.
+     * @param cantidadObjetivo Monto necesario para financiar el proyecto.
      */
     public Proyecto(
+            int idProyecto,
             String nombre,
             String descripcion,
             Categoria categoria,
             LocalDate fechaInicio,
             LocalDate fechaFin,
-            float cantidadNecesaria,
-            Gestor creador) {
-        this.idProyecto = ++contadorProyectos;
+            float cantidadObjetivo,
+            float cantidadRecaudada) {
+        this.idProyecto = idProyecto;
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.categoria = categoria;
         this.fechaInicio = fechaInicio;
         this.fechaFin = fechaFin;
-        this.cantidadNecesaria = cantidadNecesaria;
-        this.cantidadFinanciada = 0;
-        this.listaRecompensas = new ArrayList<Recompensa>();
-        this.contadorRecompensas = 0;
-        this.listaInversiones = new ArrayList<Inversion>();
-        this.creador = creador;
-    }
+        this.cantidadObjetivo = cantidadObjetivo;
+        this.cantidadRecaudada = cantidadRecaudada;
+        this.creador = null;
+        this.listaRecompensas = new ArrayList<>();
+        this.listaInversiones = new ArrayList<>();
 
-    public static int getContadorProyectos() {
-        return contadorProyectos;
     }
 
     public int getIdProyecto() {
@@ -111,20 +103,20 @@ public class Proyecto {
         this.fechaFin = fechaFin;
     }
 
-    public float getCantidadNecesaria() {
-        return cantidadNecesaria;
+    public float getCantidadObjetivo() {
+        return cantidadObjetivo;
     }
 
-    public void setCantidadNecesaria(float cantidadNecesaria) {
-        this.cantidadNecesaria = cantidadNecesaria;
+    public void setCantidadObjetivo(float cantidadObjetivo) {
+        this.cantidadObjetivo = cantidadObjetivo;
     }
 
-    public float getCantidadFinanciada() {
-        return cantidadFinanciada;
+    public float getCantidadRecaudada() {
+        return cantidadRecaudada;
     }
 
-    public void setCantidadFinanciada(float cantidadFinanciada) {
-        this.cantidadFinanciada = cantidadFinanciada;
+    public void setCantidadRecaudada(float cantidadRecaudada) {
+        this.cantidadRecaudada = cantidadRecaudada;
     }
 
     public ArrayList<Recompensa> getListaRecompensas() {
@@ -161,8 +153,8 @@ public class Proyecto {
                 "\nID Proyecto: " + idProyecto +
                 "\nNombre: " + nombre +
                 "\nCategoría: " + categoria +
-                "\nCantidad necesaria: " + cantidadNecesaria +
-                "\nCantidad financiada: " + cantidadFinanciada +
+                "\nCantidad necesaria: " + cantidadObjetivo +
+                "\nCantidad financiada: " + cantidadRecaudada +
                 "\n";
     }
 }

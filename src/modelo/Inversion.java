@@ -1,22 +1,17 @@
 package modelo;
 
 public class Inversion implements Invertible {
-    private static int contadorInversiones = 0;
     private int idInversion;
     private Proyecto proyectoInvertido;
-    private float cantidadInvertida;
     private Inversor inversor;
+    private float cantidadInvertida;
     private Recompensa recompensa;
 
-    public Inversion(Proyecto proyectoInvertido, float cantidadInvertida, Inversor inversor) {
-        this.idInversion = ++contadorInversiones;
+    public Inversion(int idInversion, Proyecto proyectoInvertido, Inversor inversor, float cantidadInvertida) {
+        this.idInversion = idInversion;
         this.proyectoInvertido = proyectoInvertido;
-        this.cantidadInvertida = cantidadInvertida;
         this.inversor = inversor;
-    }
-
-    public static int getContadorInversiones() {
-        return contadorInversiones;
+        this.cantidadInvertida = cantidadInvertida;
     }
 
     public int getIdInversion() {
@@ -50,7 +45,7 @@ public class Inversion implements Invertible {
     @Override
     public float aumentaInversion(float cantidad) {
         if (inversor.disminuyeSaldo(cantidad)) {
-            if (proyectoInvertido.getCantidadNecesaria() > proyectoInvertido.getCantidadFinanciada()) {
+            if (proyectoInvertido.getCantidadObjetivo() > proyectoInvertido.getCantidadRecaudada()) {
                 inversor.disminuyeSaldo(cantidad);
                 return cantidadInvertida += cantidad;
             }
@@ -60,7 +55,7 @@ public class Inversion implements Invertible {
 
     @Override
     public float disminuyeInversion(float cantidad) {
-        if (proyectoInvertido.getCantidadFinanciada() >= cantidad) {
+        if (proyectoInvertido.getCantidadRecaudada() >= cantidad) {
             inversor.aumentaSaldo(cantidad);
             return cantidadInvertida -= cantidad;
         }

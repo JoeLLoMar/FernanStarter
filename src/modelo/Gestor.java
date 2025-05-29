@@ -3,26 +3,17 @@ package modelo;
 import java.util.ArrayList;
 
 public class Gestor extends Usuario implements Bloqueable {
-    private static int contadorGestor = 0;
-    private int idGestor;
     private ArrayList<Proyecto> listaProyectos;
+    private int proyectosCreados;
     private int iniciosSesionFallidos;
     private boolean bloqueado;
 
     public Gestor(String nombre, String clave, String email) {
         super(nombre, clave, email);
-        this.idGestor = ++contadorGestor;
         this.listaProyectos = new ArrayList<Proyecto>();
+        this.proyectosCreados = 0;
         this.iniciosSesionFallidos = 0;
         bloqueado = false;
-    }
-
-    public static int getContadorGestor() {
-        return contadorGestor;
-    }
-
-    public int getIdGestor() {
-        return idGestor;
     }
 
     public ArrayList<Proyecto> getListaProyectos() {
@@ -43,6 +34,10 @@ public class Gestor extends Usuario implements Bloqueable {
             return listaProyectos.remove(posicion);
         }
         return null;
+    }
+
+    public int getProyectosCreados() {
+        return proyectosCreados;
     }
 
     public int getIniciosSesionFallidos() {
@@ -83,7 +78,6 @@ public class Gestor extends Usuario implements Bloqueable {
     public String toString() {
         return "\n\nUSUARIO GESTOR" +
                 super.toString() +
-                "\nID de gestor: " + idGestor +
                 "\nProyectos creados: " + listaProyectos +
                 "\n=============================================";
     }

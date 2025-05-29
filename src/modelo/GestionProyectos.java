@@ -1,7 +1,5 @@
 package modelo;
 
-import utilidades.FuncionesFechas;
-
 import java.time.LocalDate;
 import java.util.ArrayList;
 
@@ -84,7 +82,7 @@ public class GestionProyectos {
     }
 
     public Proyecto modificarCantidadNecesaria(Proyecto proyecto, float cantidad) {
-        proyecto.setCantidadNecesaria(cantidad);
+        proyecto.setCantidadObjetivo(cantidad);
         return proyecto;
     }
 
@@ -102,9 +100,8 @@ public class GestionProyectos {
     public Categoria getCategoria(String categoria) {
         if (validarCategoria(categoria)) {
             return Categoria.valueOf(categoria.toUpperCase());
-        } else {
-            return null;
         }
+        return null;
     }
 
     public Proyecto agregarRecompensa(Proyecto proyecto, Recompensa recompensa) {

@@ -21,7 +21,7 @@ public class GestionProyectosVista {
 
     public static void graficoProgreso(Proyecto proyecto) {
         // Calcular el porcentaje de progreso
-        double porcentajeProgreso = (proyecto.getCantidadFinanciada() / proyecto.getCantidadNecesaria()) * 100;
+        double porcentajeProgreso = (proyecto.getCantidadRecaudada() / proyecto.getCantidadObjetivo()) * 100;
 
         // Pintar la barra de progreso
         System.out.println("\nBarra de Progreso:");
